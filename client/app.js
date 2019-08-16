@@ -6,7 +6,7 @@ import Routes from './routes'
 const App = props => {
   return (
     <div>
-      <Navbar credentials={props.credentials} />
+      <Navbar />
       <Routes credentials={props.credentials} />
     </div>
   )
