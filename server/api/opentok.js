@@ -25,9 +25,9 @@ if (!API_KEY || !SECRET) {
 }
 
 const OpenTok = require('opentok')
-const opentok = new OpenTok(API_KEY, SECRET)
+const opentok = new OpenTok(apiKey, SECRET)
 
-var roomToSessionIdDictionary = {}
+let roomToSessionIdDictionary = {}
 
 const findRoomFromSessionId = sessionId => {
   return _.findKey(roomToSessionIdDictionary, function(value) {
@@ -35,7 +35,7 @@ const findRoomFromSessionId = sessionId => {
   })
 }
 
-router.get('/session', async (req, res, next) => {
+router.get('/session', (req, res, next) => {
   res.redirect('/room/session')
 })
 
@@ -51,7 +51,7 @@ router.get('/room/:name', async (req, res, next) => {
       token = opentok.generateToken(sessionId)
       res.setHeader('Content-Type', 'application/json')
       res.send({
-        API_KEY,
+        apiKey: API_KEY,
         sessionId,
         token
       })
@@ -71,7 +71,7 @@ router.get('/room/:name', async (req, res, next) => {
         token = opentok.generateToken(session.sessionId)
         res.setHeader('Content-Type', 'application/json')
         res.send({
-          API_KEY,
+          apiKey: API_KEY,
           sessionId,
           token
         })
