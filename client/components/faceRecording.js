@@ -1,5 +1,6 @@
 import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
+import axios from 'axios'
 
 export default class FaceRecording extends React.Component {
   constructor(props) {
@@ -74,8 +75,40 @@ export default class FaceRecording extends React.Component {
     }))
   }
 
+  recordSession = async () => {
+    console.log(this.props.credentials)
+
+    const header = {
+      iss: this.props.credentials.apiKey,
+      ist: 'project',
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 300,
+      jti: 'jwt_nonce'
+    }
+
+    const data = {
+      sessionId: this.props.credentials.sessionId,
+      hasAudio: true,
+      hasVideo: true,
+      layout: {
+        type: 'custom',
+        stylesheet: 'the layout stylesheet (only used with type == custom)'
+      },
+      name: 'archive_name',
+      outputMode: 'composed',
+      resolution: '640x480'
+    }
+
+    await axios.post(
+      `https://api.opentok.com/v2/project/${
+        this.props.credentials.apiKey
+      }/archive`,
+      data,
+      header
+    )
+  }
+
   render() {
-    console.log(this.props)
     const {apiKey, sessionId, token} = this.props.credentials
     const {error, connection, publishVideo} = this.state
 
@@ -97,15 +130,18 @@ export default class FaceRecording extends React.Component {
           <button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
           </button>
+          <button id="recordButton" type="button" onClick={this.recordSession}>
+            Record
+          </button>
           <OTPublisher
-            properties={{publishVideo, width: 1000, height: 1000}}
+            properties={{publishVideo, width: 850, height: 850}}
             onPublish={this.onPublish}
             onError={this.onPublishError}
             eventHandlers={this.publisherEventHandlers}
           />
           <OTStreams>
             <OTSubscriber
-              properties={{width: 1000, height: 1000}}
+              properties={{width: 850, height: 850}}
               onSubscribe={this.onSubscribe}
               onError={this.onSubscribeError}
               eventHandlers={this.subscriberEventHandlers}

@@ -6,7 +6,7 @@ import history from './history'
 import store from './store'
 import App from './app'
 
-import {API_KEY, SESSION_ID, TOKEN} from '../server/api/openTokconfig'
+import {API_KEY, SESSION_ID, TOKEN} from '../secrets'
 
 // establishes socket connection
 import './socket'
