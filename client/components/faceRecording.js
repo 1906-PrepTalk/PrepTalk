@@ -1,8 +1,10 @@
 import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
-import axios from 'axios'
+// import axios from 'axios'
+import {connect} from 'react-redux'
+import {getSession} from '../store/session'
 
-export default class FaceRecording extends React.Component {
+class FaceRecording extends React.Component {
   constructor(props) {
     super(props)
 
@@ -75,40 +77,44 @@ export default class FaceRecording extends React.Component {
     }))
   }
 
-  recordSession = async () => {
-    console.log(this.props.credentials)
+  // recordSession = async () => {
+  //   console.log(this.props.credentials)
 
-    const header = {
-      iss: this.props.credentials.apiKey,
-      ist: 'project',
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 300,
-      jti: 'jwt_nonce'
-    }
+  //   const header = {
+  //     iss: this.props.credentials.apiKey,
+  //     ist: 'project',
+  //     iat: Math.floor(Date.now() / 1000),
+  //     exp: Math.floor(Date.now() / 1000) + 300,
+  //     jti: 'jwt_nonce'
+  //   }
 
-    const data = {
-      sessionId: this.props.credentials.sessionId,
-      hasAudio: true,
-      hasVideo: true,
-      layout: {
-        type: 'custom',
-        stylesheet: 'the layout stylesheet (only used with type == custom)'
-      },
-      name: 'archive_name',
-      outputMode: 'composed',
-      resolution: '640x480'
-    }
+  //   const data = {
+  //     sessionId: this.props.credentials.sessionId,
+  //     hasAudio: true,
+  //     hasVideo: true,
+  //     layout: {
+  //       type: 'custom',
+  //       stylesheet: 'the layout stylesheet (only used with type == custom)'
+  //     },
+  //     name: 'archive_name',
+  //     outputMode: 'composed',
+  //     resolution: '640x480'
+  //   }
 
-    await axios.post(
-      `https://api.opentok.com/v2/project/${
-        this.props.credentials.apiKey
-      }/archive`,
-      data,
-      header
-    )
-  }
+  //   await axios.post(
+  //     `https://api.opentok.com/v2/project/${
+  //       this.props.credentials.apiKey
+  //     }/archive`,
+  //     data,
+  //     header
+  //   )
+  // }
 
   render() {
+    console.log(this)
+    const session = this.props.params.match.id
+    this.props.getSession(session)
+
     const {apiKey, sessionId, token} = this.props.credentials
     const {error, connection, publishVideo} = this.state
 
@@ -152,3 +158,20 @@ export default class FaceRecording extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  console.log('testing mstp', state)
+  return {
+    credentials: state.session
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getSession: () => {
+      dispatch(getSession())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FaceRecording)

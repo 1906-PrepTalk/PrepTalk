@@ -25,7 +25,7 @@ if (!API_KEY || !SECRET) {
 }
 
 const OpenTok = require('opentok')
-const opentok = new OpenTok(apiKey, SECRET)
+const opentok = new OpenTok(API_KEY, SECRET)
 
 let roomToSessionIdDictionary = {}
 
@@ -35,19 +35,21 @@ const findRoomFromSessionId = sessionId => {
   })
 }
 
-router.get('/session', (req, res, next) => {
-  res.redirect('/room/session')
-})
+// router.get('/session', (req, res, next) => {
+//   console.log('test get route for faceRecording')
+//   res.redirect('/room/session')
+// })
 
-router.get('/room/:name', async (req, res, next) => {
-  try {
-    const roomName = req.params.roomName
-    let sessionId
-    let token
-    if (roomToSessionIdDictionary[roomName]) {
-      sessionId = roomToSessionIdDictionary[roomName]
-
-      // generate token
+router.get('/:name', (req, res, next) => {
+  console.log(opentok)
+  //   const roomName = req.params.name
+  let sessionId
+  let token
+  opentok.createSession({}, function(error, session) {
+    if (error) {
+      console.log('Error creating session:', error)
+    } else {
+      sessionId = session.sessionId
       token = opentok.generateToken(sessionId)
       res.setHeader('Content-Type', 'application/json')
       res.send({
@@ -55,31 +57,39 @@ router.get('/room/:name', async (req, res, next) => {
         sessionId,
         token
       })
-    } else {
-      // Create a session that will attempt to transmit streams directly between
-      // clients. If clients cannot connect, the session uses the OpenTok TURN server:
-      opentok.createSession({mediaMode: 'relayed'}, function(err, session) {
-        if (err) {
-          console.log(err)
-          res.status(500).send({error: 'createSession error:', err})
-          return
-        }
-
-        roomToSessionIdDictionary[roomName] = session.sessionId
-
-        // generate token
-        token = opentok.generateToken(session.sessionId)
-        res.setHeader('Content-Type', 'application/json')
-        res.send({
-          apiKey: API_KEY,
-          sessionId,
-          token
-        })
-      })
     }
-  } catch (error) {
-    console.error(error)
-  }
+  })
+  //   token = await opentok.generateToken(sessionId)
+
+  //   if (roomToSessionIdDictionary[roomName]) {
+  //     sessionId = roomToSessionIdDictionary[roomName]
+  //     console.log('test')
+  //     // generate token
+
+  //   }
+
+  //   else {
+  //     // Create a session that will attempt to transmit streams directly between
+  //     // clients. If clients cannot connect, the session uses the OpenTok TURN server:
+  //     opentok.createSession({mediaMode: 'relayed'}, function(err, session) {
+  //       if (err) {
+  //         console.log(err)
+  //         res.status(500).send({error: 'createSession error:', err})
+  //         return
+  //       }
+
+  //       roomToSessionIdDictionary[roomName] = session.sessionId
+
+  //       // generate token
+  //       token = opentok.generateToken(session.sessionId)
+  //       res.setHeader('Content-Type', 'application/json')
+  //       res.send({
+  //         apiKey: API_KEY,
+  //         sessionId,
+  //         token
+  //       })
+  //     })
+  //   }
 })
 
 /**
