@@ -27,20 +27,20 @@ if (!API_KEY || !SECRET) {
 const OpenTok = require('opentok')
 const opentok = new OpenTok(API_KEY, SECRET)
 
-let roomToSessionIdDictionary = {}
+// let roomToSessionIdDictionary = {}
 
-const findRoomFromSessionId = sessionId => {
-  return _.findKey(roomToSessionIdDictionary, function(value) {
-    return value === sessionId
-  })
-}
+// const findRoomFromSessionId = sessionId => {
+//   return _.findKey(roomToSessionIdDictionary, function(value) {
+//     return value === sessionId
+//   })
+// }
 
 // router.get('/session', (req, res, next) => {
 //   console.log('test get route for faceRecording')
 //   res.redirect('/room/session')
 // })
 
-router.get('/:name', (req, res, next) => {
+router.get('/', (req, res, next) => {
   console.log(opentok)
   //   const roomName = req.params.name
   let sessionId

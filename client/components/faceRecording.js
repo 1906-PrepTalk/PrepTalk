@@ -110,15 +110,15 @@ class FaceRecording extends React.Component {
   //   )
   // }
 
-  render() {
-    console.log(this)
-    const session = this.props.params.match.id
-    this.props.getSession(session)
+  componentWillMount() {
+    this.props.getSession()
+  }
 
-    const {apiKey, sessionId, token} = this.props.credentials
+  render() {
+    const {apiKey, sessionId, token} = this.props.session
     const {error, connection, publishVideo} = this.state
 
-    return (
+    return Object.keys(this.props.session).length !== 0 ? (
       <div>
         <div id="sessionStatus">Session Status: {connection}</div>
         {error ? (
@@ -155,14 +155,15 @@ class FaceRecording extends React.Component {
           </OTStreams>
         </OTSession>
       </div>
+    ) : (
+      <h1 className="text-center">Loading...</h1>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log('testing mstp', state)
   return {
-    credentials: state.session
+    session: state.session
   }
 }
 

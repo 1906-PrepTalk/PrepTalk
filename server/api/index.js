@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 router.use('/users', require('./users'))
-router.use('/room', require('./opentok'))
+router.use('/faceRecording', require('./opentok'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
