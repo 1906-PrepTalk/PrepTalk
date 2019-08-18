@@ -5,8 +5,6 @@ import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import Axios from 'axios'
 
-let archiveId
-
 class FaceRecording extends React.Component {
   constructor(props) {
     super(props)
@@ -113,23 +111,29 @@ class FaceRecording extends React.Component {
   //   )
   // }
 
-  recordSession = e => {
+  // session.on('archiveStarted', archiveStarted = e => {
+  //   archiveId = e.id;
+  //   console.log('Archive started ' + archiveId);
+  // })
+
+  startArchive = e => {
     e.preventDefault()
-    archiveId = e.id
-    console.log('archiveId', archiveId)
-    Axios.post('http://localhost:8080/api/faceRecording/archive/start')
+    Axios.post('http://localhost:8080/api/faceRecording/archive/start', {
+      sessionId: this.props.session.sessionId,
+      resolution: '1280x720',
+      output: 'composed'
+    })
       .then(() => console.log('Recording Started'))
       .catch(error => {
         console.error(error)
       })
-
-    console.log(this)
   }
 
-  stopRecordSession = e => {
+  stopArchive = e => {
     e.preventDefault()
-
-    Axios.post(`http://localhost:8080/faceRecording/archive/${archiveId}/stop`)
+    Axios.post(
+      `http://localhost:8080/api/faceRecording/archive/${archiveId}/stop`
+    )
       .then(() => console.log('Recording Stopped'))
       .catch(error => {
         console.error(error)
@@ -162,14 +166,10 @@ class FaceRecording extends React.Component {
           <button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
           </button>
-          <button id="recordButton" type="button" onClick={this.recordSession}>
-            Record
+          <button id="startArchive" type="button" onClick={this.startArchive}>
+            Start Recording
           </button>
-          <button
-            id="stopRecordButton"
-            type="button"
-            onClick={this.stopRecordSession}
-          >
+          <button id="stopArchive" type="button" onClick={this.stopArchive}>
             Stop Recording
           </button>
           <OTPublisher
