@@ -3,6 +3,9 @@ import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 // import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
+import Axios from 'axios'
+
+let archiveId = null
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -77,40 +80,34 @@ class FaceRecording extends React.Component {
     }))
   }
 
-  // recordSession = async () => {
-  //   console.log(this.props.credentials)
+  startArchive = e => {
+    e.preventDefault()
+    Axios.post('http://localhost:8080/api/faceRecording/archive/start', {
+      sessionId: this.props.session.sessionId,
+      resolution: '1280x720',
+      output: 'composed'
+    })
+      .then(res => {
+        archiveId = res.data.id
+      })
+      .then(() => console.log('Recording Started'))
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
-  //   const header = {
-  //     iss: this.props.credentials.apiKey,
-  //     ist: 'project',
-  //     iat: Math.floor(Date.now() / 1000),
-  //     exp: Math.floor(Date.now() / 1000) + 300,
-  //     jti: 'jwt_nonce'
-  //   }
+  stopArchive = e => {
+    e.preventDefault()
+    Axios.post(
+      `http://localhost:8080/api/faceRecording/archive/${archiveId}/stop`
+    )
+      .then(() => console.log('Recording Stopped'))
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
-  //   const data = {
-  //     sessionId: this.props.credentials.sessionId,
-  //     hasAudio: true,
-  //     hasVideo: true,
-  //     layout: {
-  //       type: 'custom',
-  //       stylesheet: 'the layout stylesheet (only used with type == custom)'
-  //     },
-  //     name: 'archive_name',
-  //     outputMode: 'composed',
-  //     resolution: '640x480'
-  //   }
-
-  //   await axios.post(
-  //     `https://api.opentok.com/v2/project/${
-  //       this.props.credentials.apiKey
-  //     }/archive`,
-  //     data,
-  //     header
-  //   )
-  // }
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.getSession()
   }
 
@@ -136,8 +133,11 @@ class FaceRecording extends React.Component {
           <button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
           </button>
-          <button id="recordButton" type="button" onClick={this.recordSession}>
-            Record
+          <button id="startArchive" type="button" onClick={this.startArchive}>
+            Start Recording
+          </button>
+          <button id="stopArchive" type="button" onClick={this.stopArchive}>
+            Stop Recording
           </button>
           <OTPublisher
             properties={{publishVideo, width: 850, height: 850}}

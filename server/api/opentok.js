@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {API_KEY, SECRET} = require('../../secrets')
-const _ = require('lodash')
+// const _ = require('lodash')
 const path = require('path')
 
 if (!API_KEY || !SECRET) {
@@ -27,25 +27,10 @@ if (!API_KEY || !SECRET) {
 const OpenTok = require('opentok')
 const opentok = new OpenTok(API_KEY, SECRET)
 
-// let roomToSessionIdDictionary = {}
-
-// const findRoomFromSessionId = sessionId => {
-//   return _.findKey(roomToSessionIdDictionary, function(value) {
-//     return value === sessionId
-//   })
-// }
-
-// router.get('/session', (req, res, next) => {
-//   console.log('test get route for faceRecording')
-//   res.redirect('/room/session')
-// })
-
 router.get('/', (req, res, next) => {
-  console.log(opentok)
-  //   const roomName = req.params.name
   let sessionId
   let token
-  opentok.createSession({}, function(error, session) {
+  opentok.createSession({mediaMode: 'routed'}, function(error, session) {
     if (error) {
       console.log('Error creating session:', error)
     } else {
@@ -59,49 +44,20 @@ router.get('/', (req, res, next) => {
       })
     }
   })
-  //   token = await opentok.generateToken(sessionId)
-
-  //   if (roomToSessionIdDictionary[roomName]) {
-  //     sessionId = roomToSessionIdDictionary[roomName]
-  //     console.log('test')
-  //     // generate token
-
-  //   }
-
-  //   else {
-  //     // Create a session that will attempt to transmit streams directly between
-  //     // clients. If clients cannot connect, the session uses the OpenTok TURN server:
-  //     opentok.createSession({mediaMode: 'relayed'}, function(err, session) {
-  //       if (err) {
-  //         console.log(err)
-  //         res.status(500).send({error: 'createSession error:', err})
-  //         return
-  //       }
-
-  //       roomToSessionIdDictionary[roomName] = session.sessionId
-
-  //       // generate token
-  //       token = opentok.generateToken(session.sessionId)
-  //       res.setHeader('Content-Type', 'application/json')
-  //       res.send({
-  //         apiKey: API_KEY,
-  //         sessionId,
-  //         token
-  //       })
-  //     })
-  //   }
 })
 
 /**
  * POST /archive/start
  */
 router.post('/archive/start', function(req, res) {
-  var json = req.body
-  var sessionId = json.sessionId
+  const {sessionId, resolution, outputMode} = req.body
+  console.log(
+    '<===================================== testing start archive route =====================================>'
+  )
   opentok.startArchive(
     sessionId,
-    {name: findRoomFromSessionId(sessionId)},
-    function(err, archive) {
+    {name: 'Important Presentation', resolution, outputMode},
+    (err, archive) => {
       if (err) {
         console.error('error in startArchive')
         console.error(err)
@@ -109,6 +65,7 @@ router.post('/archive/start', function(req, res) {
         return
       }
       res.setHeader('Content-Type', 'application/json')
+      console.log('archive info', archive)
       res.send(archive)
     }
   )
@@ -118,9 +75,12 @@ router.post('/archive/start', function(req, res) {
  * POST /archive/:archiveId/stop
  */
 router.post('/archive/:archiveId/stop', function(req, res) {
-  var archiveId = req.params.archiveId
+  console.log(
+    '<===================================== testing stop archive route =====================================>'
+  )
+  const archiveId = req.params.archiveId
   console.log('attempting to stop archive: ' + archiveId)
-  opentok.stopArchive(archiveId, function(err, archive) {
+  opentok.stopArchive(archiveId, (err, archive) => {
     if (err) {
       console.error('error in stopArchive')
       console.error(err)
