@@ -3,6 +3,9 @@ import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 // import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
+import Axios from 'axios'
+
+let archiveId
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -110,7 +113,30 @@ class FaceRecording extends React.Component {
   //   )
   // }
 
-  componentWillMount() {
+  recordSession = e => {
+    e.preventDefault()
+    archiveId = e.id
+    console.log('archiveId', archiveId)
+    Axios.post('http://localhost:8080/api/faceRecording/archive/start')
+      .then(() => console.log('Recording Started'))
+      .catch(error => {
+        console.error(error)
+      })
+
+    console.log(this)
+  }
+
+  stopRecordSession = e => {
+    e.preventDefault()
+
+    Axios.post(`http://localhost:8080/faceRecording/archive/${archiveId}/stop`)
+      .then(() => console.log('Recording Stopped'))
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  componentDidMount() {
     this.props.getSession()
   }
 
@@ -138,6 +164,13 @@ class FaceRecording extends React.Component {
           </button>
           <button id="recordButton" type="button" onClick={this.recordSession}>
             Record
+          </button>
+          <button
+            id="stopRecordButton"
+            type="button"
+            onClick={this.stopRecordSession}
+          >
+            Stop Recording
           </button>
           <OTPublisher
             properties={{publishVideo, width: 850, height: 850}}

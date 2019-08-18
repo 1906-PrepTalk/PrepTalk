@@ -45,7 +45,10 @@ router.get('/', (req, res, next) => {
   //   const roomName = req.params.name
   let sessionId
   let token
-  opentok.createSession({}, function(error, session) {
+  opentok.createSession({mediaMode: 'routed', archiveMode: 'always'}, function(
+    error,
+    session
+  ) {
     if (error) {
       console.log('Error creating session:', error)
     } else {
@@ -96,22 +99,23 @@ router.get('/', (req, res, next) => {
  * POST /archive/start
  */
 router.post('/archive/start', function(req, res) {
+  console.log('testing route')
   var json = req.body
   var sessionId = json.sessionId
-  opentok.startArchive(
-    sessionId,
-    {name: findRoomFromSessionId(sessionId)},
-    function(err, archive) {
-      if (err) {
-        console.error('error in startArchive')
-        console.error(err)
-        res.status(500).send({error: 'startArchive error:' + err})
-        return
-      }
-      res.setHeader('Content-Type', 'application/json')
-      res.send(archive)
+  console.log(sessionId)
+  opentok.startArchive(sessionId, {name: 'Important Presentation'}, function(
+    err,
+    archive
+  ) {
+    if (err) {
+      console.error('error in startArchive')
+      console.error(err)
+      res.status(500).send({error: 'startArchive error:' + err})
+      return
     }
-  )
+    res.setHeader('Content-Type', 'application/json')
+    res.send(archive)
+  })
 })
 
 /**
