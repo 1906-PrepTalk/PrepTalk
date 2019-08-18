@@ -4,29 +4,23 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
+import MenuBar from './MenuBar'
+
 const Navbar = (props, {handleClick, isLoggedIn}) => (
   <div>
-    <h1>PrepTalk</h1>
+    <Link to="/">
+      {' '}
+      <h1>PrepTalk</h1>{' '}
+    </Link>
     <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-          <Link to="/faceRecording">Record Yourself!</Link>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/faceRecording">Record Yourself!</Link>
-        </div>
-      )}
+      <div>
+        {/* The navbar will show these links after you log in */}
+        <MenuBar
+          handleClick={props.handleClick}
+          isLoggedIn={props.isLoggedIn}
+        />
+      </div>
     </nav>
-    <hr />
   </div>
 )
 

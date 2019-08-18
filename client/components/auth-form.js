@@ -2,34 +2,66 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
 
+const AuthForm = props => {
+  const {handleSubmit, error} = props
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+    <div id="login-signup-form">
+      {/* <a href="/auth/google">{displayName} with Google</a> */}
+      <Segment placeholder>
+        <Grid columns={2} relaxed="very" stackable>
+          <Grid.Column>
+            <Form onSubmit={handleSubmit} name="login">
+              <Form.Input
+                icon="user"
+                iconPosition="left"
+                label="Email"
+                placeholder="email"
+                name="email"
+                type="text"
+              />
+              <Form.Input
+                icon="lock"
+                iconPosition="left"
+                label="Password"
+                name="password"
+                type="password"
+              />
+
+              <Button content="Login" primary />
+            </Form>
+          </Grid.Column>
+
+          <Grid.Column verticalAlign="middle">
+            <Form onSubmit={handleSubmit} name="signup">
+              <Form.Input
+                icon="user"
+                iconPosition="left"
+                label="Email"
+                placeholder="Email"
+                name="email"
+                type="text"
+              />
+              <Form.Input
+                icon="lock"
+                iconPosition="left"
+                label="Password"
+                name="password"
+                type="password"
+              />
+
+              <Button content="Sign up" icon="signup" />
+            </Form>
+          </Grid.Column>
+        </Grid>
+
+        <Divider vertical>Or</Divider>
+      </Segment>
     </div>
   )
 }
@@ -41,21 +73,6 @@ const AuthForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-const mapLogin = state => {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.user.error
-  }
-}
-
-const mapSignup = state => {
-  return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
-  }
-}
 
 const mapDispatch = dispatch => {
   return {
@@ -64,20 +81,20 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
+      console.log(evt.target)
       dispatch(auth(email, password, formName))
     }
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(null, mapDispatch)(AuthForm)
 
 /**
  * PROP TYPES
  */
 AuthForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
+  // name: PropTypes.string.isRequired,
+  // displayName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
