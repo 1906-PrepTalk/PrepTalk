@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import Axios from 'axios'
 
+let archiveId = null
+
 class FaceRecording extends React.Component {
   constructor(props) {
     super(props)
@@ -85,6 +87,9 @@ class FaceRecording extends React.Component {
       resolution: '1280x720',
       output: 'composed'
     })
+      .then(res => {
+        archiveId = res.data.id
+      })
       .then(() => console.log('Recording Started'))
       .catch(error => {
         console.error(error)
