@@ -78,44 +78,6 @@ class FaceRecording extends React.Component {
     }))
   }
 
-  // recordSession = async () => {
-  //   console.log(this.props.credentials)
-
-  //   const header = {
-  //     iss: this.props.credentials.apiKey,
-  //     ist: 'project',
-  //     iat: Math.floor(Date.now() / 1000),
-  //     exp: Math.floor(Date.now() / 1000) + 300,
-  //     jti: 'jwt_nonce'
-  //   }
-
-  //   const data = {
-  //     sessionId: this.props.credentials.sessionId,
-  //     hasAudio: true,
-  //     hasVideo: true,
-  //     layout: {
-  //       type: 'custom',
-  //       stylesheet: 'the layout stylesheet (only used with type == custom)'
-  //     },
-  //     name: 'archive_name',
-  //     outputMode: 'composed',
-  //     resolution: '640x480'
-  //   }
-
-  //   await axios.post(
-  //     `https://api.opentok.com/v2/project/${
-  //       this.props.credentials.apiKey
-  //     }/archive`,
-  //     data,
-  //     header
-  //   )
-  // }
-
-  // session.on('archiveStarted', archiveStarted = e => {
-  //   archiveId = e.id;
-  //   console.log('Archive started ' + archiveId);
-  // })
-
   startArchive = e => {
     e.preventDefault()
     Axios.post('http://localhost:8080/api/faceRecording/archive/start', {

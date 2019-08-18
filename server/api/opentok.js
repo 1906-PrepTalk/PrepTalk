@@ -30,10 +30,7 @@ const opentok = new OpenTok(API_KEY, SECRET)
 router.get('/', (req, res, next) => {
   let sessionId
   let token
-  opentok.createSession({mediaMode: 'routed', archiveMode: 'always'}, function(
-    error,
-    session
-  ) {
+  opentok.createSession({mediaMode: 'routed'}, function(error, session) {
     if (error) {
       console.log('Error creating session:', error)
     } else {
@@ -70,7 +67,7 @@ router.post('/archive/start', function(req, res) {
         return
       }
       res.setHeader('Content-Type', 'application/json')
-      console.log(archive)
+      console.log('archive info', archive)
       res.send(archive)
     }
   )
