@@ -97,11 +97,7 @@ class FaceRecording extends React.Component {
 
   stopArchive = e => {
     e.preventDefault()
-    Axios.post(
-      `http://localhost:8080/api/faceRecording/archive/${
-        this.state.archiveId
-      }/stop`
-    )
+    Axios.post(`/api/faceRecording/archive/${this.state.archiveId}/stop`)
       .then(() => console.log('Recording Stopped'))
       .catch(error => {
         console.error(error)
