@@ -5,8 +5,6 @@ import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import Axios from 'axios'
 
-let archiveId = null
-
 class FaceRecording extends React.Component {
   constructor(props) {
     super(props)
@@ -14,7 +12,8 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true
+      publishVideo: true,
+      archiveId: null
     }
 
     this.sessionEventHandlers = {
@@ -88,7 +87,7 @@ class FaceRecording extends React.Component {
       output: 'composed'
     })
       .then(res => {
-        archiveId = res.data.id
+        this.setState({archiveId: res.data.id})
       })
       .then(() => console.log('Recording Started'))
       .catch(error => {
@@ -99,7 +98,9 @@ class FaceRecording extends React.Component {
   stopArchive = e => {
     e.preventDefault()
     Axios.post(
-      `http://localhost:8080/api/faceRecording/archive/${archiveId}/stop`
+      `http://localhost:8080/api/faceRecording/archive/${
+        this.state.archiveId
+      }/stop`
     )
       .then(() => console.log('Recording Stopped'))
       .catch(error => {
