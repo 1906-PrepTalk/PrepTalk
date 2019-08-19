@@ -1,7 +1,10 @@
 const router = require('express').Router()
-const {API_KEY, SECRET} = require('../../secrets')
+// const {API_KEY, SECRET} = require('../../secrets')
 // const _ = require('lodash')
 const path = require('path')
+
+const API_KEY = process.env.API_KEY
+const SECRET = process.env.SECRET
 
 if (!API_KEY || !SECRET) {
   console.error(
