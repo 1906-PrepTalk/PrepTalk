@@ -1,11 +1,9 @@
 import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
-// import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import Axios from 'axios'
-
-let archiveId = null
+import {Button} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -14,7 +12,8 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true
+      publishVideo: true,
+      archiveId: null
     }
 
     this.sessionEventHandlers = {
@@ -88,7 +87,7 @@ class FaceRecording extends React.Component {
       output: 'composed'
     })
       .then(res => {
-        archiveId = res.data.id
+        this.setState({archiveId: res.data.id})
       })
       .then(() => console.log('Recording Started'))
       .catch(error => {
@@ -99,7 +98,9 @@ class FaceRecording extends React.Component {
   stopArchive = e => {
     e.preventDefault()
     Axios.post(
-      `http://localhost:8080/api/faceRecording/archive/${archiveId}/stop`
+      `http://localhost:8080/api/faceRecording/archive/${
+        this.state.archiveId
+      }/stop`
     )
       .then(() => console.log('Recording Stopped'))
       .catch(error => {
@@ -130,15 +131,25 @@ class FaceRecording extends React.Component {
           onError={this.onSessionError}
           eventHandlers={this.sessionEventHandlers}
         >
-          <button id="videoButton" onClick={this.toggleVideo} type="button">
+          <Button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
-          </button>
-          <button id="startArchive" type="button" onClick={this.startArchive}>
+          </Button>
+          <Button
+            id="startArchive"
+            type="button"
+            onClick={this.startArchive}
+            primary
+          >
             Start Recording
-          </button>
-          <button id="stopArchive" type="button" onClick={this.stopArchive}>
+          </Button>
+          <Button
+            id="stopArchive"
+            type="button"
+            onClick={this.stopArchive}
+            secondary
+          >
             Stop Recording
-          </button>
+          </Button>
           <OTPublisher
             properties={{publishVideo, width: 850, height: 850}}
             onPublish={this.onPublish}

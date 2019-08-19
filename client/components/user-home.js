@@ -12,11 +12,17 @@ export const UserHome = props => {
   return (
     <div id="landing-page">
       {email ? (
-        <h3>Welcome, {email}</h3>
+        <div>
+          <h3>Welcome, {email}</h3>
+        </div>
       ) : (
-        <Button as={Link} to="/login" color="green">
-          Get Started
-        </Button>
+        <div id="title-screen">
+          <h2>Need help to get that job or second interview? We can help.</h2>
+
+          <Button as={Link} to="/login" color="green">
+            Get Started
+          </Button>
+        </div>
       )}
     </div>
   )
