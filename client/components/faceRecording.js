@@ -1,9 +1,9 @@
 import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
-// import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import Axios from 'axios'
+import {Button} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -131,15 +131,25 @@ class FaceRecording extends React.Component {
           onError={this.onSessionError}
           eventHandlers={this.sessionEventHandlers}
         >
-          <button id="videoButton" onClick={this.toggleVideo} type="button">
+          <Button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
-          </button>
-          <button id="startArchive" type="button" onClick={this.startArchive}>
+          </Button>
+          <Button
+            id="startArchive"
+            type="button"
+            onClick={this.startArchive}
+            primary
+          >
             Start Recording
-          </button>
-          <button id="stopArchive" type="button" onClick={this.stopArchive}>
+          </Button>
+          <Button
+            id="stopArchive"
+            type="button"
+            onClick={this.stopArchive}
+            secondary
+          >
             Stop Recording
-          </button>
+          </Button>
           <OTPublisher
             properties={{publishVideo, width: 850, height: 850}}
             onPublish={this.onPublish}
