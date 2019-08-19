@@ -9,8 +9,7 @@ import MenuBar from './MenuBar'
 const Navbar = (props, {handleClick, isLoggedIn}) => (
   <div>
     <Link to="/">
-      {' '}
-      <h1>PrepTalk</h1>{' '}
+      <img src="PrepTalkLogo.png" />
     </Link>
     <nav>
       <div>
