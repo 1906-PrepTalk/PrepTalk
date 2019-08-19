@@ -5,11 +5,15 @@ body {
 #landing-page {
   display: flex;
   justify-content: center;
-  margin-top: 20%;
+  margin-top: 15%;
 }
 
 #login-signup-form {
+  margin-top: 5%;
+}
+
+#title-screen {
   display: flex;
-  justify-content: center;
-  margin-top: 20%;
+  align-items: center;
+  flex-direction: column;
 }

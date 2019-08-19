@@ -5,9 +5,9 @@ const Face = db.define('face', {
   // data: {
   //     type: Sequelize.JSON
   // }
-//   expressions: {
-//     type: Sequelize.ENUM
-//   }
+  //   expressions: {
+  //     type: Sequelize.ENUM
+  //   }
 })
 
 module.exports = Face

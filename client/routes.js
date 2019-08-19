@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, UserHome} from './components'
+import {Login, LandingPage} from './components'
 import {me} from './store'
 import FaceRecording from './components/faceRecording'
+import MyAccount from './components/MyAccount'
 /**
  * COMPONENT
  */
@@ -28,11 +29,12 @@ class Routes extends Component {
               path="/faceRecording"
               render={() => <FaceRecording {...this.props} />}
             />
-            <Route path="/" component={UserHome} />
+            <Route path="/myAccount" component={MyAccount} />
+            <Route path="/" component={LandingPage} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route path="/" component={UserHome} />
+        <Route path="/" component={LandingPage} />
       </Switch>
     )
   }

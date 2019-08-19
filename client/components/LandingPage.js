@@ -6,17 +6,23 @@ import {Button} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
-export const UserHome = props => {
+export const LandingPage = props => {
   const {email} = props
   console.log(email)
   return (
     <div id="landing-page">
       {email ? (
-        <h3>Welcome, {email}</h3>
+        <div>
+          <h3>Welcome, {email}</h3>
+        </div>
       ) : (
-        <Button as={Link} to="/login" color="green">
-          Get Started
-        </Button>
+        <div id="title-screen">
+          <h2>Need help to get that job or second interview? We can help.</h2>
+
+          <Button as={Link} to="/login" color="green">
+            Get Started
+          </Button>
+        </div>
       )}
     </div>
   )
@@ -31,11 +37,11 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(LandingPage)
 
 /**
  * PROP TYPES
  */
-UserHome.propTypes = {
+LandingPage.propTypes = {
   email: PropTypes.string
 }

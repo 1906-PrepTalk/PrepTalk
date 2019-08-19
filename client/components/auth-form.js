@@ -9,7 +9,7 @@ import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
  */
 
 const AuthForm = props => {
-  const {handleSubmit, error} = props
+  const {handleSubmit} = props
   return (
     <div id="login-signup-form">
       {/* <a href="/auth/google">{displayName} with Google</a> */}
@@ -32,8 +32,8 @@ const AuthForm = props => {
                 name="password"
                 type="password"
               />
-
               <Button content="Login" primary />
+              <Button content="Login with Google" secondary />
             </Form>
           </Grid.Column>
 
@@ -93,8 +93,5 @@ export const Login = connect(null, mapDispatch)(AuthForm)
  * PROP TYPES
  */
 AuthForm.propTypes = {
-  // name: PropTypes.string.isRequired,
-  // displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
+  handleSubmit: PropTypes.func.isRequired
 }
