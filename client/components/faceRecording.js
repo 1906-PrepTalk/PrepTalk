@@ -81,7 +81,7 @@ class FaceRecording extends React.Component {
 
   startArchive = e => {
     e.preventDefault()
-    Axios.post('http://localhost:8080/api/faceRecording/archive/start', {
+    Axios.post('/api/faceRecording/archive/start', {
       sessionId: this.props.session.sessionId,
       resolution: '1280x720',
       output: 'composed'
