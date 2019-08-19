@@ -3,26 +3,26 @@ const {API_KEY, SECRET} = require('../../secrets')
 // const _ = require('lodash')
 const path = require('path')
 
-if (!API_KEY || !SECRET) {
-  console.error(
-    '========================================================================================================='
-  )
-  console.error('')
-  console.error('Missing TOKBOX_API_KEY or TOKBOX_SECRET')
-  console.error(
-    'Find the appropriate values for these by logging into your TokBox Dashboard at: https://tokbox.com/account/#/'
-  )
-  console.error(
-    'Then add them to ',
-    path.resolve('.env'),
-    'or as environment variables'
-  )
-  console.error('')
-  console.error(
-    '========================================================================================================='
-  )
-  process.exit()
-}
+// if (!API_KEY || !SECRET) {
+//   console.error(
+//     '========================================================================================================='
+//   )
+//   console.error('')
+//   console.error('Missing TOKBOX_API_KEY or TOKBOX_SECRET')
+//   console.error(
+//     'Find the appropriate values for these by logging into your TokBox Dashboard at: https://tokbox.com/account/#/'
+//   )
+//   console.error(
+//     'Then add them to ',
+//     path.resolve('.env'),
+//     'or as environment variables'
+//   )
+//   console.error('')
+//   console.error(
+//     '========================================================================================================='
+//   )
+//   process.exit()
+// }
 
 const OpenTok = require('opentok')
 const opentok = new OpenTok(API_KEY, SECRET)
