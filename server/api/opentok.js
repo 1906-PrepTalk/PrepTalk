@@ -3,8 +3,8 @@ const router = require('express').Router()
 // const _ = require('lodash')
 const path = require('path')
 
-const API_KEY = process.env.API_KEY
-const SECRET = process.env.SECRET
+const API_KEY = process.env.OPENTOK_API_KEY
+const SECRET = process.env.OPENTOK_SECRET
 
 if (!API_KEY || !SECRET) {
   console.error(
