@@ -41,12 +41,16 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/speech": "^3.2.5",
+    "@google-cloud/storage": "^3.1.0",
     "@opentok/client": "^2.16.2",
+    "aws-sdk": "^2.513.0",
     "axios": "^0.19.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
+    "fluent-ffmpeg": "^2.1.2",
     "history": "^4.9.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
@@ -66,7 +70,8 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.87.3",
     "sequelize": "^5.3.1",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "yauzl": "^2.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
