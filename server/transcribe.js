@@ -47,6 +47,7 @@ function transcribeAudio(googFilename) {
     })
     .then(data => {
       const res = data[0]
+      console.log('This is res:', res)
       return res.promise()
     })
     .then(data => {
