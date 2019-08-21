@@ -1,5 +1,9 @@
 const AWS = require('aws-sdk')
+
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path
 const ffmpeg = require('fluent-ffmpeg')
+ffmpeg.setFfmpegPath(ffmpegPath)
+
 const transcribe = require('./transcribe')
 const yauzl = require('yauzl')
 const fs = require('fs')
@@ -28,6 +32,7 @@ class Archive {
         individualOutput ? 'zip' : 'mp4'
       }`
     }
+    console.log('Params are', params)
     return this.s3
       .getObject(params)
       .createReadStream()

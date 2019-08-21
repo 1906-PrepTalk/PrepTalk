@@ -58,6 +58,7 @@ router.post('/archive/start', function(req, res) {
   console.log(
     '<===================================== testing start archive route =====================================>'
   )
+  console.log('HEROKU TEST')
   opentok.startArchive(
     sessionId,
     {name: 'Important Presentation', resolution, outputMode},
