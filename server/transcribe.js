@@ -46,6 +46,7 @@ function transcribeAudio(googFilename) {
       audio: {uri: googFilename}
     })
     .then(data => {
+      console.log('This is data:', data)
       const res = data[0]
       console.log('This is res:', res)
       return res.promise()
