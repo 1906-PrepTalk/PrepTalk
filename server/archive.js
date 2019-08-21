@@ -1,5 +1,9 @@
 const AWS = require('aws-sdk')
+
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path
 const ffmpeg = require('fluent-ffmpeg')
+ffmpeg.setFfmpegPath(ffmpegPath)
+
 const transcribe = require('./transcribe')
 const yauzl = require('yauzl')
 const fs = require('fs')
