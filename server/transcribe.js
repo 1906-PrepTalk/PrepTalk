@@ -62,6 +62,7 @@ function transcribeAudio(googFilename) {
       return transcript
     })
     .catch(err => {
+      console.log('This is googFileName', googFilename)
       console.log(`Error transcribing audio. Reason: ${err}`)
     })
 }
