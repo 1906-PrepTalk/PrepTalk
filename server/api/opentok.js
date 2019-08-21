@@ -2,6 +2,7 @@ const router = require('express').Router()
 // const {API_KEY, SECRET} = require('../../secrets')
 // const _ = require('lodash')
 const path = require('path')
+const opentok = require('./opentokInstance')
 
 const API_KEY = process.env.OPENTOK_API_KEY
 const SECRET = process.env.OPENTOK_SECRET
@@ -27,8 +28,8 @@ if (!API_KEY || !SECRET) {
   process.exit()
 }
 
-const OpenTok = require('opentok')
-const opentok = new OpenTok(API_KEY, SECRET)
+// const OpenTok = require('opentok')
+// const opentok = new OpenTok(API_KEY, SECRET)
 
 router.get('/', (req, res, next) => {
   let sessionId

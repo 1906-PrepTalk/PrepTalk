@@ -16,6 +16,7 @@ const gclient = new speech.SpeechClient(googCredentials)
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
+  console.log('location bucket here', gbucket)
   return gbucket
     .file(filename)
     .createWriteStream()
@@ -35,6 +36,7 @@ function store(bucketId, filename) {
  * Send audio to transcription service Google Cloud Speech API
  */
 function transcribeAudio(googFilename) {
+  console.log('Here are the', googCredentials)
   return gclient
     .longRunningRecognize({
       config: {
