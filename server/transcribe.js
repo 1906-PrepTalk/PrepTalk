@@ -1,5 +1,6 @@
 const speech = require('@google-cloud/speech')
 let googCredentials
+
 if (
   process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON &&
   process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON.length > 1
@@ -8,7 +9,9 @@ if (
     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
   }
 }
-const storage = require('@google-cloud/storage')(googCredentials)
+
+const {Storage} = require('@google-cloud/storage')
+const storage = new Storage(googCredentials)
 const gclient = new speech.SpeechClient(googCredentials)
 
 function store(bucketId, filename) {
