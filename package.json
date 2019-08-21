@@ -41,6 +41,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.19",
     "@google-cloud/speech": "^3.2.5",
     "@google-cloud/storage": "^3.1.0",
     "@opentok/client": "^2.16.2",
