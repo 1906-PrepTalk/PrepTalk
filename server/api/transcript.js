@@ -1,9 +1,8 @@
 const router = require('express').Router()
 const Opentok = require('opentok')
 
-const OPENTOK_SECRET = process.env.OPENTOK_SECRET
-
 const Archive = require('../archive')
+const OPENTOK_SECRET = process.env.OPENTOK_SECRET
 
 const CONFIG = {}
 
@@ -15,7 +14,7 @@ const reqEnvVars = [
   ['AWS_SECRET_ACCESS_KEY'],
   ['GOOGLE_STORAGE_BUCKET'],
   ['GOOGLE_APPLICATION_CREDENTIALS', 'service-account-file.json'],
-  ['GOOGLE_APPLICATION_CREDENTIALS_JSON']
+  ['GOOGLE_APPLICATION_CREDENTIALS_JSON', 0]
 ]
 
 for (const ev of reqEnvVars) {
@@ -25,6 +24,11 @@ for (const ev of reqEnvVars) {
   }
   CONFIG[ev[0]] = process.env[ev[0]] || ev[1]
 }
+
+console.log(
+  '<=========================================================================================================== CONFIG OBJECT ===========================================================================================================>',
+  CONFIG
+)
 
 const opentok = new Opentok(CONFIG.OPENTOK_API_KEY, OPENTOK_SECRET)
 const archive = new Archive(CONFIG, opentok)
@@ -116,3 +120,5 @@ router.delete('/archives/:id', (req, res, next) => {
     })
   })
 })
+
+module.exports = router
