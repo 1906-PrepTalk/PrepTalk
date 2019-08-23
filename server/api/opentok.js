@@ -58,7 +58,6 @@ router.post('/archive/start', function(req, res) {
   console.log(
     '<===================================== testing start archive route =====================================>'
   )
-  console.log('ALDJLKAJFDSJAKLFJADJFASL', req.body)
   opentok.startArchive(
     sessionId,
     {name, resolution, outputMode},

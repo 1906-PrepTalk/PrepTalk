@@ -84,7 +84,6 @@ class FaceRecording extends React.Component {
   startArchive = e => {
     e.preventDefault()
     try {
-      console.log(e.target.recordingName.value)
       this.props.getArchiveId(
         this.props.session.sessionId,
         e.target.recordingName.value
