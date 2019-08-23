@@ -38,12 +38,14 @@ function store(bucketId, filename) {
 function transcribeAudio(googFilename) {
   console.log('Here are the', googCredentials)
   return gclient
-    .longRunningRecognize({
+    .recognize({
       config: {
         encoding: 'FLAC',
         languageCode: 'en-US'
       },
-      audio: {uri: googFilename}
+      audio: {
+        uri: googFilename
+      }
     })
     .then(data => {
       const res = data[0]

@@ -15,10 +15,10 @@ const gotSession = session => {
   }
 }
 
-export const getSession = session => async dispatch => {
+export const getSession = () => async dispatch => {
   try {
-    const {data: sessionData} = await axios.get(`/api/faceRecording`, session)
-    dispatch(gotSession(sessionData))
+    const {data} = await axios.get(`/api/faceRecording`)
+    dispatch(gotSession(data))
   } catch (error) {
     console.error(error)
   }
@@ -27,7 +27,7 @@ export const getSession = session => async dispatch => {
 const sessionReducer = (state = {}, action) => {
   switch (action.type) {
     case GOT_SESSION:
-      return {...action.session}
+      return action.session
     default:
       return state
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
+import {getArchiveId, stopArchiving} from '../store/archiveId'
 import Axios from 'axios'
 import {Button} from 'semantic-ui-react'
 
@@ -12,8 +13,7 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true,
-      archiveId: null
+      publishVideo: true
     }
 
     this.sessionEventHandlers = {
@@ -81,27 +81,20 @@ class FaceRecording extends React.Component {
 
   startArchive = e => {
     e.preventDefault()
-    Axios.post('/api/faceRecording/archive/start', {
-      sessionId: this.props.session.sessionId,
-      resolution: '1280x720',
-      output: 'composed'
-    })
-      .then(res => {
-        this.setState({archiveId: res.data.id})
-      })
-      .then(() => console.log('Recording Started'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.getArchiveId(this.props.session.sessionId)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   stopArchive = e => {
     e.preventDefault()
-    Axios.post(`/api/faceRecording/archive/${this.state.archiveId}/stop`)
-      .then(() => console.log('Recording Stopped'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.stopArchiving(this.props.archiveId)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   componentDidMount() {
@@ -170,7 +163,8 @@ class FaceRecording extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
+    archiveId: state.archiveId
   }
 }
 
@@ -178,7 +172,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getSession: () => {
       dispatch(getSession())
-    }
+    },
+    getArchiveId: archiveId => dispatch(getArchiveId(archiveId)),
+    stopArchiving: archiveId => dispatch(stopArchiving(archiveId))
   }
 }
 
