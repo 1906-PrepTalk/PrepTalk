@@ -23,15 +23,15 @@ const stoppedArchiving = archiveId => {
   }
 }
 
-export const getArchiveId = sessionId => async dispatch => {
+export const getArchiveId = (sessionId, recordingName) => async dispatch => {
   try {
     const config = {
+      name: recordingName,
       sessionId: sessionId,
       resolution: '1280x720',
       output: 'composed'
     }
     const {data} = await axios.post('/api/faceRecording/archive/start', config)
-    console.log(data)
     dispatch(gotArchiveId(data.id))
   } catch (err) {
     console.log(err)

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
 import Axios from 'axios'
-import {Button} from 'semantic-ui-react'
+import {Button, Form} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -79,10 +79,16 @@ class FaceRecording extends React.Component {
     }))
   }
 
+  // START RECORDING / STOP RECORDING
+
   startArchive = e => {
     e.preventDefault()
     try {
-      this.props.getArchiveId(this.props.session.sessionId)
+      console.log(e.target.recordingName.value)
+      this.props.getArchiveId(
+        this.props.session.sessionId,
+        e.target.recordingName.value
+      )
     } catch (err) {
       console.log(err)
     }
@@ -123,14 +129,25 @@ class FaceRecording extends React.Component {
           <Button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
           </Button>
-          <Button
-            id="startArchive"
-            type="button"
-            onClick={this.startArchive}
-            primary
-          >
-            Start Recording
-          </Button>
+
+          <Form onSubmit={this.startArchive}>
+            <label>Name of Recording</label>
+            <input
+              placeholder="Recording Name"
+              type="text"
+              name="recordingName"
+            />
+
+            <Button
+              id="startArchive"
+              type="submit"
+              // onClick={this.startArchive}
+              primary
+            >
+              Start Recording
+            </Button>
+          </Form>
+
           <Button
             id="stopArchive"
             type="button"
@@ -173,7 +190,8 @@ const mapDispatchToProps = dispatch => {
     getSession: () => {
       dispatch(getSession())
     },
-    getArchiveId: archiveId => dispatch(getArchiveId(archiveId)),
+    getArchiveId: (archiveId, recordingName) =>
+      dispatch(getArchiveId(archiveId, recordingName)),
     stopArchiving: archiveId => dispatch(stopArchiving(archiveId))
   }
 }

@@ -54,13 +54,14 @@ router.get('/', (req, res, next) => {
  * POST /archive/start
  */
 router.post('/archive/start', function(req, res) {
-  const {sessionId, resolution, outputMode} = req.body
+  const {name, sessionId, resolution, outputMode} = req.body
   console.log(
     '<===================================== testing start archive route =====================================>'
   )
+  console.log('ALDJLKAJFDSJAKLFJADJFASL', req.body)
   opentok.startArchive(
     sessionId,
-    {name: 'Important Presentation', resolution, outputMode},
+    {name, resolution, outputMode},
     (err, archive) => {
       if (err) {
         console.error('error in startArchive')
