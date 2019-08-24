@@ -12,7 +12,6 @@ if (
 
 const {Storage} = require('@google-cloud/storage')
 const storage = new Storage(googCredentials)
-const gclient = new speech.SpeechClient(googCredentials)
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
@@ -37,6 +36,7 @@ function store(bucketId, filename) {
  */
 function transcribeAudio(googFilename) {
   try {
+    const gclient = new speech.SpeechClient(googCredentials)
     console.log('Here are the', googCredentials)
     return gclient
       .recognize({
@@ -65,7 +65,8 @@ function transcribeAudio(googFilename) {
       })
       .catch(err => {
         console.log('This is googFileName', googFilename)
-        console.log(`Error transcribing audio. Reason: ${err}`)
+        // ERROR HERE, ERROR HERE, ERROR HERE, ERROR HERE, ERROR HERE
+        console.log('Error transcribing audio. Reason:' + err)
       })
   } catch (error) {
     console.error(error)
