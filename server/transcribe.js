@@ -2,6 +2,17 @@ const speech = require('@google-cloud/speech')
 const {google} = require('googleapis')
 const {Storage} = require('@google-cloud/storage')
 
+let googCredentials
+
+if (
+  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON &&
+  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON.length > 1
+) {
+  googCredentials = {
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+  }
+}
+
 // Instantiates a client. If you don't specify credentials when constructing
 // the client, the client library will look for credentials in the
 // environment.
@@ -21,17 +32,6 @@ storage
   .catch(err => {
     console.error('ERROR:', err)
   })
-
-let googCredentials
-
-if (
-  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON &&
-  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON.length > 1
-) {
-  googCredentials = {
-    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-  }
-}
 
 // const {Storage} = require('@google-cloud/storage')
 // const storage = new Storage(googCredentials)
