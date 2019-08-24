@@ -16,7 +16,7 @@ if (
 // Instantiates a client. If you don't specify credentials when constructing
 // the client, the client library will look for credentials in the
 // environment.
-const storage = new Storage(process.env.GOOGLE_CLOUD_PROJECT, googCredentials)
+const storage = new Storage(process.env.GOOGLE_CLOUD_PROJECT)
 
 // Makes an authenticated API request.
 storage
