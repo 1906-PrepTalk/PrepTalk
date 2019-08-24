@@ -6,6 +6,8 @@ import axios from 'axios'
 //   sessionId: ''
 // }
 
+// RECORD AND STOP ARCHIVING BUTTONS
+
 const GOT_ARCHIVE_ID = 'GOT_ARCHIVE_ID'
 const STOP_ARCHIVING = 'STOP_ARCHIVING'
 

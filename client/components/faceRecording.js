@@ -156,14 +156,14 @@ class FaceRecording extends React.Component {
             Stop Recording
           </Button>
           <OTPublisher
-            properties={{publishVideo, width: 850, height: 850}}
+            properties={{publishVideo, width: 1280, height: 720}}
             onPublish={this.onPublish}
             onError={this.onPublishError}
             eventHandlers={this.publisherEventHandlers}
           />
           <OTStreams>
             <OTSubscriber
-              properties={{width: 850, height: 850}}
+              properties={{width: 1280, height: 750}}
               onSubscribe={this.onSubscribe}
               onError={this.onSubscribeError}
               eventHandlers={this.subscriberEventHandlers}

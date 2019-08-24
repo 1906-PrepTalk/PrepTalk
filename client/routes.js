@@ -6,6 +6,7 @@ import {Login, LandingPage} from './components'
 import {me} from './store'
 import FaceRecording from './components/faceRecording'
 import MyAccount from './components/MyAccount'
+import faceAnalysis from './components/faceAnalysis'
 /**
  * COMPONENT
  */
@@ -30,6 +31,7 @@ class Routes extends Component {
               render={() => <FaceRecording {...this.props} />}
             />
             <Route path="/myAccount" component={MyAccount} />
+            <Route path="/faceAnalysis" component={faceAnalysis} />
             <Route path="/" component={LandingPage} />
           </Switch>
         )}
