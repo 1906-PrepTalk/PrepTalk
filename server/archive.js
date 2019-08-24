@@ -339,14 +339,29 @@ class Archive {
    */
   async processComposedOutput(metadata) {
     const archiveId = metadata.id
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 10 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const vidStream = this.downloadArchiveFromS3(archiveId, false)
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 11 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const uploadFileName = `${this.opentok_project_id}/${archiveId}/archive.wav`
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 12 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const gFilename = `gs://${
       this._conf.GOOGLE_STORAGE_BUCKET
     }/${uploadFileName}`
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 13 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const wr = transcribe.store(
       this._conf.GOOGLE_STORAGE_BUCKET,
       uploadFileName
+    )
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 14 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
     )
     wr.on('finish', () => {
       transcribe

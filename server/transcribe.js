@@ -85,27 +85,36 @@ function store(bucketId, filename) {
 
 const transcribeAudio = async googFilename => {
   try {
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const gclient = new speech.SpeechClient(googCredentials)
-
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const config = {
       encoding: 'LINEAR16',
       languageCode: 'en-US'
     }
-
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const audio = {
       uri: googFilename
     }
-
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 4 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     const request = {
       config: config,
       audio: audio
     }
-
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 5 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
     // Detects speech in the audio file
     const [response] = await gclient.recognize(request)
-    console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    )
+
     console.log('response', response)
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
