@@ -1,5 +1,27 @@
 const speech = require('@google-cloud/speech')
 const {google} = require('googleapis')
+const {Storage} = require('@google-cloud/storage')
+
+// Instantiates a client. If you don't specify credentials when constructing
+// the client, the client library will look for credentials in the
+// environment.
+const storage = new Storage()
+
+// Makes an authenticated API request.
+storage
+  .getBuckets()
+  .then(results => {
+    const buckets = results[0]
+
+    console.log('Buckets:')
+    buckets.forEach(bucket => {
+      console.log(bucket.name)
+    })
+  })
+  .catch(err => {
+    console.error('ERROR:', err)
+  })
+
 let googCredentials
 
 if (
@@ -11,8 +33,8 @@ if (
   }
 }
 
-const {Storage} = require('@google-cloud/storage')
-const storage = new Storage(googCredentials)
+// const {Storage} = require('@google-cloud/storage')
+// const storage = new Storage(googCredentials)
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
@@ -117,16 +139,16 @@ const transcribeAudio = async googFilename => {
     console.error(error)
   }
 }
-;(async () => {
-  const auth = await google.auth.getClient({
-    scopes: ['https://speech.googleapis.com/v1/operations']
-  })
-  const {data} = await google
-    .speech('v1')
-    .operations.get({auth, name: transcribeAudio})
+// ;(async () => {
+//   const auth = await google.auth.getClient({
+//     scopes: ['https://speech.googleapis.com/v1/operations']
+//   })
+//   const {data} = await google
+//     .speech('v1')
+//     .operations.get({auth, name: transcribeAudio})
 
-  console.log(data)
-})()
+//   console.log(data)
+// })()
 
 // export
 module.exports = {
