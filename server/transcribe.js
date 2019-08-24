@@ -40,7 +40,7 @@ function transcribeAudio(googFilename) {
   return gclient
     .recognize({
       config: {
-        encoding: 'FLAC',
+        encoding: 'LINEAR16',
         languageCode: 'en-US'
       },
       audio: {uri: googFilename}
