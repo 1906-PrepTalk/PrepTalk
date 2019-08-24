@@ -103,6 +103,10 @@ const transcribeAudio = async googFilename => {
 
     // Detects speech in the audio file
     const [response] = await gclient.recognize(request)
+    console.log(
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+    )
+    console.log('response', response)
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
       .join('\n')
