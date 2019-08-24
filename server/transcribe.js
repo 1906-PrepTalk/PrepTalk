@@ -1,5 +1,5 @@
 const speech = require('@google-cloud/speech')
-const {google} = require('googleapis')
+// const {google} = require('googleapis')
 const {Storage} = require('@google-cloud/storage')
 
 let googCredentials
@@ -13,28 +13,27 @@ if (
   }
 }
 
-// Instantiates a client. If you don't specify credentials when constructing
-// the client, the client library will look for credentials in the
-// environment.
-const storage = new Storage(process.env.GOOGLE_CLOUD_PROJECT)
+// // Instantiates a client. If you don't specify credentials when constructing
+// // the client, the client library will look for credentials in the
+// // environment.
+// const storage = new Storage(process.env.GOOGLE_CLOUD_PROJECT)
 
-// Makes an authenticated API request.
-storage
-  .getBuckets()
-  .then(results => {
-    const buckets = results[0]
+// // Makes an authenticated API request.
+// storage
+//   .getBuckets()
+//   .then(results => {
+//     const buckets = results[0]
 
-    console.log('Buckets:')
-    buckets.forEach(bucket => {
-      console.log(bucket.name)
-    })
-  })
-  .catch(err => {
-    console.error('ERROR:', err)
-  })
+//     console.log('Buckets:')
+//     buckets.forEach(bucket => {
+//       console.log(bucket.name)
+//     })
+//   })
+//   .catch(err => {
+//     console.error('ERROR:', err)
+//   })
 
-// const {Storage} = require('@google-cloud/storage')
-// const storage = new Storage(googCredentials)
+const storage = new Storage(googCredentials)
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
@@ -107,8 +106,10 @@ function store(bucketId, filename) {
 // }
 
 const transcribeAudio = async googFilename => {
+  console.log('googFilename', googFilename)
   try {
     const gclient = new speech.SpeechClient(googCredentials)
+    console.log('gclient', gclient)
     const config = {
       encoding: 'LINEAR16',
       languageCode: 'en-US'
