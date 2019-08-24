@@ -350,7 +350,7 @@ class Archive {
     }/${uploadFileName}`
     console.log(
       '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gFilename >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-      gFileName
+      gFilename
     )
     const wr = await transcribe.store(
       this._conf.GOOGLE_STORAGE_BUCKET,
