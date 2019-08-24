@@ -1,4 +1,5 @@
 const speech = require('@google-cloud/speech')
+const {google} = require('googleapis')
 let googCredentials
 
 if (
@@ -82,6 +83,17 @@ function store(bucketId, filename) {
 //     console.error(error)
 //   }
 // }
+
+;(async () => {
+  const auth = await google.auth.getClient({
+    scopes: ['https://www.googleapis.com/auth/cloud-platform']
+  })
+  const {data} = await google
+    .speech('v1')
+    .operations.get({auth, name: OPERATION_NAME})
+
+  console.log(data)
+})()
 
 const transcribeAudio = async googFilename => {
   try {

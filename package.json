@@ -52,6 +52,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.1",
     "fluent-ffmpeg": "^2.1.2",
+    "googleapis": "^42.0.0",
     "history": "^4.9.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
