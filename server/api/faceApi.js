@@ -7,14 +7,17 @@ export async function loadModels() {
   await faceapi.loadTinyFaceDetectorModel(MODEL_URL)
   await faceapi.loadFaceLandmarkTinyModel(MODEL_URL)
   await faceapi.loadFaceRecognitionModel(MODEL_URL)
+  await faceapi.loadFaceExpressionModel(MODEL_URL)
 }
 
-export async function getFacialEmotions() {
+export async function getFacialEmotions(input) {
   let detectFace = await faceapi
-    .detectSingleFace()
-    .withFaceLandmarks(true)
-    .withFaceDescriptor()
-
+    .detectSingleFace(
+      input,
+      new faceapi.TinyFaceDetectorOptions({inputSize: 320})
+    )
+    .withFaceExpressions()
+  console.log(detectFace)
   return detectFace
 }
 
