@@ -339,33 +339,32 @@ class Archive {
    */
   async processComposedOutput(metadata) {
     const archiveId = metadata.id
-    console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 10 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    )
     const vidStream = this.downloadArchiveFromS3(archiveId, false)
-    console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 11 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    )
     const uploadFileName = `${this.opentok_project_id}/${archiveId}/archive.wav`
     console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 12 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< UploadFilename >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      uploadFileName
     )
     const gFilename = `gs://${
       this._conf.GOOGLE_STORAGE_BUCKET
     }/${uploadFileName}`
     console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 13 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gFilename >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      gFileName
     )
-    const wr = transcribe.store(
+    const wr = await transcribe.store(
       this._conf.GOOGLE_STORAGE_BUCKET,
       uploadFileName
     )
-    console.log(
-      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Around Here 14 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-    )
+
     wr.on('finish', () => {
       transcribe
         .transcribeAudio(gFilename)
+        .then(() =>
+          console.log(
+            '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Before Here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+          )
+        )
         .then(txt => {
           console.log(`Transcription for archive ${archiveId}:\n${txt}\n`)
           return this.uploadTranscript(txt, archiveId)
