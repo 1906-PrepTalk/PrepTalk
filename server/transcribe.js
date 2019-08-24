@@ -119,7 +119,7 @@ const transcribeAudio = async googFilename => {
 }
 ;(async () => {
   const auth = await google.auth.getClient({
-    scopes: ['https://www.googleapis.com/auth/cloud-platform']
+    scopes: ['https://speech.googleapis.com/v1/operations']
   })
   const {data} = await google
     .speech('v1')
