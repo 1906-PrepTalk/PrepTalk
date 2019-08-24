@@ -36,6 +36,10 @@ function store(bucketId, filename) {
  */
 function transcribeAudio(googFilename) {
   try {
+    console.log(
+      'goooooooooooooooooooooooooooooooooooooooooooooooog',
+      googFilename
+    )
     const gclient = new speech.SpeechClient(googCredentials)
     console.log('Here are the', googCredentials)
     return gclient
@@ -46,7 +50,12 @@ function transcribeAudio(googFilename) {
         },
         audio: {uri: googFilename}
       })
-      .then(() => console.log(this.config.audio))
+      .then(() =>
+        console.log(
+          'config audio=================================',
+          this.config.audio
+        )
+      )
       .then(data => {
         console.log('This is data:', data)
         const res = data[0]
@@ -67,7 +76,7 @@ function transcribeAudio(googFilename) {
       .catch(err => {
         console.log('This is googFileName', googFilename)
         // ERROR HERE, ERROR HERE, ERROR HERE, ERROR HERE, ERROR HERE
-        console.log('Error transcribing audio. Reason:' + err)
+        console.log(`Error transcribing audio. Reason: ${err}`)
       })
   } catch (error) {
     console.error(error)
