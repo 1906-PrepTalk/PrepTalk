@@ -108,7 +108,8 @@ function store(bucketId, filename) {
 const transcribeAudio = async googFilename => {
   console.log('googFilename', googFilename)
   try {
-    const gclient = new speech.SpeechClient(googCredentials)
+    console.log('google credentials', googCredentials)
+    const gclient = new speech.SpeechClient()
     console.log('gclient', gclient)
     const config = {
       encoding: 'LINEAR16',
