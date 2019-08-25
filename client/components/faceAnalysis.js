@@ -28,21 +28,15 @@ class FaceAnalysis extends Component {
     return (
       <div>
         <h2>Review Video Here!</h2>
-        {this.props.archivedVideoUrl ? (
-          <video
-            id="video"
-            controls
-            width="720"
-            onPlay={this.handlePlay}
-            // src={this.props.archivedVideoUrl}
-            src="https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4"
-            type="video/mp4"
-          >
-            {/* <source src={this.props.archivedVideoUrl} type="video/mp4" /> */}
-          </video>
-        ) : (
-          <h1>Loading...</h1>
-        )}
+        <video
+          id="video"
+          controls
+          width="720"
+          onPlay={this.handlePlay}
+          src="https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4"
+          type="video/mp4"
+        />
+        }
       </div>
     )
   }
