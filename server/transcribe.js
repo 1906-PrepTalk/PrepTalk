@@ -140,6 +140,41 @@ const transcribeAudio = async googFilename => {
     console.error(error)
   }
 }
+
+// function transcribeAudio(googFilename) {
+//   console.log('Here are the', googCredentials)
+//   return gclient
+//     .recognize({
+//       config: {
+//         encoding: 'FLAC',
+//         languageCode: 'en-US'
+//       },
+//       audio: {
+//         uri: googFilename
+//       }
+//     })
+//     .then(data => {
+//       console.log('This is data:', data)
+//       const res = data[0]
+//       console.log('This is res:', res)
+//       return res.promise()
+//     })
+//     .then(data => {
+//       const res = data[0]
+//       // const metadata = data[1]
+//       const transcript = res.results
+//         .map(r => {
+//           console.log(r.alternatives)
+//           return r.alternatives[0].transcript.trim()
+//         })
+//         .join('\n')
+//       return transcript
+//     })
+//     .catch(err => {
+//       console.log('This is googFileName', googFilename)
+//       console.log(`Error transcribing audio. Reason: ${err}`)
+//     })
+// }
 // ;(async () => {
 //   const auth = await google.auth.getClient({
 //     scopes: ['https://speech.googleapis.com/v1/operations']
