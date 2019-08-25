@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getArchivedVideo} from '../store/archivedVideo'
+// import {getArchivedVideo} from '../store/archivedVideo'
 import {getFacialEmotions} from '../../server/api/faceApi'
 
 class FaceAnalysis extends Component {
@@ -44,15 +44,15 @@ class FaceAnalysis extends Component {
 
 const mapStateToProps = state => {
   return {
-    archivedVideoUrl: state.archivedVideo,
+    // archivedVideoUrl: state.archivedVideo,
     archiveId: state.archiveId
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId))
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId))
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FaceAnalysis)
+export default connect(mapStateToProps)(FaceAnalysis)
