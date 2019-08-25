@@ -2,8 +2,9 @@ import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
+import {getArchiveId, stopArchiving} from '../store/archiveId'
 import Axios from 'axios'
-import {Button} from 'semantic-ui-react'
+import {Button, Form} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -12,8 +13,7 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true,
-      archiveId: null
+      publishVideo: true
     }
 
     this.sessionEventHandlers = {
@@ -79,29 +79,27 @@ class FaceRecording extends React.Component {
     }))
   }
 
+  // START RECORDING / STOP RECORDING
+
   startArchive = e => {
     e.preventDefault()
-    Axios.post('/api/faceRecording/archive/start', {
-      sessionId: this.props.session.sessionId,
-      resolution: '1280x720',
-      output: 'composed'
-    })
-      .then(res => {
-        this.setState({archiveId: res.data.id})
-      })
-      .then(() => console.log('Recording Started'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.getArchiveId(
+        this.props.session.sessionId,
+        e.target.recordingName.value
+      )
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   stopArchive = e => {
     e.preventDefault()
-    Axios.post(`/api/faceRecording/archive/${this.state.archiveId}/stop`)
-      .then(() => console.log('Recording Stopped'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.stopArchiving(this.props.archiveId)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   componentDidMount() {
@@ -130,14 +128,25 @@ class FaceRecording extends React.Component {
           <Button id="videoButton" onClick={this.toggleVideo} type="button">
             {publishVideo ? 'Disable' : 'Enable'} Video
           </Button>
-          <Button
-            id="startArchive"
-            type="button"
-            onClick={this.startArchive}
-            primary
-          >
-            Start Recording
-          </Button>
+
+          <Form onSubmit={this.startArchive}>
+            <label>Name of Recording</label>
+            <input
+              placeholder="Recording Name"
+              type="text"
+              name="recordingName"
+            />
+
+            <Button
+              id="startArchive"
+              type="submit"
+              // onClick={this.startArchive}
+              primary
+            >
+              Start Recording
+            </Button>
+          </Form>
+
           <Button
             id="stopArchive"
             type="button"
@@ -147,14 +156,14 @@ class FaceRecording extends React.Component {
             Stop Recording
           </Button>
           <OTPublisher
-            properties={{publishVideo, width: 850, height: 850}}
+            properties={{publishVideo, width: 1280, height: 720}}
             onPublish={this.onPublish}
             onError={this.onPublishError}
             eventHandlers={this.publisherEventHandlers}
           />
           <OTStreams>
             <OTSubscriber
-              properties={{width: 850, height: 850}}
+              properties={{width: 1280, height: 750}}
               onSubscribe={this.onSubscribe}
               onError={this.onSubscribeError}
               eventHandlers={this.subscriberEventHandlers}
@@ -170,7 +179,8 @@ class FaceRecording extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
+    archiveId: state.archiveId
   }
 }
 
@@ -178,7 +188,10 @@ const mapDispatchToProps = dispatch => {
   return {
     getSession: () => {
       dispatch(getSession())
-    }
+    },
+    getArchiveId: (archiveId, recordingName) =>
+      dispatch(getArchiveId(archiveId, recordingName)),
+    stopArchiving: archiveId => dispatch(stopArchiving(archiveId))
   }
 }
 

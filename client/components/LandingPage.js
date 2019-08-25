@@ -8,7 +8,6 @@ import {Button} from 'semantic-ui-react'
  */
 export const LandingPage = props => {
   const {email} = props
-  console.log(email)
   return (
     <div id="landing-page">
       {email ? (
