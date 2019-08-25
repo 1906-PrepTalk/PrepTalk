@@ -3,6 +3,12 @@ const router = require('express').Router()
 // const _ = require('lodash')
 const path = require('path')
 const opentok = require('./opentokInstance')
+const AWS = require('aws-sdk')
+const s3 = new AWS.S3({
+  params: {
+    Bucket: 'preptalk2'
+  }
+})
 
 const API_KEY = process.env.OPENTOK_API_KEY
 const SECRET = process.env.OPENTOK_SECRET
@@ -30,6 +36,8 @@ if (!API_KEY || !SECRET) {
 
 // const OpenTok = require('opentok')
 // const opentok = new OpenTok(API_KEY, SECRET)
+
+// AWS S3 get route
 
 router.get('/', (req, res, next) => {
   let sessionId
