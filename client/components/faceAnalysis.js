@@ -15,9 +15,9 @@ class FaceAnalysis extends Component {
     this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
   }
 
-  async componentWillMount() {
-    await loadModels()
-  }
+  // async componentWillMount() {
+  //   await loadModels()
+  // }
 
   handlePlay(event) {
     //   console.log(event.target.currentSrc)
@@ -30,6 +30,7 @@ class FaceAnalysis extends Component {
         <h2>Review Video Here!</h2>
         {this.props.archivedVideoUrl ? (
           <video
+            id="video"
             controls
             width="720"
             onPlay={this.handlePlay}
