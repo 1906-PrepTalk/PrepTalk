@@ -34,33 +34,30 @@ if (!API_KEY || !SECRET) {
 
 // AWS S3 get route
 
-// router.get('/:filename', (req, res, next) => {
+// router.get('/archive/:archiveId/view', (req, res, next) => {
 //   try {
-//     const s3 = new aws.S3({
-//       params: {
-//         Bucket: 'preptalk2'
-//       }
-//     })
+//     const filename = req.params.archiveId
+//     const s3 = new aws.S3()
 //     aws.config.region = 'us-east-1'
 //     aws.config.credentials = {
 //       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 //       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 //     }
-//     const filename = req.params.filename
-//     s3.getSignedUrl(
-//       'getObject',
-//       {Bucket: 'preptalk2', Key: filename, expires: 3600},
-//       function(error, url) {
-//         if (error || !url) {
-//           res.status(500).end()
+//     const options = {
+//       Bucket: 'preptalk2',
+//       Key: filename,
+//       expires: 120
+//     }
+//     s3
+//       .getSignedUrl('getObject', options, function(err, url) {
+//         if (err) {
+//           console.log(err, err.stack)
 //         } else {
-//           request({
-//             url:
-//               'https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4'
-//           }).pipe(res)
+//           console.log('The URL is ', url)
 //         }
-//       }
-//     )
+//       })
+//       .createReadStream()
+//       .pipe(res)
 //   } catch (error) {
 //     console.error(error)
 //   }
@@ -147,9 +144,8 @@ router.get('/archive/:archiveId/view', function(req, res) {
     }
 
     if (archive.status === 'available') {
-      res.send(
-        'https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4'
-      )
+      res.setHeader('Content-Type', 'application/json')
+      res.send(archive.url)
       // res.redirect(archive.url)
     } else {
       res.render('view', {title: 'Archiving Pending'})
