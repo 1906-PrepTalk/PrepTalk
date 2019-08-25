@@ -33,7 +33,7 @@ class FaceAnalysis extends Component {
           controls
           width="720"
           onPlay={this.handlePlay}
-          src="https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4"
+          src={this.props.archivedVideoUrl}
           type="video/mp4"
         />
         }
@@ -44,8 +44,7 @@ class FaceAnalysis extends Component {
 
 const mapStateToProps = state => {
   return {
-    archivedVideoUrl:
-      'https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4',
+    archivedVideoUrl: state.archivedVideo,
     archiveId: state.archiveId
   }
 }

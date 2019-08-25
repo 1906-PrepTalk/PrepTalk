@@ -147,7 +147,9 @@ router.get('/archive/:archiveId/view', function(req, res) {
     }
 
     if (archive.status === 'available') {
-      res.send(archive.url)
+      res.send(
+        'https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4'
+      )
       // res.redirect(archive.url)
     } else {
       res.render('view', {title: 'Archiving Pending'})
