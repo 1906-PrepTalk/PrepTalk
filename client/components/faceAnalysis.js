@@ -12,6 +12,7 @@ class FaceAnalysis extends Component {
 
   componentDidMount() {
     // this.props.getArchivedVideo(this.props.archiveId)
+    // this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
     this.props.getArchivedVideo('faceapitest')
   }
 
@@ -35,6 +36,7 @@ class FaceAnalysis extends Component {
           onPlay={this.handlePlay}
           src={this.props.archivedVideoUrl}
           type="video/mp4"
+          crossOrigin="anonymous"
         />
         }
       </div>
