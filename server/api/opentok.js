@@ -108,25 +108,25 @@ router.post('/archive/:archiveId/stop', function(req, res) {
 /**
  * GET /archive/:archiveId/view
  */
-router.get('/archive/:archiveId/view', function(req, res) {
-  var archiveId = req.params.archiveId
-  console.log('attempting to view archive: ' + archiveId)
-  opentok.getArchive(archiveId, function(err, archive) {
-    if (err) {
-      console.error('error in getArchive')
-      console.error(err)
-      res.status(500).send({error: 'getArchive error:' + err})
-      return
-    }
+// router.get('/archive/:archiveId/view', function(req, res) {
+//   var archiveId = req.params.archiveId
+//   console.log('attempting to view archive: ' + archiveId)
+//   opentok.getArchive(archiveId, function(err, archive) {
+//     if (err) {
+//       console.error('error in getArchive')
+//       console.error(err)
+//       res.status(500).send({error: 'getArchive error:' + err})
+//       return
+//     }
 
-    if (archive.status === 'available') {
-      res.send(archive.url)
-      // res.redirect(archive.url)
-    } else {
-      res.render('view', {title: 'Archiving Pending'})
-    }
-  })
-})
+//     if (archive.status === 'available') {
+//       res.send(archive.url)
+//       // res.redirect(archive.url)
+//     } else {
+//       res.render('view', {title: 'Archiving Pending'})
+//     }
+//   })
+// })
 
 /**
  * GET /archive/:archiveId
