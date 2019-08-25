@@ -38,7 +38,6 @@ class FaceAnalysis extends Component {
           type="video/mp4"
           crossOrigin="anonymous"
         />
-        }
       </div>
     )
   }

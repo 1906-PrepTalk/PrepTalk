@@ -55,6 +55,7 @@ router.get('/archive/:archiveId/view', (req, res, next) => {
         console.log(err, err.stack)
       } else {
         console.log('The URL is ', url)
+        res.set('Content-Type', 'video/mp4')
         res.send(url)
       }
     })

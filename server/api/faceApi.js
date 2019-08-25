@@ -18,6 +18,9 @@ export async function getFacialEmotions(input) {
     )
     .withFaceExpressions()
   console.log(detectFace)
+  console.log(
+    '<========================================= finished ===========================================>'
+  )
   return detectFace
 }
 
