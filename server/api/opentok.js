@@ -54,14 +54,14 @@ router.get('/', (req, res, next) => {
  * POST /archive/start
  */
 router.post('/archive/start', function(req, res) {
-  const {sessionId, resolution, outputMode} = req.body
+  const {name, sessionId, resolution, outputMode} = req.body
   console.log(
     '<===================================== testing start archive route =====================================>'
   )
   console.log('HEROKU TEST')
   opentok.startArchive(
     sessionId,
-    {name: 'Important Presentation', resolution, outputMode},
+    {name, resolution, outputMode},
     (err, archive) => {
       if (err) {
         console.error('error in startArchive')
@@ -112,7 +112,8 @@ router.get('/archive/:archiveId/view', function(req, res) {
     }
 
     if (archive.status === 'available') {
-      res.redirect(archive.url)
+      res.send(archive.url)
+      // res.redirect(archive.url)
     } else {
       res.render('view', {title: 'Archiving Pending'})
     }

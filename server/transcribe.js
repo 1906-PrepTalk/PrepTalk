@@ -43,7 +43,9 @@ function transcribeAudio(googFilename) {
         encoding: 'FLAC',
         languageCode: 'en-US'
       },
-      audio: {uri: googFilename}
+      audio: {
+        uri: googFilename
+      }
     })
     .then(data => {
       console.log('This is data:', data)
