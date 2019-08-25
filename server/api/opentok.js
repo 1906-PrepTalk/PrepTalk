@@ -3,12 +3,7 @@ const router = require('express').Router()
 // const _ = require('lodash')
 const path = require('path')
 const opentok = require('./opentokInstance')
-const AWS = require('aws-sdk')
-const s3 = new AWS.S3({
-  params: {
-    Bucket: 'preptalk2'
-  }
-})
+const aws = require('aws-sdk')
 
 const API_KEY = process.env.OPENTOK_API_KEY
 const SECRET = process.env.OPENTOK_SECRET
@@ -38,6 +33,38 @@ if (!API_KEY || !SECRET) {
 // const opentok = new OpenTok(API_KEY, SECRET)
 
 // AWS S3 get route
+
+// router.get('/:filename', (req, res, next) => {
+//   try {
+//     const s3 = new aws.S3({
+//       params: {
+//         Bucket: 'preptalk2'
+//       }
+//     })
+//     aws.config.region = 'us-east-1'
+//     aws.config.credentials = {
+//       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//     }
+//     const filename = req.params.filename
+//     s3.getSignedUrl(
+//       'getObject',
+//       {Bucket: 'preptalk2', Key: filename, expires: 3600},
+//       function(error, url) {
+//         if (error || !url) {
+//           res.status(500).end()
+//         } else {
+//           request({
+//             url:
+//               'https://preptalk2.s3.amazonaws.com/46407582/faceapitest/faceapitest.mp4'
+//           }).pipe(res)
+//         }
+//       }
+//     )
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
 
 router.get('/', (req, res, next) => {
   let sessionId
@@ -108,25 +135,25 @@ router.post('/archive/:archiveId/stop', function(req, res) {
 /**
  * GET /archive/:archiveId/view
  */
-// router.get('/archive/:archiveId/view', function(req, res) {
-//   var archiveId = req.params.archiveId
-//   console.log('attempting to view archive: ' + archiveId)
-//   opentok.getArchive(archiveId, function(err, archive) {
-//     if (err) {
-//       console.error('error in getArchive')
-//       console.error(err)
-//       res.status(500).send({error: 'getArchive error:' + err})
-//       return
-//     }
+router.get('/archive/:archiveId/view', function(req, res) {
+  var archiveId = req.params.archiveId
+  console.log('attempting to view archive: ' + archiveId)
+  opentok.getArchive(archiveId, function(err, archive) {
+    if (err) {
+      console.error('error in getArchive')
+      console.error(err)
+      res.status(500).send({error: 'getArchive error:' + err})
+      return
+    }
 
-//     if (archive.status === 'available') {
-//       res.send(archive.url)
-//       // res.redirect(archive.url)
-//     } else {
-//       res.render('view', {title: 'Archiving Pending'})
-//     }
-//   })
-// })
+    if (archive.status === 'available') {
+      res.send(archive.url)
+      // res.redirect(archive.url)
+    } else {
+      res.render('view', {title: 'Archiving Pending'})
+    }
+  })
+})
 
 /**
  * GET /archive/:archiveId

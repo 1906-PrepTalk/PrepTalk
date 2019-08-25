@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import {getArchivedVideo} from '../store/archivedVideo'
+import {getArchivedVideo} from '../store/archivedVideo'
 import {getFacialEmotions} from '../../server/api/faceApi'
 
 class FaceAnalysis extends Component {
@@ -10,10 +10,10 @@ class FaceAnalysis extends Component {
     this.handlePlay = this.handlePlay.bind(this)
   }
 
-  // componentDidMount() {
-  //   // this.props.getArchivedVideo(this.props.archiveId)
-  //   this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
-  // }
+  componentDidMount() {
+    // this.props.getArchivedVideo(this.props.archiveId)
+    this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
+  }
 
   // async componentWillMount() {
   //   await loadModels()
@@ -49,10 +49,10 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId))
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId))
+  }
+}
 
-export default connect(mapStateToProps)(FaceAnalysis)
+export default connect(mapStateToProps, mapDispatchToProps)(FaceAnalysis)
