@@ -3,14 +3,14 @@ import * as faceapi from 'face-api.js'
 // Face API Recognition
 
 export async function loadModels() {
-  const MODEL_URL = '../../models'
-  await faceapi.loadTinyFaceDetectorModel(MODEL_URL)
-  await faceapi.loadFaceLandmarkTinyModel(MODEL_URL)
-  await faceapi.loadFaceRecognitionModel(MODEL_URL)
-  await faceapi.loadFaceExpressionModel(MODEL_URL)
+  await faceapi.nets.tinyFaceDetector.loadFromUri('/models')
+  await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
+  await faceapi.nets.faceRecognitionNet.loadFromUri('/models')
+  await faceapi.nets.faceExpressionNet.loadFromUri('/models')
 }
 
 export async function getFacialEmotions(input) {
+  await loadModels()
   let detectFace = await faceapi
     .detectSingleFace(
       input,
