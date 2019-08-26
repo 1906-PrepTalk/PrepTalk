@@ -142,44 +142,45 @@ class FaceRecording extends React.Component {
               <Button id="startArchive" type="submit" primary>
                 Start Recording
               </Button>
+
+              {this.state.stoppedArchiving ? (
+                <Button
+                  as={Link}
+                  to="/faceAnalysis"
+                  id="viewArchive"
+                  type="button"
+                  color="green"
+                >
+                  See your video!
+                </Button>
+              ) : (
+                <Button
+                  id="stopArchive"
+                  type="button"
+                  onClick={this.stopArchive}
+                  secondary
+                >
+                  Stop Recording
+                </Button>
+              )}
             </Form>
-
-            {this.state.stoppedArchiving ? (
-              <Button
-                as={Link}
-                to="/faceAnalysis"
-                id="viewArchive"
-                type="button"
-                color="green"
-              >
-                See your video!
-              </Button>
-            ) : (
-              <Button
-                id="stopArchive"
-                type="button"
-                onClick={this.stopArchive}
-                secondary
-              >
-                Stop Recording
-              </Button>
-            )}
           </div>
-
-          <OTPublisher
-            properties={{publishVideo, width: 1280, height: 720}}
-            onPublish={this.onPublish}
-            onError={this.onPublishError}
-            eventHandlers={this.publisherEventHandlers}
-          />
-          <OTStreams>
-            <OTSubscriber
-              properties={{width: 1280, height: 750}}
-              onSubscribe={this.onSubscribe}
-              onError={this.onSubscribeError}
-              eventHandlers={this.subscriberEventHandlers}
+          <div>
+            <OTPublisher
+              properties={{publishVideo, width: 800, height: 550}}
+              onPublish={this.onPublish}
+              onError={this.onPublishError}
+              eventHandlers={this.publisherEventHandlers}
             />
-          </OTStreams>
+            <OTStreams>
+              <OTSubscriber
+                properties={{width: 800, height: 550}}
+                onSubscribe={this.onSubscribe}
+                onError={this.onSubscribeError}
+                eventHandlers={this.subscriberEventHandlers}
+              />
+            </OTStreams>
+          </div>
         </OTSession>
       </div>
     ) : (

@@ -7,26 +7,6 @@ import {Button, Step, Icon} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
-const steps = [
-  {
-    key: 'signup',
-    icon: 'user',
-    title: 'Sign Up',
-    description: 'Register for account or login if you have one'
-  },
-  {
-    key: 'recordself',
-    icon: 'video camera',
-    title: 'Record Yourself',
-    description: 'Assess your speaking ability with our recording software'
-  },
-  {
-    key: 'confirm',
-    icon: 'clipboard list',
-    title: 'Facial Analysis',
-    description: 'Get a facial analysis on your most frequent expressions'
-  }
-]
 
 export const LandingPage = props => {
   const {email} = props
@@ -45,13 +25,13 @@ export const LandingPage = props => {
           </Button>
         </div>
       )}
-      <Step.Group widths={3} className="steps">
+      <Step.Group widths={4} className="steps">
         <Step>
           <Icon name="user" />
           <Step.Content>
             <Step.Title>Sign Up</Step.Title>
             <Step.Description>
-              Register for account or login if you have one
+              Register for account or login if you have one.
             </Step.Description>
           </Step.Content>
         </Step>
@@ -61,7 +41,18 @@ export const LandingPage = props => {
           <Step.Content>
             <Step.Title>Record Yourself</Step.Title>
             <Step.Description>
-              Assess your speaking ability with our recording software
+              Assess your speaking ability with our recording software.
+            </Step.Description>
+          </Step.Content>
+        </Step>
+
+        <Step>
+          <Icon name="comment" />
+          <Step.Content>
+            <Step.Title>Interview Questions</Step.Title>
+
+            <Step.Description>
+              Answer some common interview questions to gauge your nerves.
             </Step.Description>
           </Step.Content>
         </Step>
@@ -72,7 +63,7 @@ export const LandingPage = props => {
             <Step.Title>Facial Analysis</Step.Title>
 
             <Step.Description>
-              Get a facial analysis on your most frequent expressions
+              Get a facial analysis on your most frequent expressions.
             </Step.Description>
           </Step.Content>
         </Step>

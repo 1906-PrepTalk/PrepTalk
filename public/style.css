@@ -5,8 +5,9 @@ body {
 
 #landing-page {
   height: 800px;
-  background: url('./serveimage.png');
+  background: url('./Meeting1.png');
   background-size: cover;
+  color: white;
   padding-top: 25%;
 }
 
@@ -14,15 +15,16 @@ body {
   display: flex;
   justify-content: center;
   height: 800px;
-  background: url('./handshake.jpeg');
+  background: url('./meeting2.jpg');
   background-size: cover;
-  padding: 23%;
+  padding: 30%;
 }
 
 .title-screen {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 200px;
 }
 
 .startStopRecording {
@@ -38,7 +40,7 @@ body {
 }
 
 .navBar {
-  background-color: lightslategray;
+  background-color: #ebeee0;
 }
 
 #facialAnalysis {
@@ -47,4 +49,11 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 40px;
+}
+
+.logo {
+  display: block;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
