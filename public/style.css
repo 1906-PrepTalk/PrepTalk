@@ -1,22 +1,59 @@
 body {
   font-family: sans-serif;
-  height: 100%;
+  padding: 0px;
 }
 
 #landing-page {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 15%;
+  height: 800px;
+  background: url('./Meeting1.png');
+  background-size: cover;
+  color: white;
+  padding-top: 25%;
 }
 
 #login-signup-form {
-  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  height: 800px;
+  background: url('./meeting2.jpg');
+  background-size: cover;
+  padding: 30%;
 }
 
-#title-screen {
-  height: 100%;
+.title-screen {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 200px;
+}
+
+.startStopRecording {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.LoginGoogleButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navBar {
+  background-color: #ebeee0;
+}
+
+#facialAnalysis {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+.logo {
+  display: block;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }

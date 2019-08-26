@@ -3,8 +3,11 @@ import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
-import {Button, Form} from 'semantic-ui-react'
 import {postVideo} from '../store/video'
+import {Link} from 'react-router-dom'
+import {Button, Form} from 'semantic-ui-react'
+import Questions from './questions'
+import {getQuestion} from '../store/questionStore'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -13,7 +16,8 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true
+      publishVideo: true,
+      stoppedArchiving: false
     }
 
     this.sessionEventHandlers = {
@@ -93,6 +97,7 @@ class FaceRecording extends React.Component {
     e.preventDefault()
     this.props.stopArchiving(this.props.archiveId)
     this.props.postVideo(this.props.user.id, this.props.archiveId)
+    this.setState({stoppedArchiving: true})
   }
 
   componentDidMount() {
@@ -102,7 +107,6 @@ class FaceRecording extends React.Component {
   render() {
     const {apiKey, sessionId, token} = this.props.session
     const {error, connection, publishVideo} = this.state
-
     return Object.keys(this.props.session).length !== 0 ? (
       <div>
         <div id="sessionStatus">Session Status: {connection}</div>
@@ -122,47 +126,62 @@ class FaceRecording extends React.Component {
             {publishVideo ? 'Disable' : 'Enable'} Video
           </Button>
 
-          <Form onSubmit={this.startArchive}>
-            <label>Name of Recording</label>
-            <input
-              placeholder="Recording Name"
-              type="text"
-              name="recordingName"
-            />
+          <div className="startStopRecording">
+            <Form onSubmit={this.startArchive}>
+              <label>Name of Recording</label>
+              <input
+                placeholder="Recording Name"
+                type="text"
+                name="recordingName"
+              />
 
-            <Button
-              id="startArchive"
-              type="submit"
-              // onClick={this.startArchive}
-              primary
-            >
-              Start Recording
-            </Button>
-          </Form>
+              <Button id="startArchive" type="submit" primary>
+                Start Recording
+              </Button>
 
-          <Button
-            id="stopArchive"
-            type="button"
-            onClick={this.stopArchive}
-            secondary
-          >
-            Stop Recording
-          </Button>
-          <OTPublisher
-            properties={{publishVideo, width: 1280, height: 720}}
-            onPublish={this.onPublish}
-            onError={this.onPublishError}
-            eventHandlers={this.publisherEventHandlers}
-          />
-          <OTStreams>
-            <OTSubscriber
-              properties={{width: 1280, height: 750}}
-              onSubscribe={this.onSubscribe}
-              onError={this.onSubscribeError}
-              eventHandlers={this.subscriberEventHandlers}
+              {this.state.stoppedArchiving ? (
+                <Button
+                  as={Link}
+                  to="/faceAnalysis"
+                  id="viewArchive"
+                  type="button"
+                  color="green"
+                >
+                  See your video!
+                </Button>
+              ) : (
+                <Button
+                  id="stopArchive"
+                  type="button"
+                  onClick={this.stopArchive}
+                  secondary
+                >
+                  Stop Recording
+                </Button>
+              )}
+            </Form>
+          </div>
+          <div>
+            <OTPublisher
+              properties={{publishVideo, width: 800, height: 550}}
+              onPublish={this.onPublish}
+              onError={this.onPublishError}
+              eventHandlers={this.publisherEventHandlers}
             />
-          </OTStreams>
+            <OTStreams>
+              <OTSubscriber
+                properties={{width: 800, height: 550}}
+                onSubscribe={this.onSubscribe}
+                onError={this.onSubscribeError}
+                eventHandlers={this.subscriberEventHandlers}
+              />
+            </OTStreams>
+          </div>
         </OTSession>
+        <Questions
+          questions={this.props.questions}
+          getQuestions={this.props.getQuestions}
+        />
       </div>
     ) : (
       <h1 className="text-center">Loading...</h1>
@@ -174,7 +193,8 @@ const mapStateToProps = state => {
   return {
     session: state.session,
     archiveId: state.archiveId,
-    user: state.user
+    user: state.user,
+    questions: state.questions
   }
 }
 
@@ -186,7 +206,8 @@ const mapDispatchToProps = dispatch => {
     getArchiveId: (archiveId, recordingName) =>
       dispatch(getArchiveId(archiveId, recordingName)),
     stopArchiving: archiveId => dispatch(stopArchiving(archiveId)),
-    postVideo: (userId, archiveId) => dispatch(postVideo(userId, archiveId))
+    postVideo: (userId, archiveId) => dispatch(postVideo(userId, archiveId)),
+    getQuestions: () => dispatch(getQuestion())
   }
 }
 
