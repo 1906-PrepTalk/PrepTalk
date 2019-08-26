@@ -3,7 +3,6 @@ import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
-import Axios from 'axios'
 import {Button, Form} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
@@ -83,23 +82,16 @@ class FaceRecording extends React.Component {
 
   startArchive = e => {
     e.preventDefault()
-    try {
-      this.props.getArchiveId(
-        this.props.session.sessionId,
-        e.target.recordingName.value
-      )
-    } catch (err) {
-      console.log(err)
-    }
+    this.props.getArchiveId(
+      this.props.session.sessionId,
+      e.target.recordingName.value
+    )
   }
 
   stopArchive = e => {
     e.preventDefault()
-    try {
-      this.props.stopArchiving(this.props.archiveId)
-    } catch (err) {
-      console.log(err)
-    }
+    this.props.stopArchiving(this.props.archiveId)
+    this.props.postVideo(this.props.archiveId)
   }
 
   componentDidMount() {
@@ -140,7 +132,7 @@ class FaceRecording extends React.Component {
             <Button
               id="startArchive"
               type="submit"
-              // onClick={this.startArchive}
+              onClick={this.startArchive}
               primary
             >
               Start Recording

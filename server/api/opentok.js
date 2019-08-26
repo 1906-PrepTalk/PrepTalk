@@ -35,7 +35,6 @@ if (!API_KEY || !SECRET) {
 // AWS S3 get route
 
 router.get('/archive/:archiveId/view', (req, res, next) => {
-  console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
   try {
     aws.config.region = 'us-east-1'
     aws.config.credentials = {
@@ -43,7 +42,6 @@ router.get('/archive/:archiveId/view', (req, res, next) => {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     }
     const filename = req.params.archiveId
-    console.log('filename', filename)
     const s3 = new aws.S3()
 
     const options = {
@@ -127,7 +125,6 @@ router.post('/archive/start', function(req, res) {
   console.log(
     '<===================================== testing start archive route =====================================>'
   )
-  console.log('HEROKU TEST')
   opentok.startArchive(
     sessionId,
     {name, resolution, outputMode},

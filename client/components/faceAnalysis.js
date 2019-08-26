@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getArchivedVideo} from '../store/archivedVideo'
+import {getArchivedVideo} from '../store/video'
 import {getFacialEmotions} from '../../server/api/faceApi'
+import {postFaceData} from '../store/face'
+import FacialDataReport from './FacialDataReport'
 
 class FaceAnalysis extends Component {
   constructor() {
@@ -11,18 +13,12 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
-    // this.props.getArchivedVideo(this.props.archiveId)
-    // this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
-    this.props.getArchivedVideo('faceapitest')
+    this.props.getArchivedVideo(this.props.archiveId)
   }
 
-  // async componentWillMount() {
-  //   await loadModels()
-  // }
-
-  handlePlay(event) {
-    //   console.log(event.target.currentSrc)
-    getFacialEmotions(event.target)
+  handlePlay = async event => {
+    const faceData = await getFacialEmotions(event.target)
+    this.props.postFaceData(this.props.archiveId, faceData.expressions)
   }
 
   render() {
@@ -38,6 +34,7 @@ class FaceAnalysis extends Component {
           type="video/mp4"
           crossOrigin="anonymous"
         />
+        <FacialDataReport />
       </div>
     )
   }
@@ -52,7 +49,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId))
+    getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId)),
+    postFaceData: (archiveId, expressions) =>
+      dispatch(postFaceData(archiveId, expressions))
   }
 }
 

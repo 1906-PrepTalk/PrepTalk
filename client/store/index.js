@@ -5,9 +5,16 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import session from './session'
 import archiveId from './archiveId'
-import archivedVideo from './archivedVideo'
+import videoReducer from './video'
+import faceDataReducer from './face'
 
-const reducer = combineReducers({user, session, archiveId, archivedVideo})
+const reducer = combineReducers({
+  user,
+  session,
+  archiveId,
+  videoReducer,
+  faceDataReducer
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
