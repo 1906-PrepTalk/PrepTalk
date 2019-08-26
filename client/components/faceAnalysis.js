@@ -27,8 +27,8 @@ class FaceAnalysis extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Review Video Here!</h2>
+      <div id="facialAnalysis">
+        <h2>Facial Analysis Results</h2>
         <video
           id="video"
           controls

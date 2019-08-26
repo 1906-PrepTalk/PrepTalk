@@ -3,7 +3,7 @@ import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
-import Axios from 'axios'
+import {Link} from 'react-router-dom'
 import {Button, Form} from 'semantic-ui-react'
 
 class FaceRecording extends React.Component {
@@ -13,7 +13,8 @@ class FaceRecording extends React.Component {
     this.state = {
       error: null,
       connection: 'Connecting',
-      publishVideo: true
+      publishVideo: true,
+      stoppedArchiving: false
     }
 
     this.sessionEventHandlers = {
@@ -97,6 +98,7 @@ class FaceRecording extends React.Component {
     e.preventDefault()
     try {
       this.props.stopArchiving(this.props.archiveId)
+      this.setState({stoppedArchiving: true})
     } catch (err) {
       console.log(err)
     }
@@ -109,7 +111,6 @@ class FaceRecording extends React.Component {
   render() {
     const {apiKey, sessionId, token} = this.props.session
     const {error, connection, publishVideo} = this.state
-
     return Object.keys(this.props.session).length !== 0 ? (
       <div>
         <div id="sessionStatus">Session Status: {connection}</div>
@@ -129,32 +130,42 @@ class FaceRecording extends React.Component {
             {publishVideo ? 'Disable' : 'Enable'} Video
           </Button>
 
-          <Form onSubmit={this.startArchive}>
-            <label>Name of Recording</label>
-            <input
-              placeholder="Recording Name"
-              type="text"
-              name="recordingName"
-            />
+          <div className="startStopRecording">
+            <Form onSubmit={this.startArchive}>
+              <label>Name of Recording</label>
+              <input
+                placeholder="Recording Name"
+                type="text"
+                name="recordingName"
+              />
 
-            <Button
-              id="startArchive"
-              type="submit"
-              // onClick={this.startArchive}
-              primary
-            >
-              Start Recording
-            </Button>
-          </Form>
+              <Button id="startArchive" type="submit" primary>
+                Start Recording
+              </Button>
+            </Form>
 
-          <Button
-            id="stopArchive"
-            type="button"
-            onClick={this.stopArchive}
-            secondary
-          >
-            Stop Recording
-          </Button>
+            {this.state.stoppedArchiving ? (
+              <Button
+                as={Link}
+                to="/faceAnalysis"
+                id="viewArchive"
+                type="button"
+                color="green"
+              >
+                See your video!
+              </Button>
+            ) : (
+              <Button
+                id="stopArchive"
+                type="button"
+                onClick={this.stopArchive}
+                secondary
+              >
+                Stop Recording
+              </Button>
+            )}
+          </div>
+
           <OTPublisher
             properties={{publishVideo, width: 1280, height: 720}}
             onPublish={this.onPublish}

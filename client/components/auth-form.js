@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
@@ -17,6 +18,7 @@ const AuthForm = props => {
         <Grid columns={2} relaxed="very" stackable>
           <Grid.Column>
             <Form onSubmit={handleSubmit} name="login">
+              <h2>Login</h2>
               <Form.Input
                 icon="user"
                 iconPosition="left"
@@ -32,13 +34,16 @@ const AuthForm = props => {
                 name="password"
                 type="password"
               />
-              <Button content="Login" primary />
-              <Button content="Login with Google" secondary />
+              <div className="LoginGoogleButtons">
+                <Button content="Login" primary />
+                <Button icon="google" color="red" />
+              </div>
             </Form>
           </Grid.Column>
 
           <Grid.Column verticalAlign="middle">
             <Form onSubmit={handleSubmit} name="signup">
+              <h2>Sign Up</h2>
               <Form.Input
                 icon="user"
                 iconPosition="left"
@@ -55,7 +60,7 @@ const AuthForm = props => {
                 type="password"
               />
 
-              <Button content="Sign up" icon="signup" />
+              <Button content="Sign up" secondary />
             </Form>
           </Grid.Column>
         </Grid>

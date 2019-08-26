@@ -7,7 +7,7 @@ import {logout} from '../store'
 import MenuBar from './MenuBar'
 
 const Navbar = (props, {handleClick, isLoggedIn}) => (
-  <div>
+  <div className="navBar">
     <Link to="/">
       <img src="PrepTalkLogo.png" />
     </Link>
