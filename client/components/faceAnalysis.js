@@ -22,6 +22,7 @@ class FaceAnalysis extends Component {
   }
 
   render() {
+    console.log('this.props.archiveId', this.props.archiveId)
     return (
       <div>
         <h2>Review Video Here!</h2>

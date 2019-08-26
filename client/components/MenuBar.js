@@ -4,7 +4,7 @@ import {Menu, Icon} from 'semantic-ui-react'
 
 const MenuBar = props => {
   return props.isLoggedIn ? (
-    <Menu fluid widths={4}>
+    <Menu fluid widths={5}>
       <Menu.Item as={Link} to="/myAccount" name="myAccount">
         {' '}
         <Icon name="user" />
@@ -24,6 +24,11 @@ const MenuBar = props => {
         {' '}
         <Icon name="video camera" />
         Facial Analysis
+      </Menu.Item>
+      <Menu.Item as={Link} to="/faceRecording/videos" name="recordings">
+        {' '}
+        <Icon name="video camera" />
+        Recordings
       </Menu.Item>
     </Menu>
   ) : (

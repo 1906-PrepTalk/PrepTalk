@@ -7,6 +7,7 @@ import {me} from './store'
 import FaceRecording from './components/faceRecording'
 import MyAccount from './components/MyAccount'
 import faceAnalysis from './components/faceAnalysis'
+import UserVideos from './components/UserVideos'
 /**
  * COMPONENT
  */
@@ -17,6 +18,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    console.log('this.props routes page', this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -27,9 +29,11 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route
+              exact
               path="/faceRecording"
               render={() => <FaceRecording {...this.props} />}
             />
+            <Route path="/faceRecording/videos" component={UserVideos} />
             <Route path="/myAccount" component={MyAccount} />
             <Route path="/faceAnalysis" component={faceAnalysis} />
             <Route path="/" component={LandingPage} />

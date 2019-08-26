@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
 import {Button, Form} from 'semantic-ui-react'
+import {postVideo} from '../store/video'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -91,7 +92,7 @@ class FaceRecording extends React.Component {
   stopArchive = e => {
     e.preventDefault()
     this.props.stopArchiving(this.props.archiveId)
-    this.props.postVideo(this.props.archiveId)
+    this.props.postVideo(this.props.user.id, this.props.archiveId)
   }
 
   componentDidMount() {
@@ -132,7 +133,7 @@ class FaceRecording extends React.Component {
             <Button
               id="startArchive"
               type="submit"
-              onClick={this.startArchive}
+              // onClick={this.startArchive}
               primary
             >
               Start Recording
@@ -172,7 +173,8 @@ class FaceRecording extends React.Component {
 const mapStateToProps = state => {
   return {
     session: state.session,
-    archiveId: state.archiveId
+    archiveId: state.archiveId,
+    user: state.user
   }
 }
 
@@ -183,7 +185,8 @@ const mapDispatchToProps = dispatch => {
     },
     getArchiveId: (archiveId, recordingName) =>
       dispatch(getArchiveId(archiveId, recordingName)),
-    stopArchiving: archiveId => dispatch(stopArchiving(archiveId))
+    stopArchiving: archiveId => dispatch(stopArchiving(archiveId)),
+    postVideo: (userId, archiveId) => dispatch(postVideo(userId, archiveId))
   }
 }
 

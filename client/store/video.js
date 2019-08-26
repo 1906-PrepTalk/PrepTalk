@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 // GETTING ARCHIVED VIDEO
 
@@ -15,17 +16,18 @@ const gotArchivedVideo = videoUrl => {
   }
 }
 
-const postedVideo = videoUrl => {
+const postedVideo = (userId, archiveId) => {
   return {
     type: POSTED_VIDEO,
-    videoUrl
+    userId,
+    archiveId
   }
 }
 
-const gotAllVideos = userId => {
+const gotAllVideos = videos => {
   return {
     type: GOT_ALL_VIDEOS,
-    userId
+    videos
   }
 }
 
@@ -40,10 +42,16 @@ export const getArchivedVideo = archiveId => async dispatch => {
   }
 }
 
-export const postVideo = videoUrl => async dispatch => {
+export const postVideo = (userId, archiveId) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/faceRecording/archive/`, videoUrl)
+    console.log('postVideo thunk archiveId', archiveId, 'userId', userId)
+    const {data} = await axios.post(`/api/faceRecording/archive/`, {
+      userId,
+      archiveId
+    })
+    console.log('postVideo thunk data', data)
     dispatch(postedVideo(data))
+    history.push('/faceRecording/videos')
   } catch (error) {
     console.error(error)
   }
@@ -51,21 +59,23 @@ export const postVideo = videoUrl => async dispatch => {
 
 export const getAllVideos = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/faceRecording/archive/${userId}`)
+    const {data} = await axios.get(`/api/faceRecording/videos/view/${userId}`)
+    console.log('thunk data', data)
     dispatch(gotAllVideos(data))
   } catch (error) {
     console.error(error)
   }
 }
 
-const videoReducer = (state = '', action) => {
+const videoReducer = (state = {}, action) => {
   switch (action.type) {
     case GOT_ARCHIVED_VIDEO:
       return action.videoUrl
     case POSTED_VIDEO:
-      return action.videoUrl
+      return action.archiveId
     case GOT_ALL_VIDEOS:
-      return action.videos
+      console.log('action got all videos', action)
+      return {...state.videos, videos: action.videos}
     default:
       return state
   }
