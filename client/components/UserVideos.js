@@ -8,25 +8,26 @@ class UserVideos extends Component {
   }
 
   componentDidMount() {
-    console.log('user videos---------------------------------', this.props)
     if (this.props.userId) {
       this.props.getAllVideos(this.props.userId)
     }
   }
 
-  selectVideo = videoId => {
-    this.props.history.push(`/faceRecording/videos/${videoId}`)
+  selectVideo = archiveId => {
+    this.props.history.push(`/faceAnalysis/archive/${archiveId}/view`)
   }
 
   render() {
-    console.log('user videos props', this.props)
     return (
       <div>
         {this.props.videos &&
           this.props.videos.map(video => (
             <div key={video.id}>
-              <p>{video.name}</p>
-              <button onClick={() => this.selectVideo(video.id)} type="button">
+              <p>{video.archiveId}</p>
+              <button
+                onClick={() => this.selectVideo(video.archiveId)}
+                type="button"
+              >
                 Select Video
               </button>
             </div>

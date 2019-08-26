@@ -1,5 +1,38 @@
 const router = require('express').Router()
 const {Face} = require('../db/models')
+const aws = require('aws-sdk')
+
+router.get('/archive/:archiveId/view', async (req, res, next) => {
+  try {
+    aws.config.region = 'us-east-1'
+    aws.config.credentials = {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+    const archiveId = req.params.archiveId
+    const s3 = new aws.S3()
+    const video = await Face.findAll({
+      where: {
+        archiveId: archiveId
+      }
+    })
+    const options = {
+      Bucket: 'preptalk2',
+      Key: `46407582/${archiveId}/archive.mp4`
+    }
+    s3.getSignedUrl('getObject', options, function(err, url) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('The URL is ', url)
+        res.set('Content-Type', 'video/mp4')
+        res.send({url, video})
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 router.get('/:videoId', async (req, res, next) => {
   try {
@@ -24,9 +57,13 @@ router.get('/:videoId', async (req, res, next) => {
   }
 })
 
-router.post('/:videoId', async (req, res, next) => {
+router.post('/:archiveId', async (req, res, next) => {
   try {
-    const faceData = await Face.findByPk(req.params.videoId)
+    const faceData = await Face.findOne({
+      where: {
+        archiveId: req.params.archiveId
+      }
+    })
     if (!faceData) {
       const newFaceData = await Face.create({
         angry: req.body.angry,

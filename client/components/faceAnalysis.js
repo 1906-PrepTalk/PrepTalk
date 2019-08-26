@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getArchivedVideo} from '../store/video'
+// import {getArchivedVideo} from '../store/video'
 import {getFacialEmotions} from '../../server/api/faceApi'
-import {postFaceData} from '../store/face'
+import {postFaceData, getArchivedVideo} from '../store/face'
 import FacialDataReport from './FacialDataReport'
 
 class FaceAnalysis extends Component {
@@ -13,7 +13,10 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
-    this.props.getArchivedVideo(this.props.archiveId)
+    const {archiveId} = this.props.match.params
+    console.log('archiveId', archiveId)
+    console.log('this.props', this.props)
+    this.props.getArchivedVideo(archiveId)
   }
 
   handlePlay = async event => {
@@ -22,7 +25,6 @@ class FaceAnalysis extends Component {
   }
 
   render() {
-    console.log('this.props.archiveId', this.props.archiveId)
     return (
       <div>
         <h2>Review Video Here!</h2>
@@ -43,8 +45,9 @@ class FaceAnalysis extends Component {
 
 const mapStateToProps = state => {
   return {
-    archivedVideoUrl: state.archivedVideo,
-    archiveId: state.archiveId
+    archiveId: state.archiveId,
+    videoUrl: state.videoUrl,
+    videoId: state.videoId
   }
 }
 

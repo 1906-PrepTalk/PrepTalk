@@ -4,11 +4,10 @@ import {getFaceData} from '../store/face'
 
 class FacialDataReport extends Component {
   componentDidMount() {
-    this.props.getFaceData('999')
+    this.props.getFaceData(this.props.archiveId)
   }
   render() {
     const {faceData} = this.props
-    console.log(faceData)
     return (
       <div id="face-data">
         <h3>Angry</h3>
@@ -19,6 +18,7 @@ class FacialDataReport extends Component {
 
 const mapStateToProps = state => {
   return {
+    videoId: state.videoId,
     faceData: state.faceData
   }
 }

@@ -18,7 +18,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-    console.log('this.props routes page', this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -35,7 +34,10 @@ class Routes extends Component {
             />
             <Route path="/faceRecording/videos" component={UserVideos} />
             <Route path="/myAccount" component={MyAccount} />
-            <Route path="/faceAnalysis" component={faceAnalysis} />
+            <Route
+              path="/faceAnalysis/archive/:archiveId/view"
+              component={faceAnalysis}
+            />
             <Route path="/" component={LandingPage} />
           </Switch>
         )}

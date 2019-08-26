@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const GOT_FACEDATA = 'GOT_FACEDATA'
 const POSTED_FACEDATA = 'POSTED_FACEDATA'
+const GOT_ARCHIVED_VIDEO = 'GOT_ARCHIVED_VIDEO'
 
 const gotFaceData = faceData => {
   return {
@@ -13,6 +14,12 @@ const postedFaceData = faceData => {
   return {
     type: POSTED_FACEDATA,
     faceData
+  }
+}
+const gotArchivedVideo = videoUrl => {
+  return {
+    type: GOT_ARCHIVED_VIDEO,
+    videoUrl
   }
 }
 
@@ -33,16 +40,27 @@ export const postFaceData = (videoId, expressions) => async dispatch => {
     console.error(error)
   }
 }
+export const getArchivedVideo = archiveId => async dispatch => {
+  try {
+    const {data} = await axios.get(
+      `/api/faceAnalysis/archive/${archiveId}/view`
+    )
+    dispatch(gotArchivedVideo(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-const faceDataReducer = (state = {}, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case GOT_FACEDATA:
       return action.faceData
     case POSTED_FACEDATA:
       return action.faceData
+    case GOT_ARCHIVED_VIDEO:
+      console.log('action in face thunk', action)
+      return action
     default:
       return state
   }
 }
-
-export default faceDataReducer

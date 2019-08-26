@@ -5,15 +5,15 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import session from './session'
 import archiveId from './archiveId'
-import videoReducer from './video'
-import faceDataReducer from './face'
+import videos from './video'
+import faceData from './face'
 
 const reducer = combineReducers({
   user,
   session,
   archiveId,
-  videoReducer,
-  faceDataReducer
+  videos,
+  faceData
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
