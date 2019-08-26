@@ -6,8 +6,15 @@ import user from './user'
 import session from './session'
 import archiveId from './archiveId'
 import archivedVideo from './archivedVideo'
+import questionReducer from './questionStore'
 
-const reducer = combineReducers({user, session, archiveId, archivedVideo})
+const reducer = combineReducers({
+  user,
+  session,
+  archiveId,
+  archivedVideo,
+  questions: questionReducer
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

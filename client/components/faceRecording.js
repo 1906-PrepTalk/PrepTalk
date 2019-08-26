@@ -5,6 +5,8 @@ import {getSession} from '../store/session'
 import {getArchiveId, stopArchiving} from '../store/archiveId'
 import Axios from 'axios'
 import {Button, Form} from 'semantic-ui-react'
+import Questions from './questions'
+import {getQuestion} from '../store/questionStore'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -170,6 +172,10 @@ class FaceRecording extends React.Component {
             />
           </OTStreams>
         </OTSession>
+        <Questions
+          questions={this.props.questions}
+          getQuestions={this.props.getQuestions}
+        />
       </div>
     ) : (
       <h1 className="text-center">Loading...</h1>
@@ -180,7 +186,8 @@ class FaceRecording extends React.Component {
 const mapStateToProps = state => {
   return {
     session: state.session,
-    archiveId: state.archiveId
+    archiveId: state.archiveId,
+    questions: state.questions
   }
 }
 
@@ -191,7 +198,8 @@ const mapDispatchToProps = dispatch => {
     },
     getArchiveId: (archiveId, recordingName) =>
       dispatch(getArchiveId(archiveId, recordingName)),
-    stopArchiving: archiveId => dispatch(stopArchiving(archiveId))
+    stopArchiving: archiveId => dispatch(stopArchiving(archiveId)),
+    getQuestions: () => dispatch(getQuestion())
   }
 }
 
