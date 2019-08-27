@@ -1,20 +1,19 @@
 import axios from 'axios'
-import history from '../history'
 
 // GETTING ARCHIVED VIDEO
 
-// const GOT_ARCHIVED_VIDEO = 'GOT_ARCHIVED_VIDEO'
+const GOT_ARCHIVED_VIDEO = 'GOT_ARCHIVED_VIDEO'
 const POSTED_VIDEO = 'POSTED_VIDEO'
 const GOT_ALL_VIDEOS = 'GOT_ALL_VIDEOS'
 
 // ACTION CREATORS
 
-// const gotArchivedVideo = videoUrl => {
-//   return {
-//     type: GOT_ARCHIVED_VIDEO,
-//     videoUrl
-//   }
-// }
+const gotArchivedVideo = videoUrl => {
+  return {
+    type: GOT_ARCHIVED_VIDEO,
+    videoUrl
+  }
+}
 
 const postedVideo = (userId, archiveId) => {
   return {
@@ -31,16 +30,16 @@ const gotAllVideos = videos => {
   }
 }
 
-// export const getArchivedVideo = archiveId => async dispatch => {
-//   try {
-//     const {data} = await axios.get(
-//       `/api/faceRecording/archive/${archiveId}/view`
-//     )
-//     dispatch(gotArchivedVideo(data))
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
+export const getArchivedVideo = archiveId => async dispatch => {
+  try {
+    const {data} = await axios.get(
+      `/api/faceRecording/archive/${archiveId}/view`
+    )
+    dispatch(gotArchivedVideo(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 export const postVideo = (userId, archiveId) => async dispatch => {
   try {
@@ -63,10 +62,10 @@ export const getAllVideos = userId => async dispatch => {
   }
 }
 
-export default (state = [], action) => {
+export default function(state = [], action) {
   switch (action.type) {
-    // case GOT_ARCHIVED_VIDEO:
-    //   return action.videoUrl
+    case GOT_ARCHIVED_VIDEO:
+      return action.videoUrl
     case POSTED_VIDEO:
       return action.archiveId
     case GOT_ALL_VIDEOS:

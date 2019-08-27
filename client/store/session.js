@@ -24,7 +24,7 @@ export const getSession = () => async dispatch => {
   }
 }
 
-const sessionReducer = (state = {}, action) => {
+export default function(state = {}, action) {
   switch (action.type) {
     case GOT_SESSION:
       return action.session
@@ -32,5 +32,3 @@ const sessionReducer = (state = {}, action) => {
       return state
   }
 }
-
-export default sessionReducer

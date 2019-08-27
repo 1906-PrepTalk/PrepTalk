@@ -51,7 +51,7 @@ export const getArchivedVideo = archiveId => async dispatch => {
   }
 }
 
-export default (state = {}, action) => {
+export default function(state = {}, action) {
   switch (action.type) {
     case GOT_FACEDATA:
       return action.faceData

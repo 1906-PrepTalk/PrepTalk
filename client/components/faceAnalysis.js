@@ -45,7 +45,6 @@ class FaceAnalysis extends Component {
 
 const mapStateToProps = state => {
   return {
-    archiveId: state.archiveId,
     videoUrl: state.videoUrl,
     videoId: state.videoId
   }

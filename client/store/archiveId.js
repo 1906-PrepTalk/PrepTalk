@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-// const defaultSession = {
-//   apiKey: '',
-//   token: '',
-//   sessionId: ''
-// }
-
 // RECORD AND STOP ARCHIVING BUTTONS
 
 const GOT_ARCHIVE_ID = 'GOT_ARCHIVE_ID'
@@ -51,7 +45,7 @@ export const stopArchiving = archiveId => async dispatch => {
   }
 }
 
-const archiveIdReducer = (state = '', action) => {
+export default function(state = '', action) {
   switch (action.type) {
     case GOT_ARCHIVE_ID:
       return action.archiveId
@@ -59,5 +53,3 @@ const archiveIdReducer = (state = '', action) => {
       return state
   }
 }
-
-export default archiveIdReducer

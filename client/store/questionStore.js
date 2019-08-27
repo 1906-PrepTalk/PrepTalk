@@ -18,7 +18,7 @@ export const getQuestion = () => async dispatch => {
   }
 }
 
-const questionReducer = (state = [], action) => {
+export default function(state = [], action) {
   switch (action.type) {
     case GOT_QUESTION:
       return action.question
@@ -26,5 +26,3 @@ const questionReducer = (state = [], action) => {
       return state
   }
 }
-
-export default questionReducer
