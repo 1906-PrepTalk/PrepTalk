@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Face} = require('../db/models')
+const {Face, Video} = require('../db/models')
 const aws = require('aws-sdk')
 
 router.get('/archive/:archiveId/view', async (req, res, next) => {
@@ -12,9 +12,14 @@ router.get('/archive/:archiveId/view', async (req, res, next) => {
     const archiveId = req.params.archiveId
     const s3 = new aws.S3()
     const video = await Face.findAll({
-      where: {
-        archiveId: archiveId
-      }
+      include: [
+        {
+          model: Video,
+          where: {
+            archiveId: req.params.archiveId
+          }
+        }
+      ]
     })
     const options = {
       Bucket: 'preptalk2',
@@ -60,9 +65,14 @@ router.get('/:videoId', async (req, res, next) => {
 router.post('/:archiveId', async (req, res, next) => {
   try {
     const faceData = await Face.findOne({
-      where: {
-        archiveId: req.params.archiveId
-      }
+      include: [
+        {
+          model: Video,
+          where: {
+            archiveId: req.params.archiveId
+          }
+        }
+      ]
     })
     if (!faceData) {
       const newFaceData = await Face.create({

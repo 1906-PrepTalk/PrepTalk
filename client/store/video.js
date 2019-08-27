@@ -70,7 +70,6 @@ export default (state = [], action) => {
     case POSTED_VIDEO:
       return action.archiveId
     case GOT_ALL_VIDEOS:
-      console.log('action got all videos', action)
       return action.videos
     default:
       return state

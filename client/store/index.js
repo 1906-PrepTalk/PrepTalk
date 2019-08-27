@@ -7,7 +7,6 @@ import session from './session'
 import archiveId from './archiveId'
 import videos from './video'
 import faceData from './face'
-import archivedVideo from './archivedVideo'
 import questionReducer from './questionStore'
 
 const reducer = combineReducers({
@@ -16,7 +15,6 @@ const reducer = combineReducers({
   archiveId,
   videos,
   faceData,
-  archivedVideo,
   questions: questionReducer
 })
 const middleware = composeWithDevTools(

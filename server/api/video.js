@@ -13,7 +13,6 @@ router.get('/videos/view/:userId', async (req, res, next) => {
         }
       ]
     })
-    console.log('route videos', videos)
     res.send(videos)
   } catch (error) {
     console.error(error)
