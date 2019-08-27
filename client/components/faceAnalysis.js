@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getFacialEmotions} from '../../server/api/faceApi'
 import {postFaceData, getVideoUrl} from '../store/face'
-import FacialDataReport from './FacialDataReport'
+// import FacialDataReport from './FacialDataReport'
+import DonutPosition from './DonutPosition'
 
 class FaceAnalysis extends Component {
   constructor() {
@@ -39,7 +40,13 @@ class FaceAnalysis extends Component {
           type="video/mp4"
           crossOrigin="anonymous"
         />
-        {/* <FacialDataReport archiveId={this.props.match.params.archiveId} /> */}
+
+        <div id="donutChart">
+          <DonutPosition
+            //Add facial expressions data into props for DonutPosition component
+            data={[5, 2, 7, 1, 1, 3, 4, 9]}
+          />
+        </div>
       </div>
     ) : (
       <h1 className="text-center">Loading...</h1>
