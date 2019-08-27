@@ -25,7 +25,7 @@ const MenuBar = props => {
         <Icon name="video camera" />
         Facial Analysis
       </Menu.Item>
-      <Menu.Item as={Link} to="/faceRecording/videos" name="recordings">
+      <Menu.Item as={Link} to="/recordings" name="recordings">
         {' '}
         <Icon name="video camera" />
         Recordings

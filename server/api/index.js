@@ -4,7 +4,7 @@ router.use('/users', require('./users'))
 router.use('/faceRecording', require('./opentok'))
 router.use('/transcript', require('./transcript'))
 router.use('/faceAnalysis', require('./face'))
-router.use('/faceRecording', require('./video'))
+router.use('/recordings', require('./video'))
 router.use('/questions', require('./questionRoute'))
 
 router.use((req, res, next) => {

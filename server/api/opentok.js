@@ -189,51 +189,51 @@ router.post('/archive/:archiveId/stop', function(req, res) {
 /**
  * GET /archive/:archiveId
  */
-router.get('/archive/:archiveId', function(req, res) {
-  var archiveId = req.params.archiveId
+// router.get('/archive/:archiveId', function(req, res) {
+//   var archiveId = req.params.archiveId
 
-  // fetch archive
-  console.log('attempting to fetch archive: ' + archiveId)
-  opentok.getArchive(archiveId, function(err, archive) {
-    if (err) {
-      console.error('error in getArchive')
-      console.error(err)
-      res.status(500).send({error: 'getArchive error:' + err})
-      return
-    }
+//   // fetch archive
+//   console.log('attempting to fetch archive: ' + archiveId)
+//   opentok.getArchive(archiveId, function(err, archive) {
+//     if (err) {
+//       console.error('error in getArchive')
+//       console.error(err)
+//       res.status(500).send({error: 'getArchive error:' + err})
+//       return
+//     }
 
-    // extract as a JSON object
-    res.setHeader('Content-Type', 'application/json')
-    res.send(archive)
-  })
-})
+//     // extract as a JSON object
+//     res.setHeader('Content-Type', 'application/json')
+//     res.send(archive)
+//   })
+// })
 
 /**
  * GET /archive
  */
-router.get('/archive', function(req, res) {
-  var options = {}
-  if (req.query.count) {
-    options.count = req.query.count
-  }
-  if (req.query.offset) {
-    options.offset = req.query.offset
-  }
+// router.get('/archive', function(req, res) {
+//   var options = {}
+//   if (req.query.count) {
+//     options.count = req.query.count
+//   }
+//   if (req.query.offset) {
+//     options.offset = req.query.offset
+//   }
 
-  // list archives
-  console.log('attempting to list archives')
-  opentok.listArchives(options, function(err, archives) {
-    if (err) {
-      console.error('error in listArchives')
-      console.error(err)
-      res.status(500).send({error: 'infoArchive error:' + err})
-      return
-    }
+//   // list archives
+//   console.log('attempting to list archives')
+//   opentok.listArchives(options, function(err, archives) {
+//     if (err) {
+//       console.error('error in listArchives')
+//       console.error(err)
+//       res.status(500).send({error: 'infoArchive error:' + err})
+//       return
+//     }
 
-    // extract as a JSON object
-    res.setHeader('Content-Type', 'application/json')
-    res.send(archives)
-  })
-})
+//     // extract as a JSON object
+//     res.setHeader('Content-Type', 'application/json')
+//     res.send(archives)
+//   })
+// })
 
 module.exports = router

@@ -8,9 +8,7 @@ import MenuBar from './MenuBar'
 
 const Navbar = (props, {handleClick, isLoggedIn}) => (
   <div className="navBar">
-    <Link to="/">
-      <img src="PrepTalkLogo5.png" className="logo" />
-    </Link>
+    <Link to="/">{/* <img src="PrepTalkLogo5.png" className="logo" /> */}</Link>
     <nav>
       <div>
         {/* The navbar will show these links after you log in */}

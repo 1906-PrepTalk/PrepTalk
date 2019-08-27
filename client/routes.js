@@ -32,10 +32,10 @@ class Routes extends Component {
               path="/faceRecording"
               render={() => <FaceRecording {...this.props} />}
             />
-            <Route path="/faceRecording/videos" component={UserVideos} />
-            <Route path="/myAccount" component={MyAccount} />
+            <Route path="/recordings" component={UserVideos} />
+            <Route exact path="/myAccount" component={MyAccount} />
             <Route
-              path="/faceAnalysis/archive/:archiveId/view"
+              path="/faceAnalysis/video/:archiveId"
               component={faceAnalysis}
             />
             <Route path="/" component={LandingPage} />

@@ -2,12 +2,12 @@ import axios from 'axios'
 
 const GOT_FACEDATA = 'GOT_FACEDATA'
 const POSTED_FACEDATA = 'POSTED_FACEDATA'
-const GOT_ARCHIVED_VIDEO = 'GOT_ARCHIVED_VIDEO'
+const GOT_VIDEO_URL = 'GOT_VIDEO_URL'
 
-const gotFaceData = faceData => {
+const gotFaceData = expressions => {
   return {
     type: GOT_FACEDATA,
-    faceData
+    expressions
   }
 }
 const postedFaceData = faceData => {
@@ -16,9 +16,10 @@ const postedFaceData = faceData => {
     faceData
   }
 }
-const gotArchivedVideo = videoUrl => {
+
+const gotVideoUrl = videoUrl => {
   return {
-    type: GOT_ARCHIVED_VIDEO,
+    type: GOT_VIDEO_URL,
     videoUrl
   }
 }
@@ -40,12 +41,14 @@ export const postFaceData = (videoId, expressions) => async dispatch => {
     console.error(error)
   }
 }
-export const getArchivedVideo = archiveId => async dispatch => {
+
+// Gets video URL through S3
+export const getVideoUrl = archiveId => async dispatch => {
   try {
-    const {data} = await axios.get(
-      `/api/faceAnalysis/archive/${archiveId}/view`
+    const {data: videoUrl} = await axios.get(
+      `/api/faceAnalysis/video/${archiveId}`
     )
-    dispatch(gotArchivedVideo(data))
+    dispatch(gotVideoUrl(videoUrl))
   } catch (err) {
     console.log(err)
   }
@@ -54,12 +57,11 @@ export const getArchivedVideo = archiveId => async dispatch => {
 export default function(state = {}, action) {
   switch (action.type) {
     case GOT_FACEDATA:
-      return action.faceData
+      return action.expressions
     case POSTED_FACEDATA:
       return action.faceData
-    case GOT_ARCHIVED_VIDEO:
-      console.log('action in face thunk', action)
-      return action
+    case GOT_VIDEO_URL:
+      return {...state, videoUrl: action.videoUrl}
     default:
       return state
   }

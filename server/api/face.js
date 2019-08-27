@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const {Face, Video} = require('../db/models')
+
 const aws = require('aws-sdk')
 
-router.get('/archive/:archiveId/view', async (req, res, next) => {
+// Gets video URL through S3
+router.get('/video/:archiveId', async (req, res, next) => {
   try {
     aws.config.region = 'us-east-1'
     aws.config.credentials = {
@@ -11,16 +13,6 @@ router.get('/archive/:archiveId/view', async (req, res, next) => {
     }
     const archiveId = req.params.archiveId
     const s3 = new aws.S3()
-    const video = await Face.findAll({
-      include: [
-        {
-          model: Video,
-          where: {
-            archiveId: req.params.archiveId
-          }
-        }
-      ]
-    })
     const options = {
       Bucket: 'preptalk2',
       Key: `46407582/${archiveId}/archive.mp4`
@@ -31,7 +23,7 @@ router.get('/archive/:archiveId/view', async (req, res, next) => {
       } else {
         console.log('The URL is ', url)
         res.set('Content-Type', 'video/mp4')
-        res.send({url, video})
+        res.send(url)
       }
     })
   } catch (error) {
@@ -39,17 +31,16 @@ router.get('/archive/:archiveId/view', async (req, res, next) => {
   }
 })
 
-router.get('/:videoId', async (req, res, next) => {
+router.get('/:archiveId', async (req, res, next) => {
   try {
-    const faceData = await Face.findByPk(req.params.videoId, {
-      attributes: [
-        'angry',
-        'disgusted',
-        'fearful',
-        'happy',
-        'neutral',
-        'sad',
-        'surprised'
+    const faceData = await Face.findAll({
+      include: [
+        {
+          model: Video,
+          where: {
+            archiveId: req.params.archiveId
+          }
+        }
       ]
     })
     if (!faceData) {
@@ -62,19 +53,19 @@ router.get('/:videoId', async (req, res, next) => {
   }
 })
 
-router.post('/:archiveId', async (req, res, next) => {
+router.post('/:videoId', async (req, res, next) => {
   try {
-    const faceData = await Face.findOne({
+    const faceData = await Face.findAll({
       include: [
         {
           model: Video,
           where: {
-            archiveId: req.params.archiveId
+            id: req.params.videoId
           }
         }
       ]
     })
-    if (!faceData) {
+    if (faceData.length === 0) {
       const newFaceData = await Face.create({
         angry: req.body.angry,
         disgusted: req.body.disgusted,
@@ -82,7 +73,8 @@ router.post('/:archiveId', async (req, res, next) => {
         happy: req.body.happy,
         neutral: req.body.neutral,
         sad: req.body.sad,
-        surprised: req.body.surprised
+        surprised: req.body.surprised,
+        videoId: req.params.videoId
       })
       res.status(201).json(newFaceData)
     } else {

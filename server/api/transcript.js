@@ -26,12 +26,6 @@ for (const ev of reqEnvVars) {
   CONFIG[ev[0]] = process.env[ev[0]] || ev[1]
 }
 
-// console.log(
-//   '<=========================================================================================================== CONFIG OBJECT ===========================================================================================================>',
-//   CONFIG
-// )
-
-// const opentok = new Opentok(CONFIG.OPENTOK_API_KEY, OPENTOK_SECRET)
 const archive = new Archive(CONFIG, opentok)
 
 router.post('/ot_callback', (req, res) => {

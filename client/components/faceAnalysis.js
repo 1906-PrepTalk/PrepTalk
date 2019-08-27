@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import {getArchivedVideo} from '../store/video'
 import {getFacialEmotions} from '../../server/api/faceApi'
-import {postFaceData, getArchivedVideo} from '../store/face'
+import {postFaceData, getVideoUrl} from '../store/face'
 import FacialDataReport from './FacialDataReport'
 
 class FaceAnalysis extends Component {
@@ -14,18 +13,21 @@ class FaceAnalysis extends Component {
 
   componentDidMount() {
     const {archiveId} = this.props.match.params
-    console.log('archiveId', archiveId)
-    console.log('this.props', this.props)
-    this.props.getArchivedVideo(archiveId)
+    this.props.getVideoUrl(archiveId)
   }
 
-  handlePlay = async event => {
-    const faceData = await getFacialEmotions(event.target)
-    this.props.postFaceData(this.props.archiveId, faceData.expressions)
+  handlePlay = async e => {
+    e.preventDefault()
+    console.log('handlePlay this.props', this.props)
+    const {archiveId} = this.props.match.params
+    const video = this.props.videos.find(v => v.archiveId === archiveId)
+    const faceData = await getFacialEmotions(e.target)
+    console.log('faceData expressions', faceData.expression)
+    this.props.postFaceData(video.id, faceData.expressions)
   }
 
   render() {
-    return (
+    return this.props.videoUrl !== 'undefined' ? (
       <div id="facialAnalysis">
         <h2>Facial Analysis Results</h2>
         <video
@@ -33,26 +35,28 @@ class FaceAnalysis extends Component {
           controls
           width="720"
           onPlay={this.handlePlay}
-          src={this.props.archivedVideoUrl}
+          src={this.props.videoUrl}
           type="video/mp4"
           crossOrigin="anonymous"
         />
-        <FacialDataReport />
+        {/* <FacialDataReport archiveId={this.props.match.params.archiveId} /> */}
       </div>
+    ) : (
+      <h1 className="text-center">Loading...</h1>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    videoUrl: state.videoUrl,
-    videoId: state.videoId
+    videoUrl: state.faceData.videoUrl,
+    videos: state.videos
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId)),
+    getVideoUrl: archiveId => dispatch(getVideoUrl(archiveId)),
     postFaceData: (archiveId, expressions) =>
       dispatch(postFaceData(archiveId, expressions))
   }

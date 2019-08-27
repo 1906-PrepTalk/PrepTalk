@@ -3,10 +3,6 @@ import {connect} from 'react-redux'
 import {getAllVideos} from '../store/video'
 
 class UserVideos extends Component {
-  constructor() {
-    super()
-  }
-
   componentDidMount() {
     if (this.props.userId) {
       this.props.getAllVideos(this.props.userId)
@@ -14,25 +10,26 @@ class UserVideos extends Component {
   }
 
   selectVideo = archiveId => {
-    this.props.history.push(`/faceAnalysis/archive/${archiveId}/view`)
+    this.props.history.push(`/faceAnalysis/video/${archiveId}`)
   }
 
   render() {
-    return (
+    return this.props.videos.length > 0 ? (
       <div>
-        {this.props.videos &&
-          this.props.videos.map(video => (
-            <div key={video.id}>
-              <p>{video.archiveId}</p>
-              <button
-                onClick={() => this.selectVideo(video.archiveId)}
-                type="button"
-              >
-                Select Video
-              </button>
-            </div>
-          ))}
+        {this.props.videos.map(video => (
+          <div key={video.id}>
+            <p>{video.archiveId}</p>
+            <button
+              onClick={() => this.selectVideo(video.archiveId)}
+              type="button"
+            >
+              Select Video
+            </button>
+          </div>
+        ))}
       </div>
+    ) : (
+      <h1 className="text-center">Loading...</h1>
     )
   }
 }
