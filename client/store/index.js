@@ -7,13 +7,17 @@ import session from './session'
 import archiveId from './archiveId'
 import archivedVideo from './archivedVideo'
 import questionReducer from './questionStore'
+import userVideo from './userVideos'
+import faceData from './faceData'
 
 const reducer = combineReducers({
   user,
   session,
   archiveId,
   archivedVideo,
-  questions: questionReducer
+  questionReducer,
+  userVideo,
+  faceData
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

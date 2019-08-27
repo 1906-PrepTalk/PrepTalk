@@ -7,7 +7,7 @@ router.use('/questions', require('./questionRoute'))
 // new Routes
 
 router.use('/faceAnalysis', require('./facialAnalysisVideo'))
-router.use('/recording', require('./userRecordings'))
+router.use('/recordings', require('./userRecordings'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

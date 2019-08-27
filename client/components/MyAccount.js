@@ -1,13 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import UserAccountInfo from './UserAccountInfo'
+import {getAllVideos} from '../store/userVideos'
 
 class MyAccount extends Component {
+  componentDidMount() {
+    if (this.props.user.id) {
+      this.props.getAllVideos(this.props.user.id)
+    }
+  }
   render() {
+    console.log(this.props)
     return (
       <div id="userPage">
         <h2>Welcome, {this.props.user.email}</h2>
-        <UserAccountInfo user={this.props.user} />
+        <UserAccountInfo user={this.props.user} videos={this.props.videos} />
       </div>
     )
   }
@@ -15,11 +22,14 @@ class MyAccount extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    videos: state.userVideo
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    getAllVideos: userId => dispatch(getAllVideos(userId))
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MyAccount)
