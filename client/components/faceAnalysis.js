@@ -11,9 +11,10 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.archiveId)
     // this.props.getArchivedVideo(this.props.archiveId)
     // this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
-    this.props.getArchivedVideo('faceapitest')
+    this.props.getArchivedVideo(this.props.archiveId)
   }
 
   // async componentWillMount() {

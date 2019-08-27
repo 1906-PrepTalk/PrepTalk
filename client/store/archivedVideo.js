@@ -15,9 +15,7 @@ const gotArchivedVideo = videoUrl => {
 
 export const getArchivedVideo = archiveId => async dispatch => {
   try {
-    const {data} = await axios.get(
-      `/api/faceRecording/archive/${archiveId}/view`
-    )
+    const {data} = await axios.get(`/api/faceAnalysis/video/${archiveId}`)
     dispatch(gotArchivedVideo(data))
   } catch (err) {
     console.log(err)
