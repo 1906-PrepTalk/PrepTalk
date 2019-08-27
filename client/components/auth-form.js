@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
@@ -36,7 +35,7 @@ const AuthForm = props => {
               />
               <div className="LoginGoogleButtons">
                 <Button content="Login" primary />
-                <Button icon="google" color="red" />
+                <Button color="red" />
               </div>
             </Form>
           </Grid.Column>
