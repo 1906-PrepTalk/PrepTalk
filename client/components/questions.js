@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {getQuestion} from '../store/questionStore'
-
+import {Button, Icon} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
@@ -30,28 +28,20 @@ export default class Questions extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="questionGenerator">
         <h3 className="text-center">Ready? Let's get started!</h3>
-        <button type="button" onClick={this.randomQuestions}>
+        <Button
+          type="button"
+          onClick={this.randomQuestions}
+          inverted
+          color="green"
+          basic
+        >
           {' '}
-          Ask me A Question
-        </button>
+          <Icon name="question" /> Ask me A Question
+        </Button>{' '}
         <h3>{this.state.question}</h3>
       </div>
     )
   }
 }
-
-// const mapState = state => {
-//     return {
-//         questions: state.question
-//     }
-// }
-
-// const mapDispatch = dispatch => {
-//     return {
-//         getQuestion: () => dispatch(getQuestion())
-//     }
-// }
-
-// export default connect(mapState, mapDispatch)(Questions)
