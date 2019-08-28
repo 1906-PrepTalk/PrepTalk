@@ -8,13 +8,14 @@ import axios from 'axios'
 
 // RECORD AND STOP ARCHIVING BUTTONS
 
-const GOT_ARCHIVE_ID = 'GOT_ARCHIVE_ID'
+const GOT_ARCHIVE_DETAILS = 'GOT_ARCHIVE_DETAILS'
 const STOP_ARCHIVING = 'STOP_ARCHIVING'
 
-const gotArchiveId = archiveId => {
+const gotArchiveDetails = (archiveDetails, archiveName) => {
   return {
-    type: GOT_ARCHIVE_ID,
-    archiveId
+    type: GOT_ARCHIVE_DETAILS,
+    archiveDetails,
+    archiveName
   }
 }
 
@@ -25,7 +26,10 @@ const stoppedArchiving = archiveId => {
   }
 }
 
-export const getArchiveId = (sessionId, recordingName) => async dispatch => {
+export const getArchiveDetails = (
+  sessionId,
+  recordingName
+) => async dispatch => {
   try {
     const config = {
       name: recordingName,
@@ -34,7 +38,7 @@ export const getArchiveId = (sessionId, recordingName) => async dispatch => {
       output: 'composed'
     }
     const {data} = await axios.post('/api/faceRecording/archive/start', config)
-    dispatch(gotArchiveId(data.id))
+    dispatch(gotArchiveDetails(data.id, data.name))
   } catch (err) {
     console.log(err)
   }
@@ -52,10 +56,19 @@ export const stopArchiving = archiveId => async dispatch => {
   }
 }
 
-const archiveIdReducer = (state = '', action) => {
+const initialState = {
+  archiveId: '',
+  archiveName: ''
+}
+
+const archiveIdReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_ARCHIVE_ID:
-      return action.archiveId
+    case GOT_ARCHIVE_DETAILS:
+      return {
+        ...state,
+        archiveId: action.archiveDetails,
+        archiveName: action.archiveName
+      }
     default:
       return state
   }

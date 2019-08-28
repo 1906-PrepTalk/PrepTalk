@@ -23,16 +23,3 @@ export async function getFacialEmotions(input) {
   )
   return detectFace
 }
-
-// AWS grabbing functions
-
-// export function downloadArchiveFromS3(archiveId) {
-//     const params = {
-//       Bucket: "preptalk",
-//       Key: `${process.env.OPENTOK_API_KEY}/${archiveId}/archive.mp4`
-//     }
-
-//     return this.s3
-//       .getObject(params)
-//       .createReadStream()
-//   }
