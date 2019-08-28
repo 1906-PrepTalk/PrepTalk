@@ -2,12 +2,13 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Video = db.define('video', {
-  url: {
+  archiveId: {
     type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      isUrl: true
-    }
+    allowNull: false
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 
