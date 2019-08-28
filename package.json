@@ -7,6 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "preinstall": "node preinstall.js",
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
