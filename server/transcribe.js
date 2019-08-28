@@ -1,10 +1,9 @@
 const speech = require('@google-cloud/speech')
-// const {google} = require('googleapis')
 const {Storage} = require('@google-cloud/storage')
 
-let googCredentials = process.env.GOOGLE_APPLICATION_CREDENTIALS
+// let googCredentials = process.env.GOOGLE_APPLICATION_CREDENTIALS
 
-const storage = new Storage(googCredentials)
+const storage = new Storage()
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
@@ -65,7 +64,7 @@ function store(bucketId, filename) {
 
 const transcribeAudio = async googFilename => {
   try {
-    const gclient = new speech.SpeechClient(googCredentials)
+    const gclient = new speech.SpeechClient()
     const config = {
       encoding: 'LINEAR16',
       languageCode: 'en-US'
