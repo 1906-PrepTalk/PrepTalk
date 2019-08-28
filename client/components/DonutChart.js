@@ -6,7 +6,18 @@ import Slice from './Slice'
 export default class DonutChart extends React.Component {
   constructor(props) {
     super(props)
-    this.colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+    this.colorScale = d3
+      .scaleOrdinal()
+      .domain(this.props.data)
+      .range([
+        '#F3BC50',
+        '#25C0C0',
+        '#FA53A0',
+        '#FC8BC0',
+        '#BCECE0',
+        '#F51720',
+        '#F8D210'
+      ])
     this.renderSlice = this.renderSlice.bind(this)
   }
   render() {

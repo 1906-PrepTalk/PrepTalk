@@ -47,28 +47,17 @@ class FaceAnalysis extends Component {
             type="video/mp4"
             crossOrigin="anonymous"
           />
-        </div>
-
-        <div id="donutChart">
           {this.props.faceData[0] ? (
             <DonutPosition
-              //Add facial expressions data into props for DonutPosition component
-              // data={[`angry: ${(this.props.faceData[0].angry * 100).toFixed(2)}`,
-              // `disgusted: ${(this.props.faceData[0].disgusted * 100).toFixed(2)}`,
-              // `fearful: ${(this.props.faceData[0].fearful * 100).toFixed(2)}`,
-              // `happy: ${(this.props.faceData[0].happy * 100).toFixed(2)}`,
-              // `neutral: ${(this.props.faceData[0].neutral * 100).toFixed(2)}`,
-              // `sad: ${(this.props.faceData[0].sad * 100).toFixed(2)}`,
-              // `surprised: ${(this.props.faceData[0].surprised * 100).toFixed(2)}`]}
               data={[
-                this.props.faceData[0].angry,
-                this.props.faceData[0].disgusted,
-                this.props.faceData[0].fearful,
-                this.props.faceData[0].happy,
-                this.props.faceData[0].neutral,
-                this.props.faceData[0].sad,
-                this.props.faceData[0].surprised
-              ]}
+                (this.props.faceData[0].angry * 100).toFixed(2),
+                (this.props.faceData[0].disgusted * 100).toFixed(2),
+                (this.props.faceData[0].fearful * 100).toFixed(2),
+                (this.props.faceData[0].happy * 100).toFixed(2),
+                (this.props.faceData[0].neutral * 100).toFixed(2),
+                (this.props.faceData[0].sad * 100).toFixed(2),
+                (this.props.faceData[0].surprised * 100).toFixed(2)
+              ].filter(data => data > 1)}
             />
           ) : (
             ''
