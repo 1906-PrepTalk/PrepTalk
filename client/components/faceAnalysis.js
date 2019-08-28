@@ -5,12 +5,17 @@ import {getFaceData, postFaceData} from '../store/faceData'
 import {getFacialEmotions} from '../../server/api/faceApi'
 import {getAllVideos} from '../store/userVideos'
 import DonutPosition from './DonutPosition'
+import {Button} from 'semantic-ui-react'
 
 class FaceAnalysis extends Component {
   constructor() {
     super()
-
+    this.state = {
+      button: false
+    }
+    this.displayButton = this.displayButton.bind(this)
     this.handlePlay = this.handlePlay.bind(this)
+    this.getFaceData = this.getFaceData.bind(this)
   }
 
   componentDidMount() {
@@ -29,8 +34,18 @@ class FaceAnalysis extends Component {
     if (archiveId) {
       const video = this.props.videos.find(v => v.archiveId === archiveId)
       this.props.postFaceData(video.id, faceData.expressions)
-      this.props.getFaceData(archiveId)
+      // this.props.getFaceData(archiveId)
     }
+  }
+
+  displayButton() {
+    this.setState({button: true})
+  }
+
+  getFaceData() {
+    const {archiveId} = this.props.match.params
+    this.props.getFaceData(archiveId)
+    this.setState({button: false})
   }
 
   render() {
@@ -42,11 +57,26 @@ class FaceAnalysis extends Component {
             id="video"
             controls
             width="720"
+            onEnded={this.displayButton}
             onPlay={this.handlePlay}
             src={this.props.archivedVideoUrl}
             type="video/mp4"
             crossOrigin="anonymous"
           />
+
+          {this.state.button ? (
+            <Button
+              type="button"
+              onClick={this.getFaceData}
+              color="yellow"
+              className="getFaceDataButton"
+            >
+              Get Face Data
+            </Button>
+          ) : (
+            ''
+          )}
+
           {this.props.faceData[0] ? (
             <DonutPosition
               data={[
