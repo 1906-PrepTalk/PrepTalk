@@ -28,7 +28,7 @@ function store(bucketId, filename) {
  */
 function transcribeAudio(googFilename) {
   try {
-    const gclient = new speech.SpeechClient()
+    const gclient = new speech.SpeechClient(googCredentials)
     return gclient
       .recognize({
         config: {
