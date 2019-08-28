@@ -7,6 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "heroku-prebuild": "node preinstall.js",
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
@@ -15,7 +16,6 @@
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
-    "preinstall": "node preinstall.js",
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
     "start": "node server",
