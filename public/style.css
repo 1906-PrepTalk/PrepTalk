@@ -110,5 +110,23 @@ a {
 }
 
 #donutChart {
-  height: 675px;
+  height: 1000px;
 }
+
+/* .svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 70%;
+  vertical-align: top;
+  overflow: hidden;
+}
+​
+.svg-content {
+  display: inline-block;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  left: 0;
+} */

@@ -16,9 +16,9 @@ const postedFaceData = faceData => {
   }
 }
 
-export const getFaceData = videoId => async dispatch => {
+export const getFaceData = archiveId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/faceAnalysis/${videoId}`)
+    const {data} = await axios.get(`/api/faceAnalysis/${archiveId}`)
     dispatch(gotFaceData(data))
   } catch (error) {
     console.error(error)

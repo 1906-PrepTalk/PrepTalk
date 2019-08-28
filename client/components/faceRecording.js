@@ -145,7 +145,7 @@ class FaceRecording extends React.Component {
                 {this.state.stoppedArchiving ? (
                   <Button
                     as={Link}
-                    to="/faceAnalysis"
+                    to={`/faceAnalysis/video/${this.props.archiveId}`}
                     id="viewArchive"
                     type="button"
                     color="green"
@@ -218,7 +218,7 @@ const mapStateToProps = state => {
     session: state.session,
     archiveId: state.archiveDetails.archiveId,
     archiveName: state.archiveDetails.archiveName,
-    questions: state.questions,
+    questions: state.questionReducer,
     user: state.user
   }
 }
