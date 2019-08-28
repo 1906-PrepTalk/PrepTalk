@@ -2,11 +2,12 @@ import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
-import {getArchiveId, stopArchiving} from '../store/archiveId'
+import {getArchiveDetails, stopArchiving} from '../store/archiveDetails'
 import {Link} from 'react-router-dom'
 import {Button, Form, Segment} from 'semantic-ui-react'
 import Questions from './questions'
 import {getQuestion} from '../store/questionStore'
+import {postVideo} from '../store/userVideos'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -86,7 +87,7 @@ class FaceRecording extends React.Component {
   startArchive = e => {
     e.preventDefault()
     try {
-      this.props.getArchiveId(
+      this.props.getArchiveDetails(
         this.props.session.sessionId,
         e.target.recordingName.value
       )
@@ -99,6 +100,11 @@ class FaceRecording extends React.Component {
     e.preventDefault()
     try {
       this.props.stopArchiving(this.props.archiveId)
+      this.props.postVideo(
+        this.props.user.id,
+        this.props.archiveId,
+        this.props.archiveName
+      )
       this.setState({stoppedArchiving: true})
     } catch (err) {
       console.log(err)
@@ -138,7 +144,7 @@ class FaceRecording extends React.Component {
                 {this.state.stoppedArchiving ? (
                   <Button
                     as={Link}
-                    to="/faceAnalysis"
+                    to={`/faceAnalysis/video/${this.props.archiveId}`}
                     id="viewArchive"
                     type="button"
                     color="green"
@@ -209,8 +215,10 @@ class FaceRecording extends React.Component {
 const mapStateToProps = state => {
   return {
     session: state.session,
-    archiveId: state.archiveId,
-    questions: state.questions
+    archiveId: state.archiveDetails.archiveId,
+    archiveName: state.archiveDetails.archiveName,
+    questions: state.questionReducer,
+    user: state.user
   }
 }
 
@@ -219,10 +227,12 @@ const mapDispatchToProps = dispatch => {
     getSession: () => {
       dispatch(getSession())
     },
-    getArchiveId: (archiveId, recordingName) =>
-      dispatch(getArchiveId(archiveId, recordingName)),
+    getArchiveDetails: (archiveId, recordingName) =>
+      dispatch(getArchiveDetails(archiveId, recordingName)),
     stopArchiving: archiveId => dispatch(stopArchiving(archiveId)),
-    getQuestions: () => dispatch(getQuestion())
+    getQuestions: () => dispatch(getQuestion()),
+    postVideo: (userId, archiveId, archiveName) =>
+      dispatch(postVideo(userId, archiveId, archiveName))
   }
 }
 
