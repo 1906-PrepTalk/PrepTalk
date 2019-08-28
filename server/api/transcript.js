@@ -14,7 +14,7 @@ const reqEnvVars = [
   ['AWS_ACCESS_KEY_ID'],
   ['AWS_SECRET_ACCESS_KEY'],
   ['GOOGLE_STORAGE_BUCKET'],
-  ['GOOGLE_APPLICATION_CREDENTIALS', 'service-account-file.json'],
+  ['GOOGLE_APPLICATION_CREDENTIALS', 'google-credentials-heroku.json'],
   ['GOOGLE_APPLICATION_CREDENTIALS_JSON', 0]
 ]
 

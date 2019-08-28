@@ -33,7 +33,7 @@ if (
 //     console.error('ERROR:', err)
 //   })
 
-const storage = new Storage(googCredentials)
+const storage = new Storage()
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
