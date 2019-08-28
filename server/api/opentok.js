@@ -34,71 +34,71 @@ if (!API_KEY || !SECRET) {
 
 // AWS S3 get route
 
-router.get('/archive/:archiveId/view', (req, res, next) => {
-  console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
-  try {
-    aws.config.region = 'us-east-1'
-    aws.config.credentials = {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    }
-    const filename = req.params.archiveId
-    console.log('filename', filename)
-    const s3 = new aws.S3()
+// router.get('/archive/:archiveId/view', (req, res, next) => {
+//   console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+//   try {
+//     aws.config.region = 'us-east-1'
+//     aws.config.credentials = {
+//       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//     }
+//     const filename = req.params.archiveId
+//     console.log('filename', filename)
+//     const s3 = new aws.S3()
 
-    const options = {
-      Bucket: 'preptalk2',
-      Key: `${filename}.mp4`
-    }
-    s3.getSignedUrl('getObject', options, function(err, url) {
-      if (err) {
-        console.log(err, err.stack)
-      } else {
-        console.log('The URL is ', url)
-        res.set('Content-Type', 'video/mp4')
-        res.send(url)
-      }
-    })
+//     const options = {
+//       Bucket: 'preptalk2',
+//       Key: `${filename}.mp4`
+//     }
+//     s3.getSignedUrl('getObject', options, function(err, url) {
+//       if (err) {
+//         console.log(err, err.stack)
+//       } else {
+//         console.log('The URL is ', url)
+//         res.set('Content-Type', 'video/mp4')
+//         res.send(url)
+//       }
+//     })
 
-    // s3
-    //   .getSignedUrl('getObject', options)
-    //   .on('httpHeaders', function(statusCode, headers) {
-    //     res.set('Content-Length', headers['content-length'])
-    //     res.set('Content-Type', headers['video/mp4'])
-    //     this.response.httpResponse.createUnbufferedStream().pipe(res)
-    //   })
-    //   .send()
-    // s3.headObject(options, function(err, data) {
-    //   if (err) {
-    //     // an error occurred
-    //     console.error(err)
-    //     return next()
-    //   }
-    //   const stream = s3.getObject(options).createReadStream()
+// s3
+//   .getSignedUrl('getObject', options)
+//   .on('httpHeaders', function(statusCode, headers) {
+//     res.set('Content-Length', headers['content-length'])
+//     res.set('Content-Type', headers['video/mp4'])
+//     this.response.httpResponse.createUnbufferedStream().pipe(res)
+//   })
+//   .send()
+// s3.headObject(options, function(err, data) {
+//   if (err) {
+//     // an error occurred
+//     console.error(err)
+//     return next()
+//   }
+//   const stream = s3.getObject(options).createReadStream()
 
-    //   // forward errors
-    //   stream.on('error', function error(errors) {
-    //     console.error(errors)
-    //     return next()
-    //   })
+//   // forward errors
+//   stream.on('error', function error(errors) {
+//     console.error(errors)
+//     return next()
+//   })
 
-    //   //Add the content type to the response (it's not propagated from the S3 SDK)
-    //   res.set('Content-Type', 'video/mp4')
-    //   res.set('Content-Length', data.ContentLength)
-    //   res.set('Last-Modified', data.LastModified)
-    //   res.set('ETag', data.ETag)
+//   //Add the content type to the response (it's not propagated from the S3 SDK)
+//   res.set('Content-Type', 'video/mp4')
+//   res.set('Content-Length', data.ContentLength)
+//   res.set('Last-Modified', data.LastModified)
+//   res.set('ETag', data.ETag)
 
-    //   stream.on('end', () => {
-    //     console.log('Served by Amazon S3: ' + filename)
-    //     console.log(data)
-    //   })
-    //   //Pipe the s3 object to the response
-    //   stream.pipe(res)
-    // })
-  } catch (error) {
-    console.error(error)
-  }
-})
+//   stream.on('end', () => {
+//     console.log('Served by Amazon S3: ' + filename)
+//     console.log(data)
+//   })
+//   //Pipe the s3 object to the response
+//   stream.pipe(res)
+// })
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
 
 router.get('/', (req, res, next) => {
   let sessionId
@@ -139,7 +139,6 @@ router.post('/archive/start', function(req, res) {
         return
       }
       res.setHeader('Content-Type', 'application/json')
-      console.log('archive info', archive)
       res.send(archive)
     }
   )
@@ -192,51 +191,51 @@ router.post('/archive/:archiveId/stop', function(req, res) {
 /**
  * GET /archive/:archiveId
  */
-router.get('/archive/:archiveId', function(req, res) {
-  var archiveId = req.params.archiveId
+// router.get('/archive/:archiveId', function(req, res) {
+//   var archiveId = req.params.archiveId
 
-  // fetch archive
-  console.log('attempting to fetch archive: ' + archiveId)
-  opentok.getArchive(archiveId, function(err, archive) {
-    if (err) {
-      console.error('error in getArchive')
-      console.error(err)
-      res.status(500).send({error: 'getArchive error:' + err})
-      return
-    }
+//   // fetch archive
+//   console.log('attempting to fetch archive: ' + archiveId)
+//   opentok.getArchive(archiveId, function(err, archive) {
+//     if (err) {
+//       console.error('error in getArchive')
+//       console.error(err)
+//       res.status(500).send({error: 'getArchive error:' + err})
+//       return
+//     }
 
-    // extract as a JSON object
-    res.setHeader('Content-Type', 'application/json')
-    res.send(archive)
-  })
-})
+//     // extract as a JSON object
+//     res.setHeader('Content-Type', 'application/json')
+//     res.send(archive)
+//   })
+// })
 
 /**
  * GET /archive
  */
-router.get('/archive', function(req, res) {
-  var options = {}
-  if (req.query.count) {
-    options.count = req.query.count
-  }
-  if (req.query.offset) {
-    options.offset = req.query.offset
-  }
+// router.get('/archive', function(req, res) {
+//   var options = {}
+//   if (req.query.count) {
+//     options.count = req.query.count
+//   }
+//   if (req.query.offset) {
+//     options.offset = req.query.offset
+//   }
 
-  // list archives
-  console.log('attempting to list archives')
-  opentok.listArchives(options, function(err, archives) {
-    if (err) {
-      console.error('error in listArchives')
-      console.error(err)
-      res.status(500).send({error: 'infoArchive error:' + err})
-      return
-    }
+//   // list archives
+//   console.log('attempting to list archives')
+//   opentok.listArchives(options, function(err, archives) {
+//     if (err) {
+//       console.error('error in listArchives')
+//       console.error(err)
+//       res.status(500).send({error: 'infoArchive error:' + err})
+//       return
+//     }
 
-    // extract as a JSON object
-    res.setHeader('Content-Type', 'application/json')
-    res.send(archives)
-  })
-})
+//     // extract as a JSON object
+//     res.setHeader('Content-Type', 'application/json')
+//     res.send(archives)
+//   })
+// })
 
 module.exports = router
