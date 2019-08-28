@@ -12,7 +12,8 @@ router.post('/', async (req, res, next) => {
     if (!video) {
       await Video.create({
         userId: req.body.userId,
-        archiveId: req.body.archiveId
+        archiveId: req.body.archiveId,
+        name: req.body.archiveName
       })
     } else {
       res.status(404).send('Video already exists!')

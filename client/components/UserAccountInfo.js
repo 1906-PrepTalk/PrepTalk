@@ -49,7 +49,8 @@ const UserAccountInfo = props => {
           <Table basic="very">
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>User Information</Table.HeaderCell>
+                <Table.HeaderCell>Video Archive Id</Table.HeaderCell>
+                <Table.HeaderCell>Video Name</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
@@ -58,6 +59,7 @@ const UserAccountInfo = props => {
                 ? props.videos.map(video => (
                     <Table.Row key={video.id}>
                       <Table.Cell>{video.archiveId}</Table.Cell>
+                      <Table.Cell>{video.name}</Table.Cell>
                     </Table.Row>
                   ))
                 : ''}

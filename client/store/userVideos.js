@@ -7,11 +7,12 @@ const GOT_ALL_VIDEOS = 'GOT_ALL_VIDEOS'
 
 // ACTION CREATORS
 
-const postedVideo = (userId, archiveId) => {
+const postedVideo = (userId, archiveId, archiveName) => {
   return {
     type: POSTED_VIDEO,
     userId,
-    archiveId
+    archiveId,
+    archiveName
   }
 }
 
@@ -23,11 +24,12 @@ const gotAllVideos = videos => {
 }
 
 // Post video
-export const postVideo = (userId, archiveId) => async dispatch => {
+export const postVideo = (userId, archiveId, archiveName) => async dispatch => {
   try {
     const {data: videoData} = await axios.post(`/api/recordings/`, {
       userId,
-      archiveId
+      archiveId,
+      archiveName
     })
     dispatch(postedVideo(videoData))
   } catch (error) {

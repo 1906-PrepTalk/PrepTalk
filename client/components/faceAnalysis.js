@@ -12,18 +12,10 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.archiveId)
-    // this.props.getArchivedVideo(this.props.archiveId)
-    // this.props.getArchivedVideo('4a485767-9e83-41f0-a78a-e37ba7f67194')
     this.props.getArchivedVideo(this.props.archiveId)
   }
 
-  // async componentWillMount() {
-  //   await loadModels()
-  // }
-
   handlePlay(event) {
-    //   console.log(event.target.currentSrc)
     getFacialEmotions(event.target)
   }
 
@@ -57,7 +49,7 @@ class FaceAnalysis extends Component {
 const mapStateToProps = state => {
   return {
     archivedVideoUrl: state.archivedVideo,
-    archiveId: state.archiveId
+    archiveId: state.archiveDetails.archiveId
   }
 }
 

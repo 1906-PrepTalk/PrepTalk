@@ -139,7 +139,6 @@ router.post('/archive/start', function(req, res) {
         return
       }
       res.setHeader('Content-Type', 'application/json')
-      console.log('archive info', archive)
       res.send(archive)
     }
   )

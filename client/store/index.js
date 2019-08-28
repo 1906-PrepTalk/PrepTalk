@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import session from './session'
-import archiveId from './archiveId'
+import archiveDetails from './archiveDetails'
 import archivedVideo from './archivedVideo'
 import questionReducer from './questionStore'
 import userVideo from './userVideos'
@@ -13,7 +13,7 @@ import faceData from './faceData'
 const reducer = combineReducers({
   user,
   session,
-  archiveId,
+  archiveDetails,
   archivedVideo,
   questionReducer,
   userVideo,
