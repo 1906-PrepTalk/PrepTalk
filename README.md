@@ -12,8 +12,11 @@ Give it a shot!
 ## Our Team
 
 Daphne Lee
+
 Peter Lee
+
 Austin Wu
+
 Michael Chan
 
 ## Technologies Used
