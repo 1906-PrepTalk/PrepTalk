@@ -56,89 +56,71 @@ function store(bucketId, filename) {
 /**
  * Send audio to transcription service Google Cloud Speech API
  */
-function transcribeAudio(googFilename) {
-  try {
-    const gclient = new speech.SpeechClient()
-    return gclient
-      .recognize({
-        config: {
-          encoding: 'LINEAR16',
-          languageCode: 'en-US'
-        },
-        audio: {uri: googFilename}
-      })
-      .then(data => {
-        console.log('This is data:', data)
-        const res = data[0]
-        console.log('This is res:', res)
-        return res.promise()
-      })
-      .then(data => {
-        const res = data[0]
-        // const metadata = data[1]
-        const transcript = res.results
-          .map(r => {
-            console.log(r.alternatives)
-            return r.alternatives[0].transcript.trim()
-          })
-          .join('\n')
-        return transcript
-      })
-      .catch(err => {
-        console.log('This is googFileName', googFilename)
-        console.log(`Error transcribing audio. Reason: ${err}`)
-      })
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-// const transcribeAudio = async googFilename => {
-//   console.log('googFilename', googFilename)
+// function transcribeAudio(googFilename) {
 //   try {
-//     console.log('google credentials', googCredentials)
 //     const gclient = new speech.SpeechClient()
-//     console.log('gclient', gclient)
-//     const config = {
-//       encoding: 'LINEAR16',
-//       languageCode: 'en-US'
-//     }
-//     const audio = {
-//       uri: googFilename
-//     }
-//     const request = {
-//       config: config,
-//       audio: audio
-//     }
-//     console.log(
-//       '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens After Here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-//     )
-//     // Detects speech in the audio file
-//     console.log('request', request)
-//     const [response] = await gclient.recognize(request)
-//     console.log('response', response)
-//     console.log(
-//       '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Error Happens Before Here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-//     )
-//     console.log('response', response)
-//     const transcription = response.results
-//       .map(result => result.alternatives[0].transcript)
-//       .join('\n')
-//     console.log(`Transcription: `, transcription)
+//     return gclient
+//       .recognize({
+//         config: {
+//           encoding: 'LINEAR16',
+//           languageCode: 'en-US'
+//         },
+//         audio: {uri: googFilename}
+//       })
+//       .then(data => {
+//         console.log('This is data:', data)
+//         const res = data[0]
+//         console.log('This is res:', res)
+//         return res.promise()
+//       })
+//       .then(data => {
+//         const res = data[0]
+//         // const metadata = data[1]
+//         const transcript = res.results
+//           .map(r => {
+//             console.log(r.alternatives)
+//             return r.alternatives[0].transcript.trim()
+//           })
+//           .join('\n')
+//         return transcript
+//       })
+//       .catch(err => {
+//         console.log('This is googFileName', googFilename)
+//         console.log(`Error transcribing audio. Reason: ${err}`)
+//       })
 //   } catch (error) {
 //     console.error(error)
 //   }
 // }
-// ;(async () => {
-//   const auth = await google.auth.getClient({
-//     scopes: ['https://speech.googleapis.com/v1/operations']
-//   })
-//   const {data} = await google
-//     .speech('v1')
-//     .operations.get({auth, name: transcribeAudio})
 
-//   console.log(data)
-// })()
+const transcribeAudio = async googFilename => {
+  console.log('googFilename', googFilename)
+  try {
+    const gclient = new speech.SpeechClient()
+    const config = {
+      encoding: 'LINEAR16',
+      languageCode: 'en-US'
+    }
+    const audio = {
+      uri: googFilename
+    }
+    const request = {
+      config: config,
+      audio: audio
+    }
+    // Detects speech in the audio file
+    console.log('request', request)
+    const [response] = await gclient.recognize(request)
+    console.log('response', response)
+    const transcription = response.results
+      .map(result => result.alternatives[0].transcript)
+      .join('\n')
+    console.log(`Transcription: `, transcription)
+    return transcription
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // export
 module.exports = {
