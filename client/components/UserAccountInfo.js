@@ -2,7 +2,6 @@ import React from 'react'
 import {Table, Button, Segment} from 'semantic-ui-react'
 
 const UserAccountInfo = props => {
-  console.log(props.videos)
   return (
     <div>
       <div className="userInfoTable">
