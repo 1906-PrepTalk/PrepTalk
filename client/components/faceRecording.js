@@ -2,8 +2,11 @@ import React from 'react'
 import {OTSession, OTPublisher, OTStreams, OTSubscriber} from 'opentok-react'
 import {connect} from 'react-redux'
 import {getSession} from '../store/session'
-import Axios from 'axios'
-import {Button} from 'semantic-ui-react'
+import {getArchiveId, stopArchiving} from '../store/archiveId'
+import {Link} from 'react-router-dom'
+import {Button, Form, Segment} from 'semantic-ui-react'
+import Questions from './questions'
+import {getQuestion} from '../store/questionStore'
 
 class FaceRecording extends React.Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class FaceRecording extends React.Component {
       error: null,
       connection: 'Connecting',
       publishVideo: true,
-      archiveId: null
+      stoppedArchiving: false
     }
 
     this.sessionEventHandlers = {
@@ -79,29 +82,28 @@ class FaceRecording extends React.Component {
     }))
   }
 
+  // START RECORDING / STOP RECORDING
+
   startArchive = e => {
     e.preventDefault()
-    Axios.post('/api/faceRecording/archive/start', {
-      sessionId: this.props.session.sessionId,
-      resolution: '1280x720',
-      output: 'composed'
-    })
-      .then(res => {
-        this.setState({archiveId: res.data.id})
-      })
-      .then(() => console.log('Recording Started'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.getArchiveId(
+        this.props.session.sessionId,
+        e.target.recordingName.value
+      )
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   stopArchive = e => {
     e.preventDefault()
-    Axios.post(`/api/faceRecording/archive/${this.state.archiveId}/stop`)
-      .then(() => console.log('Recording Stopped'))
-      .catch(error => {
-        console.error(error)
-      })
+    try {
+      this.props.stopArchiving(this.props.archiveId)
+      this.setState({stoppedArchiving: true})
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   componentDidMount() {
@@ -111,15 +113,8 @@ class FaceRecording extends React.Component {
   render() {
     const {apiKey, sessionId, token} = this.props.session
     const {error, connection, publishVideo} = this.state
-
     return Object.keys(this.props.session).length !== 0 ? (
-      <div>
-        <div id="sessionStatus">Session Status: {connection}</div>
-        {error ? (
-          <div className="error">
-            <strong>Error:</strong> {error}
-          </div>
-        ) : null}
+      <div id="videoRecordingBackground">
         <OTSession
           apiKey={apiKey}
           sessionId={sessionId}
@@ -127,39 +122,83 @@ class FaceRecording extends React.Component {
           onError={this.onSessionError}
           eventHandlers={this.sessionEventHandlers}
         >
-          <Button id="videoButton" onClick={this.toggleVideo} type="button">
-            {publishVideo ? 'Disable' : 'Enable'} Video
-          </Button>
-          <Button
-            id="startArchive"
-            type="button"
-            onClick={this.startArchive}
-            primary
-          >
-            Start Recording
-          </Button>
-          <Button
-            id="stopArchive"
-            type="button"
-            onClick={this.stopArchive}
-            secondary
-          >
-            Stop Recording
-          </Button>
-          <OTPublisher
-            properties={{publishVideo, width: 850, height: 850}}
-            onPublish={this.onPublish}
-            onError={this.onPublishError}
-            eventHandlers={this.publisherEventHandlers}
-          />
-          <OTStreams>
-            <OTSubscriber
-              properties={{width: 850, height: 850}}
-              onSubscribe={this.onSubscribe}
-              onError={this.onSubscribeError}
-              eventHandlers={this.subscriberEventHandlers}
-            />
-          </OTStreams>
+          <div className="startStopRecording">
+            <Segment raised padded>
+              <Form onSubmit={this.startArchive}>
+                <label>Name of Recording</label>
+                <input
+                  placeholder="Recording Name"
+                  type="text"
+                  name="recordingName"
+                />
+
+                <Button id="startArchive" type="submit" primary>
+                  Start Recording
+                </Button>
+
+                {this.state.stoppedArchiving ? (
+                  <Button
+                    as={Link}
+                    to="/faceAnalysis"
+                    id="viewArchive"
+                    type="button"
+                    color="green"
+                  >
+                    See your video!
+                  </Button>
+                ) : (
+                  <Button
+                    id="stopArchive"
+                    type="button"
+                    onClick={this.stopArchive}
+                    secondary
+                  >
+                    Stop Recording
+                  </Button>
+                )}
+              </Form>
+            </Segment>
+          </div>
+
+          <div className="videoQuestions">
+            <Segment raised padded>
+              <div id="sessionStatus">
+                Session Status: {connection}
+                {error ? (
+                  <div className="error">
+                    <strong>Error:</strong> {error}
+                  </div>
+                ) : null}
+                <Button
+                  id="videoButton"
+                  onClick={this.toggleVideo}
+                  type="button"
+                >
+                  {publishVideo ? 'Disable' : 'Enable'} Video
+                </Button>
+              </div>
+              <OTPublisher
+                properties={{publishVideo, width: 800, height: 550}}
+                onPublish={this.onPublish}
+                onError={this.onPublishError}
+                eventHandlers={this.publisherEventHandlers}
+              />
+              <OTStreams>
+                <OTSubscriber
+                  properties={{width: 800, height: 550}}
+                  onSubscribe={this.onSubscribe}
+                  onError={this.onSubscribeError}
+                  eventHandlers={this.subscriberEventHandlers}
+                />
+              </OTStreams>
+            </Segment>
+            <Segment raised padded inverted>
+              <Questions
+                questions={this.props.questions}
+                getQuestions={this.props.getQuestions}
+              />
+            </Segment>
+          </div>
         </OTSession>
       </div>
     ) : (
@@ -170,7 +209,9 @@ class FaceRecording extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
+    archiveId: state.archiveId,
+    questions: state.questions
   }
 }
 
@@ -178,7 +219,11 @@ const mapDispatchToProps = dispatch => {
   return {
     getSession: () => {
       dispatch(getSession())
-    }
+    },
+    getArchiveId: (archiveId, recordingName) =>
+      dispatch(getArchiveId(archiveId, recordingName)),
+    stopArchiving: archiveId => dispatch(stopArchiving(archiveId)),
+    getQuestions: () => dispatch(getQuestion())
   }
 }
 

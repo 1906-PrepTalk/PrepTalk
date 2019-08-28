@@ -2,6 +2,52 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const Question = require('../server/db/models/question')
+
+const questions = [
+  {
+    question: 'Tell me about yourself.'
+  },
+  {
+    question: 'Why are you interested in working here?'
+  },
+  {
+    question: 'What kind of work environment are you looking for?'
+  },
+  {
+    question: 'How would your peers / coworkers describe you?'
+  },
+  {
+    question: 'Describe your perfect job.'
+  },
+  {
+    question:
+      'Tell me about a time when you and your teammates did not agree. How did you communicate your frustrations and what was the outcome?'
+  },
+  {
+    question: 'What did you find most challenging about your last job?'
+  },
+  {
+    question: 'What have you done that shows initiative?'
+  },
+  {
+    question: 'Where do you see yourself in 5 years?'
+  },
+  {
+    question: 'What are your weaknesses? What are you improving on?'
+  },
+  {
+    question:
+      'Discuss a professional accomplishment that you are most proud of.'
+  },
+  {
+    question: 'What kind of salary are ou looking for?'
+  },
+  {
+    question:
+      'What is your approach to balancing multiple, sometimes unexpected, tasks?'
+  }
+]
 
 async function seed() {
   await db.sync({force: true})
@@ -12,7 +58,12 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  console.log(`seeded ${users.length} users`)
+  await Promise.all(
+    questions.map(question => {
+      return Question.create(question)
+    })
+  )
+
   console.log(`seeded successfully`)
 }
 

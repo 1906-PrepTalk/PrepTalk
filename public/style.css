@@ -1,19 +1,127 @@
 body {
   font-family: sans-serif;
+  padding: 0px;
 }
 
 #landing-page {
-  display: flex;
-  justify-content: center;
-  margin-top: 15%;
+  height: 800px;
+  background: url('./Meeting1.png');
+  background-size: cover;
+  color: white;
+  padding-top: 25%;
 }
 
 #login-signup-form {
-  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  height: 800px;
+  background: url('./meeting2.jpg');
+  background-size: cover;
+  padding: 30%;
 }
 
-#title-screen {
+.title-screen {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 300px;
+}
+
+.startStopRecording {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.LoginGoogleButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navBar {
+  background-color: #ebeee0;
+}
+
+#facialAnalysis {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #e1e7e0;
+}
+
+.logo {
+  display: block;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.videoQuestions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+}
+.questionGenerator {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+}
+
+.userInfoTable {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+  padding: 30px;
+  width: 50%;
+}
+
+.stickySteps {
+  position: sticky;
+  bottom: 0;
+}
+
+#sessionStatus {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#videoRecordingBackground {
+  background-color: #6aa4b0;
+}
+
+#userPage {
+  color: white;
+  padding: 50px;
+  background-color: #2f6d80;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 70%;
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content {
+  display: inline-block;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  left: 0;
 }
