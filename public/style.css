@@ -109,11 +109,7 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-#donutChart {
-  height: 1000px;
-}
-
-/* .svg-container {
+.svg-container {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -121,7 +117,6 @@ a {
   vertical-align: top;
   overflow: hidden;
 }
-​
 .svg-content {
   display: inline-block;
   position: absolute;
@@ -129,4 +124,4 @@ a {
   margin-right: auto;
   top: 0;
   left: 0;
-} */
+}
