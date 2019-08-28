@@ -60,6 +60,13 @@ const UserAccountInfo = props => {
                     <Table.Row key={video.id}>
                       <Table.Cell>{video.archiveId}</Table.Cell>
                       <Table.Cell>{video.name}</Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          onClick={() => props.selectVideo(video.archiveId)}
+                        >
+                          Replay
+                        </Button>
+                      </Table.Cell>
                     </Table.Row>
                   ))
                 : ''}

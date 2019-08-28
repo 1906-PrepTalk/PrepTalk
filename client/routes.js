@@ -31,7 +31,11 @@ class Routes extends Component {
               render={() => <FaceRecording {...this.props} />}
             />
             <Route path="/myAccount" component={MyAccount} />
-            <Route path="/faceAnalysis" component={faceAnalysis} />
+            <Route exact path="/faceAnalysis" component={faceAnalysis} />
+            <Route
+              path="/faceAnalysis/video/:archiveId"
+              component={faceAnalysis}
+            />
             <Route path="/" component={LandingPage} />
           </Switch>
         )}

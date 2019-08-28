@@ -9,12 +9,20 @@ class MyAccount extends Component {
       this.props.getAllVideos(this.props.user.id)
     }
   }
+
+  selectVideo = archiveId => {
+    this.props.history.push(`/faceAnalysis/video/${archiveId}`)
+  }
   render() {
     console.log(this.props)
     return (
       <div id="userPage">
         <h2>Welcome, {this.props.user.email}</h2>
-        <UserAccountInfo user={this.props.user} videos={this.props.videos} />
+        <UserAccountInfo
+          user={this.props.user}
+          videos={this.props.videos}
+          selectVideo={this.selectVideo}
+        />
       </div>
     )
   }

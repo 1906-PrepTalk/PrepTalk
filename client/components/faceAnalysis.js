@@ -12,7 +12,11 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
-    this.props.getArchivedVideo(this.props.archiveId)
+    if (this.props.match.params.archiveId) {
+      this.props.getArchivedVideo(this.props.match.params.archiveId)
+    } else {
+      this.props.getArchivedVideo(this.props.archiveId)
+    }
   }
 
   handlePlay(event) {
