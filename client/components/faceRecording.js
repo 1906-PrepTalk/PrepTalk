@@ -81,7 +81,6 @@ class FaceRecording extends React.Component {
       publishVideo: !state.publishVideo
     }))
   }
-
   // START RECORDING / STOP RECORDING
 
   startArchive = e => {

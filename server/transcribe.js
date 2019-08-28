@@ -1,7 +1,7 @@
 const speech = require('@google-cloud/speech')
 const {Storage} = require('@google-cloud/storage')
 
-// let googCredentials = process.env.GOOGLE_APPLICATION_CREDENTIALS
+let googCredentials = process.env.GOOGLE_APPLICATION_CREDENTIALS
 
 const storage = new Storage()
 
