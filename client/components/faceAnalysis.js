@@ -58,7 +58,7 @@ class FaceAnalysis extends Component {
             controls
             width="720"
             onEnded={this.displayButton}
-            onPlay={this.handlePlay}
+            onTimeUpdate={this.handlePlay}
             src={this.props.archivedVideoUrl}
             type="video/mp4"
             crossOrigin="anonymous"

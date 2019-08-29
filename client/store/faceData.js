@@ -3,12 +3,10 @@ import axios from 'axios'
 const GOT_FACEDATA = 'GOT_FACEDATA'
 const POSTED_FACEDATA = 'POSTED_FACEDATA'
 
-const gotFaceData = expressions => {
-  return {
-    type: GOT_FACEDATA,
-    expressions
-  }
-}
+const gotFaceData = expressions => ({
+  type: GOT_FACEDATA,
+  expressions
+})
 const postedFaceData = faceData => {
   return {
     type: POSTED_FACEDATA,
@@ -19,6 +17,7 @@ const postedFaceData = faceData => {
 export const getFaceData = archiveId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/faceAnalysis/${archiveId}`)
+    console.log(data)
     dispatch(gotFaceData(data))
   } catch (error) {
     console.error(error)
