@@ -4,7 +4,8 @@ fs.writeFile(
   process.env.GOOGLE_APPLICATION_CREDENTIALS,
   process.env.GOOGLE_CONFIG,
 
-  err => {
-    console.error(err)
+  function(err, data) {
+    if (err) throw err
+    console.log(data)
   }
 )
