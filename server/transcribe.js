@@ -11,8 +11,8 @@ if (
 }
 
 const {Storage} = require('@google-cloud/storage')
-const storage = new Storage(googCredentials)
-const gclient = new speech.SpeechClient(googCredentials)
+const storage = new Storage()
+const gclient = new speech.SpeechClient()
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
