@@ -9,6 +9,7 @@ import archivedVideo from './archivedVideo'
 import questionReducer from './questionStore'
 import userVideo from './userVideos'
 import faceData from './faceData'
+import transcript from './transcript'
 
 const reducer = combineReducers({
   user,
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   archivedVideo,
   questionReducer,
   userVideo,
-  faceData
+  faceData,
+  transcript
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

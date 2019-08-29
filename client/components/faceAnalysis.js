@@ -6,6 +6,7 @@ import {getFacialEmotions} from '../../server/api/faceApi'
 import {getAllVideos} from '../store/userVideos'
 import DonutPosition from './DonutPosition'
 import {Button} from 'semantic-ui-react'
+import {getTranscript} from '../store/transcript'
 
 class FaceAnalysis extends Component {
   constructor() {
@@ -49,10 +50,12 @@ class FaceAnalysis extends Component {
   }
 
   render() {
+    console.log(this.props)
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
         <div id="facialAnalysis">
           <h2>Facial Analysis Results</h2>
+          <p />
           <video
             id="video"
             controls
@@ -107,7 +110,8 @@ const mapStateToProps = state => {
     expressions: state.expressions,
     faceData: state.faceData,
     videos: state.userVideo,
-    userId: state.user.id
+    userId: state.user.id,
+    transcript: state.transcript
   }
 }
 
@@ -117,7 +121,8 @@ const mapDispatchToProps = dispatch => {
     getFaceData: archiveId => dispatch(getFaceData(archiveId)),
     postFaceData: (videoId, expressions) =>
       dispatch(postFaceData(videoId, expressions)),
-    getAllVideos: userId => dispatch(getAllVideos(userId))
+    getAllVideos: userId => dispatch(getAllVideos(userId)),
+    getTranscript: archiveId => dispatch(getTranscript(archiveId))
   }
 }
 

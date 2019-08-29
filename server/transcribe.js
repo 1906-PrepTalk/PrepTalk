@@ -1,14 +1,4 @@
 const speech = require('@google-cloud/speech')
-let googCredentials
-
-if (
-  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON &&
-  process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON.length > 1
-) {
-  googCredentials = {
-    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
-  }
-}
 
 const {Storage} = require('@google-cloud/storage')
 const storage = new Storage()
