@@ -46,6 +46,7 @@ class FaceAnalysis extends Component {
   getFaceData() {
     const {archiveId} = this.props.match.params
     this.props.getFaceData(archiveId)
+    this.props.getTranscript(archiveId)
     this.setState({button: false})
   }
 
