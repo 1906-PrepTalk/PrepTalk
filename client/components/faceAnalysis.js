@@ -21,8 +21,10 @@ class FaceAnalysis extends Component {
 
   componentDidMount() {
     // if (this.props.match.params.archiveId) {
+    const {archiveId} = this.props.match.params
     this.props.getArchivedVideo(this.props.match.params.archiveId)
     this.props.getAllVideos(this.props.userId)
+    this.props.getTranscript(archiveId)
     // } else {
     //   this.props.getArchivedVideo(this.props.archiveId)
     // }
@@ -46,17 +48,15 @@ class FaceAnalysis extends Component {
   getFaceData() {
     const {archiveId} = this.props.match.params
     this.props.getFaceData(archiveId)
-    this.props.getTranscript(archiveId)
     this.setState({button: false})
   }
 
   render() {
-    console.log(this.props)
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
         <div id="facialAnalysis">
           <h2>Facial Analysis Results</h2>
-          <p />
+          <p>{this.props.transcript.data}</p>
           <video
             id="video"
             controls
