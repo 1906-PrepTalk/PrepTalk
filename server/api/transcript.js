@@ -87,7 +87,7 @@ router.get('/metadata/:archiveId', (req, res, next) => {
  * Get the actual text of transcription for a given archive and its stream ID.
  */
 
-router.get('/:archiveId/:streamId.txt', (req, res, next) => {
+router.get('/:archiveId', (req, res, next) => {
   const streamId = req.params.streamId || 'transcript'
   const archiveId = req.params.archiveId
   archive

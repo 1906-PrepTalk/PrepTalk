@@ -11,9 +11,7 @@ const gotTranscript = transcript => {
 
 export const getTranscript = archiveId => async dispatch => {
   try {
-    const {data} = await axios.get(
-      `/api/transcript/${archiveId}/transcript.txt`
-    )
+    const {data} = await axios.get(`/api/transcript/${archiveId}`)
     dispatch(gotTranscript(data))
   } catch (error) {
     console.error(error)
