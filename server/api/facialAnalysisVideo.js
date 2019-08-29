@@ -14,7 +14,7 @@ router.get('/video/:archiveId', (req, res, next) => {
     const archiveId = req.params.archiveId
     const s3 = new aws.S3()
     const options = {
-      Bucket: 'preptalk2',
+      Bucket: 'preptalk3',
       Key: `46407582/${archiveId}/archive.mp4`
     }
     s3.getSignedUrl('getObject', options, function(err, url) {
