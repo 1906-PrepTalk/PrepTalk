@@ -7,6 +7,7 @@ import {getAllVideos} from '../store/userVideos'
 import DonutPosition from './DonutPosition'
 import {Button} from 'semantic-ui-react'
 import {getTranscript} from '../store/transcript'
+import WordCloud from './WordCloud'
 
 class FaceAnalysis extends Component {
   constructor() {
@@ -57,6 +58,7 @@ class FaceAnalysis extends Component {
         <div id="facialAnalysis">
           <h2>Facial Analysis Results</h2>
           <p>{this.props.transcript.data}</p>
+          <WordCloud />
           <video
             id="video"
             controls
