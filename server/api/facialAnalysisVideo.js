@@ -14,7 +14,7 @@ router.get('/video/:archiveId', (req, res, next) => {
     const archiveId = req.params.archiveId
     const s3 = new aws.S3()
     const options = {
-      Bucket: 'preptalk2',
+      Bucket: 'preptalk3',
       Key: `46407582/${archiveId}/archive.mp4`
     }
     s3.getSignedUrl('getObject', options, function(err, url) {
@@ -55,31 +55,28 @@ router.get('/:archiveId', async (req, res, next) => {
 
 router.post('/:videoId', async (req, res, next) => {
   try {
-    const faceData = await Face.findAll({
-      include: [
-        {
-          model: Video,
-          where: {
-            id: req.params.videoId
-          }
-        }
-      ]
+    // const faceData = await Face.findAll({
+    //   include: [
+    //     {
+    //       model: Video,
+    //       where: {
+    //         id: req.params.videoId
+    //       }
+    //     }
+    //   ]
+    // })
+
+    const newFaceData = await Face.create({
+      angry: req.body.angry,
+      disgusted: req.body.disgusted,
+      fearful: req.body.fearful,
+      happy: req.body.happy,
+      neutral: req.body.neutral,
+      sad: req.body.sad,
+      surprised: req.body.surprised,
+      videoId: req.params.videoId
     })
-    if (faceData.length === 0) {
-      const newFaceData = await Face.create({
-        angry: req.body.angry,
-        disgusted: req.body.disgusted,
-        fearful: req.body.fearful,
-        happy: req.body.happy,
-        neutral: req.body.neutral,
-        sad: req.body.sad,
-        surprised: req.body.surprised,
-        videoId: req.params.videoId
-      })
-      res.status(201).json(newFaceData)
-    } else {
-      res.sendStatus(404)
-    }
+    res.status(201).json(newFaceData)
   } catch (error) {
     console.error(error)
   }

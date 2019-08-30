@@ -3,12 +3,10 @@ import axios from 'axios'
 const GOT_FACEDATA = 'GOT_FACEDATA'
 const POSTED_FACEDATA = 'POSTED_FACEDATA'
 
-const gotFaceData = expressions => {
-  return {
-    type: GOT_FACEDATA,
-    expressions
-  }
-}
+const gotFaceData = expressions => ({
+  type: GOT_FACEDATA,
+  expressions
+})
 const postedFaceData = faceData => {
   return {
     type: POSTED_FACEDATA,

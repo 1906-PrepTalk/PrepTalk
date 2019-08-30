@@ -41,7 +41,7 @@ const questions = [
       'Discuss a professional accomplishment that you are most proud of.'
   },
   {
-    question: 'What kind of salary are ou looking for?'
+    question: 'What kind of salary are you looking for?'
   },
   {
     question:

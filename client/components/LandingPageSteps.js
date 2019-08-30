@@ -9,7 +9,7 @@ const LandingPageSteps = props => {
         <Step.Content>
           <Step.Title>Sign Up</Step.Title>
           <Step.Description>
-            Register for account or login if you have one.
+            Register for an account or login if you have one.
           </Step.Description>
         </Step.Content>
       </Step>
@@ -41,7 +41,7 @@ const LandingPageSteps = props => {
           <Step.Title>Facial Analysis</Step.Title>
 
           <Step.Description>
-            Get a facial analysis on your most frequent expressions.
+            View your facial analysis on your most frequent expressions.
           </Step.Description>
         </Step.Content>
       </Step>
