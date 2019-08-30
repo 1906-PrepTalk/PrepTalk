@@ -35,7 +35,7 @@ const AuthForm = props => {
               />
               <div className="LoginGoogleButtons">
                 <Button content="Login" primary />
-                <Button color="red" />
+                <Button color="red" icon="google" />
               </div>
             </Form>
           </Grid.Column>
