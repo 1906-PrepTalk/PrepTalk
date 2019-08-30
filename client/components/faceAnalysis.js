@@ -11,31 +11,32 @@ class FaceAnalysis extends Component {
   constructor() {
     super()
     this.state = {
-      button: false
+      button: false,
+      angry: '',
+      happy: '',
+      sad: '',
+      disgusted: '',
+      surprised: '',
+      fearful: '',
+      neutral: ''
     }
     this.displayButton = this.displayButton.bind(this)
     this.handlePlay = this.handlePlay.bind(this)
     this.getFaceData = this.getFaceData.bind(this)
+    this.testFaceData = this.testFaceData.bind(this)
   }
 
   componentDidMount() {
-    // if (this.props.match.params.archiveId) {
     this.props.getArchivedVideo(this.props.match.params.archiveId)
     this.props.getAllVideos(this.props.userId)
-    // } else {
-    //   this.props.getArchivedVideo(this.props.archiveId)
-    // }
   }
 
   handlePlay = async event => {
     const faceData = await getFacialEmotions(event.target)
     console.log(faceData)
     const {archiveId} = this.props.match.params
-    if (archiveId) {
-      const video = this.props.videos.find(v => v.archiveId === archiveId)
-      this.props.postFaceData(video.id, faceData.expressions)
-      // this.props.getFaceData(archiveId)
-    }
+    const video = this.props.videos.find(v => v.archiveId === archiveId)
+    this.props.postFaceData(video.id, faceData.expressions)
   }
 
   displayButton() {
@@ -46,6 +47,48 @@ class FaceAnalysis extends Component {
     const {archiveId} = this.props.match.params
     this.props.getFaceData(archiveId)
     this.setState({button: false})
+    setTimeout(this.testFaceData, 2000)
+  }
+
+  testFaceData() {
+    let faceData = this.props.faceData
+    const angry =
+      faceData.map(word => Number(word.angry)).reduce((a, b) => a + b) /
+      faceData.length
+    const happy =
+      faceData.map(word => Number(word.happy)).reduce((a, b) => a + b) /
+      faceData.length
+    const surprised =
+      faceData.map(word => Number(word.surprised)).reduce((a, b) => a + b) /
+      faceData.length
+    const sad =
+      faceData.map(word => Number(word.sad)).reduce((a, b) => a + b) /
+      faceData.length
+    const disgusted =
+      faceData.map(word => Number(word.disgusted)).reduce((a, b) => a + b) /
+      faceData.length
+    const fearful =
+      faceData.map(word => Number(word.fearful)).reduce((a, b) => a + b) /
+      faceData.length
+    const neutral =
+      faceData.map(word => Number(word.neutral)).reduce((a, b) => a + b) /
+      faceData.length
+    console.log(`angry: ${angry * 100},
+      happy: ${happy * 100},
+      surprised: ${surprised * 100},
+      sad: ${sad * 100},
+      disgusted: ${disgusted * 100},
+      fearful: ${fearful * 100},
+      neutral: ${neutral * 100}`)
+    this.setState({
+      angry: angry,
+      happy: happy,
+      surprised: surprised,
+      sad: sad,
+      disgusted: disgusted,
+      fearful: fearful,
+      neutral: neutral
+    })
   }
 
   render() {
@@ -56,12 +99,13 @@ class FaceAnalysis extends Component {
           <video
             id="video"
             controls
-            width="720"
+            width="900"
             onEnded={this.displayButton}
-            onPlay={this.handlePlay}
+            onTimeUpdate={this.handlePlay}
             src={this.props.archivedVideoUrl}
             type="video/mp4"
             crossOrigin="anonymous"
+            preload="auto"
           />
 
           {this.state.button ? (
@@ -77,16 +121,16 @@ class FaceAnalysis extends Component {
             ''
           )}
 
-          {this.props.faceData[0] ? (
+          {typeof this.state.angry === 'number' ? (
             <DonutPosition
               data={[
-                (this.props.faceData[0].angry * 100).toFixed(2),
-                (this.props.faceData[0].disgusted * 100).toFixed(2),
-                (this.props.faceData[0].fearful * 100).toFixed(2),
-                (this.props.faceData[0].happy * 100).toFixed(2),
-                (this.props.faceData[0].neutral * 100).toFixed(2),
-                (this.props.faceData[0].sad * 100).toFixed(2),
-                (this.props.faceData[0].surprised * 100).toFixed(2)
+                (this.state.angry * 100).toFixed(2),
+                (this.state.disgusted * 100).toFixed(2),
+                (this.state.fearful * 100).toFixed(2),
+                (this.state.happy * 100).toFixed(2),
+                (this.state.neutral * 100).toFixed(2),
+                (this.state.sad * 100).toFixed(2),
+                (this.state.surprised * 100).toFixed(2)
               ].filter(data => data > 1)}
             />
           ) : (
