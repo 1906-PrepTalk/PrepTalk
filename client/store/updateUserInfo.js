@@ -63,16 +63,3 @@ export const updateAccountOccupation = (userId, info) => async dispatch => {
     console.log(err)
   }
 }
-
-// UPDATE USER REDUCER
-
-// const updateAccountInfoReducer = (state = '', action) => {
-//   switch (action.type) {
-//     case UPDATE_ACCOUNT_INFO:
-//       return action.info
-//     default:
-//       return state
-//   }
-// }
-
-// export default updateAccountInfoReducer
