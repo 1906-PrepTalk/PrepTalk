@@ -126,7 +126,7 @@ class FaceAnalysis extends Component {
               ''
             )}
           </div>
-          <div>
+          <div id="facialAnalysis">
             {typeof this.state.angry === 'number' ? (
               <div>
                 <h3>Expressions</h3>
@@ -146,7 +146,7 @@ class FaceAnalysis extends Component {
               ''
             )}
           </div>
-          <div>
+          <div id="facialAnalysis">
             {Object.keys(this.props.transcript).length > 0 ? (
               <div>
                 <h3>Frequently Used Words</h3>
