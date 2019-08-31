@@ -32,12 +32,10 @@ class FaceAnalysis extends Component {
     const {archiveId} = this.props.match.params
     this.props.getArchivedVideo(this.props.match.params.archiveId)
     this.props.getAllVideos(this.props.userId)
-    this.props.getTranscript(archiveId)
   }
 
   handlePlay = async event => {
     const faceData = await getFacialEmotions(event.target)
-    console.log(faceData)
     const {archiveId} = this.props.match.params
     const video = this.props.videos.find(v => v.archiveId === archiveId)
     this.props.postFaceData(video.id, faceData.expressions)
@@ -52,6 +50,7 @@ class FaceAnalysis extends Component {
     this.props.getFaceData(archiveId)
     this.setState({button: false})
     setTimeout(this.testFaceData, 2000)
+    this.props.getTranscript(archiveId)
   }
 
   testFaceData() {
@@ -96,12 +95,14 @@ class FaceAnalysis extends Component {
   }
 
   render() {
+    console.log('faceanalysis??????????????????????????', this.props.transcript)
+    console.log('faceanalysis', Object.keys(this.props.transcript).length > 0)
+
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
         <div id="facialAnalysis">
           <h2>Facial Analysis Results</h2>
-          <p>{this.props.transcript.data}</p>
-          <WordCloud />
+
           <video
             id="video"
             controls
@@ -141,6 +142,11 @@ class FaceAnalysis extends Component {
             />
           ) : (
             ''
+          )}
+          {Object.keys(this.props.transcript) > 0 ? (
+            <WordCloud transcript={this.props.transcript.data} />
+          ) : (
+            <h3>Transcript Currently Unavailable</h3>
           )}
         </div>
       </div>
