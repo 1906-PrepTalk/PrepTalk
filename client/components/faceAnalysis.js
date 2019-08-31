@@ -144,7 +144,7 @@ class FaceAnalysis extends Component {
           ) : (
             ''
           )}
-          {Object.keys(this.props.transcript) > 0 ? (
+          {Object.keys(this.props.transcript).length > 0 ? (
             <WordCloud transcript={this.props.transcript.data} />
           ) : (
             <h3>Transcript Currently Unavailable</h3>
