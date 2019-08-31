@@ -29,8 +29,10 @@ class FaceAnalysis extends Component {
   }
 
   componentDidMount() {
-    this.props.getArchivedVideo(this.props.match.params.archiveId)
+    const {archiveId} = this.props.match.params
+    this.props.getArchivedVideo(archiveId)
     this.props.getAllVideos(this.props.userId)
+    this.props.getTranscript(archiveId)
   }
 
   handlePlay = async event => {
