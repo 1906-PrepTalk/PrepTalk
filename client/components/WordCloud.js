@@ -25,14 +25,8 @@ import React, {Component} from 'react'
 
 export default class WordCloud extends Component {
   render() {
-    console.log(
-      'this.props WORDCLOUD??????????????????????',
-      this.props.transcript
-    )
     if (this.props.transcript !== 'undefined') {
       const seriesConstruct = () => {
-        const test =
-          'this is a test one two three four five six test test one two is a test'
         const wordCount = str => {
           let words = {}
           str.split(' ').forEach(word => {
@@ -66,7 +60,7 @@ export default class WordCloud extends Component {
       <Chart width={600} height={300} series={series} minY={0}>
         <Transform method="transpose">
           <Cloud
-            font="Open Sans Condensed"
+            font="Helvetica"
             minFontSize={12}
             maxFontSize={72}
             padding={2}

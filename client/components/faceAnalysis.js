@@ -49,7 +49,6 @@ class FaceAnalysis extends Component {
   getFaceData() {
     const {archiveId} = this.props.match.params
     this.props.getFaceData(archiveId)
-    this.props.getTranscript(archiveId)
     this.setState({button: false})
     setTimeout(this.testFaceData, 2000)
   }
@@ -96,9 +95,6 @@ class FaceAnalysis extends Component {
   }
 
   render() {
-    console.log('faceanalysis??????????????????????????', this.props.transcript)
-    console.log('faceanalysis', Object.keys(this.props.transcript).length > 0)
-
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
         <div id="facialAnalysis">
@@ -130,24 +126,30 @@ class FaceAnalysis extends Component {
           )}
 
           {typeof this.state.angry === 'number' ? (
-            <DonutPosition
-              data={[
-                (this.state.angry * 100).toFixed(2),
-                (this.state.disgusted * 100).toFixed(2),
-                (this.state.fearful * 100).toFixed(2),
-                (this.state.happy * 100).toFixed(2),
-                (this.state.neutral * 100).toFixed(2),
-                (this.state.sad * 100).toFixed(2),
-                (this.state.surprised * 100).toFixed(2)
-              ].filter(data => data > 1)}
-            />
+            <div>
+              <h3>Expressions</h3>
+              <DonutPosition
+                data={[
+                  (this.state.angry * 100).toFixed(2),
+                  (this.state.disgusted * 100).toFixed(2),
+                  (this.state.fearful * 100).toFixed(2),
+                  (this.state.happy * 100).toFixed(2),
+                  (this.state.neutral * 100).toFixed(2),
+                  (this.state.sad * 100).toFixed(2),
+                  (this.state.surprised * 100).toFixed(2)
+                ].filter(data => data > 1)}
+              />
+            </div>
           ) : (
             ''
           )}
           {Object.keys(this.props.transcript).length > 0 ? (
-            <WordCloud transcript={this.props.transcript.data} />
+            <div>
+              <h3>Frequently Used Words</h3>
+              <WordCloud transcript={this.props.transcript.data} />
+            </div>
           ) : (
-            <h3>Transcript Currently Unavailable</h3>
+            <h3>Processing Transcript...</h3>
           )}
         </div>
       </div>
