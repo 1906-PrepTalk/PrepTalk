@@ -31,7 +31,6 @@ class FaceAnalysis extends Component {
   componentDidMount() {
     this.props.getArchivedVideo(this.props.match.params.archiveId)
     this.props.getAllVideos(this.props.userId)
-    this.props.getTranscript(this.props.match.params.archiveId)
   }
 
   handlePlay = async event => {
@@ -48,6 +47,7 @@ class FaceAnalysis extends Component {
   getFaceData() {
     const {archiveId} = this.props.match.params
     this.props.getFaceData(archiveId)
+    this.props.getTranscript(archiveId)
     this.setState({button: false})
     setTimeout(this.testFaceData, 2000)
   }
