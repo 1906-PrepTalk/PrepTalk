@@ -49,7 +49,6 @@ export const stopArchiving = archiveId => async dispatch => {
     const {data} = await axios.post(
       `/api/faceRecording/archive/${archiveId}/stop`
     )
-    console.log(data)
     dispatch(stoppedArchiving(data))
   } catch (err) {
     console.log(err)

@@ -5,7 +5,6 @@ const storage = new Storage()
 
 function store(bucketId, filename) {
   const gbucket = storage.bucket(bucketId)
-  console.log('location bucket here', gbucket)
   return gbucket
     .file(filename)
     .createWriteStream()
