@@ -130,3 +130,7 @@ a {
   text-anchor: middle;
   fill: white;
 }
+
+h2 {
+  text-align: center;
+}

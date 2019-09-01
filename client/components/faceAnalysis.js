@@ -97,65 +97,59 @@ class FaceAnalysis extends Component {
   render() {
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
-        <div>
-          <div id="facialAnalysis">
-            <h2>Facial Analysis Results</h2>
+        <div id="facialAnalysis">
+          <h2>Facial Analysis Results</h2>
 
-            <video
-              id="video"
-              controls
-              width="900"
-              onEnded={this.displayButton}
-              onTimeUpdate={this.handlePlay}
-              src={this.props.archivedVideoUrl}
-              type="video/mp4"
-              crossOrigin="anonymous"
-              preload="auto"
-            />
+          <video
+            id="video"
+            controls
+            width="900"
+            onEnded={this.displayButton}
+            onTimeUpdate={this.handlePlay}
+            src={this.props.archivedVideoUrl}
+            type="video/mp4"
+            crossOrigin="anonymous"
+            preload="auto"
+          />
 
-            {this.state.button ? (
-              <Button
-                type="button"
-                onClick={this.getFaceData}
-                color="yellow"
-                className="getFaceDataButton"
-              >
-                Get Face Data
-              </Button>
-            ) : (
-              ''
-            )}
-          </div>
-          <div id="facialAnalysis">
-            {typeof this.state.angry === 'number' ? (
-              <div>
-                <h3>Expressions</h3>
-                <DonutPosition
-                  data={[
-                    (this.state.angry * 100).toFixed(2),
-                    (this.state.disgusted * 100).toFixed(2),
-                    (this.state.fearful * 100).toFixed(2),
-                    (this.state.happy * 100).toFixed(2),
-                    (this.state.neutral * 100).toFixed(2),
-                    (this.state.sad * 100).toFixed(2),
-                    (this.state.surprised * 100).toFixed(2)
-                  ].filter(data => data > 1)}
-                />
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div id="facialAnalysis">
-            {Object.keys(this.props.transcript).length > 0 ? (
-              <div>
-                <h3>Frequently Used Words</h3>
-                <WordCloud transcript={this.props.transcript.data} />
-              </div>
-            ) : (
-              <h3>Processing Transcript...</h3>
-            )}
-          </div>
+          {this.state.button ? (
+            <Button
+              type="button"
+              onClick={this.getFaceData}
+              color="yellow"
+              className="getFaceDataButton"
+            >
+              Get Face Data
+            </Button>
+          ) : (
+            ''
+          )}
+          {typeof this.state.angry === 'number' ? (
+            <div>
+              <h2>Facial Expressions</h2>
+              <DonutPosition
+                data={[
+                  (this.state.angry * 100).toFixed(2),
+                  (this.state.disgusted * 100).toFixed(2),
+                  (this.state.fearful * 100).toFixed(2),
+                  (this.state.happy * 100).toFixed(2),
+                  (this.state.neutral * 100).toFixed(2),
+                  (this.state.sad * 100).toFixed(2),
+                  (this.state.surprised * 100).toFixed(2)
+                ].filter(data => data > 1)}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+          {Object.keys(this.props.transcript).length > 0 ? (
+            <div>
+              <h2>Frequently Used Words</h2>
+              <WordCloud transcript={this.props.transcript.data} />
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     ) : (
