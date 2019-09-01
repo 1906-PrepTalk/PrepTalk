@@ -32,7 +32,6 @@ class Archive {
         individualOutput ? 'zip' : 'mp4'
       }`
     }
-    console.log('Params are', params)
     return this.s3
       .getObject(params)
       .createReadStream()
@@ -145,7 +144,7 @@ class Archive {
         console.log(`Completed transcoding of archive ${archiveId}`)
       })
       .noVideo()
-      .format('flac')
+      .format('wav')
       .audioChannels(1)
   }
 
@@ -280,7 +279,7 @@ class Archive {
                 const streamId = entry.fileName.split('.')[0]
                 const uploadFileName = `${
                   this.opentok_project_id
-                }/${archiveId}/${streamId}.flac`
+                }/${archiveId}/${streamId}.wav`
                 const gFilename = `gs://${
                   this._conf.GOOGLE_STORAGE_BUCKET
                 }/${uploadFileName}`
@@ -340,9 +339,7 @@ class Archive {
   async processComposedOutput(metadata) {
     const archiveId = metadata.id
     const vidStream = this.downloadArchiveFromS3(archiveId, false)
-    const uploadFileName = `${
-      this.opentok_project_id
-    }/${archiveId}/archive.flac`
+    const uploadFileName = `${this.opentok_project_id}/${archiveId}/archive.wav`
     const gFilename = `gs://${
       this._conf.GOOGLE_STORAGE_BUCKET
     }/${uploadFileName}`

@@ -12,7 +12,6 @@ const AuthForm = props => {
   const {handleSubmit} = props
   return (
     <div id="login-signup-form">
-      {/* <a href="/auth/google">{displayName} with Google</a> */}
       <Segment placeholder>
         <Grid columns={2} relaxed="very" stackable>
           <Grid.Column>

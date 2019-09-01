@@ -19,7 +19,6 @@ Austin Wu
 
 Michael Chan
 
-
 ## Technologies Used
 
 * React-Redux

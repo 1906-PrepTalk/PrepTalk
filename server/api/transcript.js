@@ -1,9 +1,6 @@
 const router = require('express').Router()
-// const Opentok = require('opentok')
 const opentok = require('./opentokInstance')
-
 const Archive = require('../archive')
-// const OPENTOK_SECRET = process.env.OPENTOK_SECRET
 
 const CONFIG = {}
 
@@ -26,12 +23,6 @@ for (const ev of reqEnvVars) {
   CONFIG[ev[0]] = process.env[ev[0]] || ev[1]
 }
 
-// console.log(
-//   '<=========================================================================================================== CONFIG OBJECT ===========================================================================================================>',
-//   CONFIG
-// )
-
-// const opentok = new Opentok(CONFIG.OPENTOK_API_KEY, OPENTOK_SECRET)
 const archive = new Archive(CONFIG, opentok)
 
 router.post('/ot_callback', (req, res) => {
@@ -87,7 +78,7 @@ router.get('/metadata/:archiveId', (req, res, next) => {
  * Get the actual text of transcription for a given archive and its stream ID.
  */
 
-router.get('/:archiveId/:streamId.txt', (req, res, next) => {
+router.get('/:archiveId', (req, res, next) => {
   const streamId = req.params.streamId || 'transcript'
   const archiveId = req.params.archiveId
   archive

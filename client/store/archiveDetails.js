@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-// const defaultSession = {
-//   apiKey: '',
-//   token: '',
-//   sessionId: ''
-// }
-
 // RECORD AND STOP ARCHIVING BUTTONS
 
 const GOT_ARCHIVE_DETAILS = 'GOT_ARCHIVE_DETAILS'
@@ -49,7 +43,6 @@ export const stopArchiving = archiveId => async dispatch => {
     const {data} = await axios.post(
       `/api/faceRecording/archive/${archiveId}/stop`
     )
-    console.log(data)
     dispatch(stoppedArchiving(data))
   } catch (err) {
     console.log(err)
