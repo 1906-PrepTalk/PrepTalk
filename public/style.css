@@ -109,7 +109,7 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-/* .svg-container {
+.svg-container {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -124,14 +124,14 @@ a {
   margin-right: auto;
   top: 0;
   left: 0;
-} */
+}
 
 .label {
   text-anchor: middle;
   fill: white;
 }
 
-.svg-container {
+/* .svg-container {
   display: inline-block;
   text-align: center;
   vertical-align: top;
@@ -140,8 +140,8 @@ a {
 .svg-content {
   display: inline-block;
   width: 70%;
-  height: 70%;
-}
+  height: 70%; 
+}*/
 
 h2 {
   text-align: center;
