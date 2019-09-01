@@ -113,13 +113,13 @@ a {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 70%;
+  padding-bottom: 40%;
   vertical-align: top;
   overflow: hidden;
 }
 .svg-content {
   display: inline-block;
-  position: absolute;
+  /* position: absolute; */
   margin-left: auto;
   margin-right: auto;
   top: 0;
@@ -140,7 +140,7 @@ a {
 .svg-content {
   display: inline-block;
   width: 70%;
-  height: 70%; 
+  height: 70%;
 }*/
 
 h2 {
@@ -154,4 +154,9 @@ h2 {
   align-items: center;
   padding: 40px;
   background-color: #e1e7e0;
+}
+
+#container {
+  height: 500px;
+  width: 675px;
 }
