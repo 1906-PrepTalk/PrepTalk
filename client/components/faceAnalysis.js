@@ -30,7 +30,6 @@ class FaceAnalysis extends Component {
 
   componentDidMount() {
     const {archiveId} = this.props.match.params
-    this.setState({button: true})
     this.props.getArchivedVideo(archiveId)
     this.props.getAllVideos(this.props.userId)
     this.props.getTranscript(archiveId)
