@@ -54,7 +54,7 @@ router.get('/', (req, res, next) => {
 router.post('/archive/start', function(req, res) {
   const {name, sessionId, resolution, outputMode} = req.body
   console.log(
-    '<===================================== testing start archive route =====================================>'
+    '<=============================================== start archive ===============================================>'
   )
   opentok.startArchive(
     sessionId,
@@ -77,7 +77,7 @@ router.post('/archive/start', function(req, res) {
  */
 router.post('/archive/:archiveId/stop', function(req, res) {
   console.log(
-    '<===================================== testing stop archive route =====================================>'
+    '<=============================================== stop archive ===============================================>'
   )
   const archiveId = req.params.archiveId
   console.log('attempting to stop archive: ' + archiveId)

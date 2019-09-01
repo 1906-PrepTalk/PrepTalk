@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-// const defaultSession = {
-//   apiKey: '',
-//   token: '',
-//   sessionId: ''
-// }
-
 const GOT_SESSION = 'GOT_SESSION'
 
 const gotSession = session => {

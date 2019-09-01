@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-// const defaultSession = {
-//   apiKey: '',
-//   token: '',
-//   sessionId: ''
-// }
-
 // RECORD AND STOP ARCHIVING BUTTONS
 
 const GOT_ARCHIVE_DETAILS = 'GOT_ARCHIVE_DETAILS'

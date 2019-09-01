@@ -32,7 +32,6 @@ class Archive {
         individualOutput ? 'zip' : 'mp4'
       }`
     }
-    console.log('Params are', params)
     return this.s3
       .getObject(params)
       .createReadStream()

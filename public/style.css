@@ -109,7 +109,7 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-/* .svg-container {
+.svg-container {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -129,4 +129,4 @@ a {
 .label {
   text-anchor: middle;
   fill: white;
-} */
+}
