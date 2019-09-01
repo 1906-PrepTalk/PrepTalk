@@ -18,10 +18,9 @@ export default class DonutPosition extends React.Component {
     return (
       <div id="container" className="svg-container">
         <svg
+          viewBox="0 0 1000 800"
           className="svg-content"
-          preserveAspectRatio="xMidYMid meet"
-          width="100%"
-          height="100%"
+          preserveAspectRatio="xMinYMin meet"
         >
           <DonutChart
             x={x}
