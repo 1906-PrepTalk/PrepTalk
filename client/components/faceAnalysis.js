@@ -99,8 +99,6 @@ class FaceAnalysis extends Component {
       <div>
         <div>
           <div id="facialAnalysis">
-            <h2>Facial Analysis Results</h2>
-
             <video
               id="video"
               controls
