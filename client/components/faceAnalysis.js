@@ -13,19 +13,21 @@ class FaceAnalysis extends Component {
   constructor() {
     super()
     this.state = {
+      showGraph: false,
       button: false,
-      angry: '',
-      happy: '',
-      sad: '',
-      disgusted: '',
-      surprised: '',
-      fearful: '',
-      neutral: ''
+      called: 0,
+      angry: 0,
+      happy: 0,
+      sad: 0,
+      disgusted: 0,
+      surprised: 0,
+      fearful: 0,
+      neutral: 0
     }
     this.displayButton = this.displayButton.bind(this)
     this.handlePlay = this.handlePlay.bind(this)
     this.getFaceData = this.getFaceData.bind(this)
-    this.testFaceData = this.testFaceData.bind(this)
+    this.resetData = this.resetData.bind(this)
   }
 
   componentDidMount() {
@@ -35,11 +37,36 @@ class FaceAnalysis extends Component {
     this.props.getTranscript(archiveId)
   }
 
+  resetData() {
+    this.setState({
+      called: 0,
+      angry: 0,
+      happy: 0,
+      sad: 0,
+      disgusted: 0,
+      surprised: 0,
+      fearful: 0,
+      neutral: 0,
+      showGraph: false
+    })
+  }
+
   handlePlay = async event => {
     const faceData = await getFacialEmotions(event.target)
-    const {archiveId} = this.props.match.params
-    const video = this.props.videos.find(v => v.archiveId === archiveId)
-    this.props.postFaceData(video.id, faceData.expressions)
+    console.log(faceData)
+
+    this.state.angry += faceData.expressions.angry
+    this.state.happy += faceData.expressions.happy
+    this.state.sad += faceData.expressions.sad
+    this.state.disgusted += faceData.expressions.disgusted
+    this.state.surprised += faceData.expressions.surprised
+    this.state.fearful += faceData.expressions.fearful
+    this.state.neutral += faceData.expressions.neutral
+    this.state.called++
+
+    // const {archiveId} = this.props.match.params
+    // const video = this.props.videos.find(v => v.archiveId === archiveId)
+    // this.props.postFaceData(video.id, faceData.expressions)
   }
 
   displayButton() {
@@ -47,42 +74,30 @@ class FaceAnalysis extends Component {
   }
 
   getFaceData() {
-    const {archiveId} = this.props.match.params
-    this.props.getFaceData(archiveId)
-    this.setState({button: false})
-    setTimeout(this.testFaceData, 2000)
-  }
+    const expressions = this.state
 
-  testFaceData() {
-    let faceData = this.props.faceData
-    const angry =
-      faceData.map(word => Number(word.angry)).reduce((a, b) => a + b) /
-      faceData.length
-    const happy =
-      faceData.map(word => Number(word.happy)).reduce((a, b) => a + b) /
-      faceData.length
-    const surprised =
-      faceData.map(word => Number(word.surprised)).reduce((a, b) => a + b) /
-      faceData.length
-    const sad =
-      faceData.map(word => Number(word.sad)).reduce((a, b) => a + b) /
-      faceData.length
-    const disgusted =
-      faceData.map(word => Number(word.disgusted)).reduce((a, b) => a + b) /
-      faceData.length
-    const fearful =
-      faceData.map(word => Number(word.fearful)).reduce((a, b) => a + b) /
-      faceData.length
-    const neutral =
-      faceData.map(word => Number(word.neutral)).reduce((a, b) => a + b) /
-      faceData.length
+    const angry = expressions.angry / expressions.called
+
+    const happy = expressions.happy / expressions.called
+
+    const surprised = expressions.surprised / expressions.called
+
+    const sad = expressions.sad / expressions.called
+
+    const disgusted = expressions.disgusted / expressions.called
+
+    const fearful = expressions.fearful / expressions.called
+
+    const neutral = expressions.neutral / expressions.called
+
     console.log(`angry: ${angry * 100},
-      happy: ${happy * 100},
-      surprised: ${surprised * 100},
-      sad: ${sad * 100},
-      disgusted: ${disgusted * 100},
-      fearful: ${fearful * 100},
-      neutral: ${neutral * 100}`)
+    happy: ${happy * 100},
+    surprised: ${surprised * 100},
+    sad: ${sad * 100},
+    disgusted: ${disgusted * 100},
+    fearful: ${fearful * 100},
+    neutral: ${neutral * 100}`)
+
     this.setState({
       angry: angry,
       happy: happy,
@@ -90,70 +105,102 @@ class FaceAnalysis extends Component {
       sad: sad,
       disgusted: disgusted,
       fearful: fearful,
-      neutral: neutral
+      neutral: neutral,
+      button: false,
+      showGraph: true
     })
   }
 
   render() {
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
-        <div>
-          <div id="facialAnalysis">
-            <video
-              id="video"
-              controls
-              width="900"
-              onEnded={this.displayButton}
-              onTimeUpdate={this.handlePlay}
-              src={this.props.archivedVideoUrl}
-              type="video/mp4"
-              crossOrigin="anonymous"
-              preload="auto"
-            />
+        <div id="facialAnalysis">
+          <video
+            id="video"
+            controls
+            width="900"
+            onPlay={this.resetData}
+            onEnded={this.displayButton}
+            onTimeUpdate={this.handlePlay}
+            src={this.props.archivedVideoUrl}
+            type="video/mp4"
+            crossOrigin="anonymous"
+            preload="auto"
+          />
 
-            {this.state.button ? (
-              <Button
-                type="button"
-                onClick={this.getFaceData}
-                color="yellow"
-                className="getFaceDataButton"
-              >
-                Get Face Data
-              </Button>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="container">
-            {typeof this.state.angry === 'number' ? (
-              <div>
-                <h2>Facial Expressions</h2>
-                <DonutPosition
-                  data={[
-                    (this.state.angry * 100).toFixed(2),
-                    (this.state.disgusted * 100).toFixed(2),
-                    (this.state.fearful * 100).toFixed(2),
-                    (this.state.happy * 100).toFixed(2),
-                    (this.state.neutral * 100).toFixed(2),
-                    (this.state.sad * 100).toFixed(2),
-                    (this.state.surprised * 100).toFixed(2)
-                  ].filter(data => data > 1)}
-                />
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="container">
-            {Object.keys(this.props.transcript).length > 0 ? (
-              <div>
-                <h2>Frequently Used Words</h2>
-                <WordCloud transcript={this.props.transcript.data} />
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
+          {this.state.button ? (
+            <Button
+              type="button"
+              onClick={this.getFaceData}
+              color="yellow"
+              className="getFaceDataButton"
+            >
+              Get Face Data
+            </Button>
+          ) : (
+            ''
+          )}
+        </div>
+
+        {/* <div className="container">
+          {this.state.showGraph ? (
+            <div>
+              <h2>Facial Expressions</h2>
+              <DonutPosition
+                data={[
+                  (this.state.angry * 100).toFixed(2),
+                  (this.state.disgusted * 100).toFixed(2),
+                  (this.state.fearful * 100).toFixed(2),
+                  (this.state.happy * 100).toFixed(2),
+                  (this.state.neutral * 100).toFixed(2),
+                  (this.state.sad * 100).toFixed(2),
+                  (this.state.surprised * 100).toFixed(2)
+                ].filter(data => data > 1)}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className="container">
+          {Object.keys(this.props.transcript).length > 0 ? (
+            <div>
+              <h2>Frequently Used Words</h2>
+              <WordCloud transcript={this.props.transcript.data} />
+            </div>
+          ) : (
+            ''
+          )}
+        </div> */}
+
+        <div className="container">
+          {this.state.showGraph ? (
+            <div>
+              <h2>Facial Analysis Data</h2>
+              <DonutPosition
+                data={[
+                  (this.state.angry * 100).toFixed(2),
+                  (this.state.disgusted * 100).toFixed(2),
+                  (this.state.fearful * 100).toFixed(2),
+                  (this.state.happy * 100).toFixed(2),
+                  (this.state.neutral * 100).toFixed(2),
+                  (this.state.sad * 100).toFixed(2),
+                  (this.state.surprised * 100).toFixed(2)
+                ].filter(data => data > 1)}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+
+          {this.state.showGraph ? (
+            <div>
+              <h2>Frequently Used Words</h2>
+              <WordCloud transcript={this.props.transcript.data} />
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     ) : (
