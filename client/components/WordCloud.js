@@ -57,7 +57,7 @@ export default class WordCloud extends Component {
     }
 
     return (
-      <Chart width={600} height={300} series={series} minY={0}>
+      <Chart width={600} height={510} series={series} minY={0}>
         <Transform method="transpose">
           <Cloud
             font="Helvetica"

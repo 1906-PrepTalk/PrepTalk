@@ -91,12 +91,12 @@ class FaceAnalysis extends Component {
     const neutral = expressions.neutral / expressions.called
 
     console.log(`angry: ${angry * 100},
-    happy: ${happy * 100},
-    surprised: ${surprised * 100},
-    sad: ${sad * 100},
     disgusted: ${disgusted * 100},
     fearful: ${fearful * 100},
-    neutral: ${neutral * 100}`)
+    happy: ${happy * 100},
+    neutral: ${neutral * 100},
+    sad: ${sad * 100},
+    surprised: ${surprised * 100}`)
 
     this.setState({
       angry: angry,
@@ -112,9 +112,20 @@ class FaceAnalysis extends Component {
   }
 
   render() {
+    let faceData = Object.entries({
+      angry: (this.state.angry * 100).toFixed(2),
+      disgusted: (this.state.disgusted * 100).toFixed(2),
+      fearful: (this.state.fearful * 100).toFixed(2),
+      happy: (this.state.happy * 100).toFixed(2),
+      neutral: (this.state.neutral * 100).toFixed(2),
+      sad: (this.state.sad * 100).toFixed(2),
+      surprised: (this.state.surprised * 100).toFixed(2)
+    }).filter(data => data[1] > 1)
+
     return this.props.archivedVideoUrl !== 'undefined' ? (
       <div>
         <div id="facialAnalysis">
+          <h1>Facial and Speech Analysis</h1>
           <video
             id="video"
             controls
@@ -135,7 +146,7 @@ class FaceAnalysis extends Component {
               color="yellow"
               className="getFaceDataButton"
             >
-              Get Face Data
+              View Analysis Results
             </Button>
           ) : (
             ''
@@ -177,17 +188,19 @@ class FaceAnalysis extends Component {
           {this.state.showGraph ? (
             <div>
               <h2>Facial Analysis Data</h2>
-              <DonutPosition
+              {/* <DonutPosition
                 data={[
-                  (this.state.angry * 100).toFixed(2),
-                  (this.state.disgusted * 100).toFixed(2),
-                  (this.state.fearful * 100).toFixed(2),
-                  (this.state.happy * 100).toFixed(2),
-                  (this.state.neutral * 100).toFixed(2),
-                  (this.state.sad * 100).toFixed(2),
-                  (this.state.surprised * 100).toFixed(2)
-                ].filter(data => data > 1)}
-              />
+                  {angry: (this.state.angry * 100).toFixed(2)},
+                  {disgusted: (this.state.disgusted * 100).toFixed(2)},
+                  {fearful: (this.state.fearful * 100).toFixed(2)},
+                  {happy: (this.state.happy * 100).toFixed(2)},
+                  {neutral: (this.state.neutral * 100).toFixed(2)},
+                  {sad: (this.state.sad * 100).toFixed(2)},
+                  {surprised: (this.state.surprised * 100).toFixed(2)}
+                ].filter(data => Object.values(data) > 1)}
+              /> */}
+
+              <DonutPosition data={faceData} />
             </div>
           ) : (
             ''
