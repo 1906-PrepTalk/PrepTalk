@@ -48,7 +48,6 @@ export default class Slice extends React.Component {
       <g onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} {...props}>
         <path d={arc(value)} fill={fill} />
         <text
-          // transform={translate(...arc.centroid(value))}
           transform={translate(...arc.centroid(value))}
           dy=".35em"
           className="label"
