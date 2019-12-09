@@ -40,8 +40,6 @@ export default class DonutChart extends React.Component {
     return (
       <g transform={`translate(${x}, ${y})`}>
         {/* Render a slice for each data point */}
-        {/* {pie(data.map(el => Number(el[1]))).map(this.renderSlice)}
-         */}
         {pie(data).map(this.renderSlice)}
       </g>
     )

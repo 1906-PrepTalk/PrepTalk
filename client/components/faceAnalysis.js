@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getArchivedVideo} from '../store/archivedVideo'
-import {getFaceData, postFaceData} from '../store/faceData'
+import {getFaceData} from '../store/faceData'
 import {getFacialEmotions} from '../../server/api/faceApi'
 import {getAllVideos} from '../store/userVideos'
 import DonutPosition from './DonutPosition'
@@ -47,7 +47,8 @@ class FaceAnalysis extends Component {
       surprised: 0,
       fearful: 0,
       neutral: 0,
-      showGraph: false
+      showGraph: false,
+      button: false
     })
   }
 
@@ -113,13 +114,13 @@ class FaceAnalysis extends Component {
 
   render() {
     let faceData = Object.entries({
-      angry: (this.state.angry * 100).toFixed(2),
-      disgusted: (this.state.disgusted * 100).toFixed(2),
-      fearful: (this.state.fearful * 100).toFixed(2),
-      happy: (this.state.happy * 100).toFixed(2),
-      neutral: (this.state.neutral * 100).toFixed(2),
-      sad: (this.state.sad * 100).toFixed(2),
-      surprised: (this.state.surprised * 100).toFixed(2)
+      angry: Math.round(this.state.angry * 100),
+      disgusted: Math.round(this.state.disgusted * 100),
+      fearful: Math.round(this.state.fearful * 100),
+      happy: Math.round(this.state.happy * 100),
+      neutral: Math.round(this.state.neutral * 100),
+      sad: Math.round(this.state.sad * 100),
+      surprised: Math.round(this.state.surprised * 100)
     }).filter(data => data[1] > 1)
 
     return this.props.archivedVideoUrl !== 'undefined' ? (
@@ -153,52 +154,10 @@ class FaceAnalysis extends Component {
           )}
         </div>
 
-        {/* <div className="container">
-          {this.state.showGraph ? (
-            <div>
-              <h2>Facial Expressions</h2>
-              <DonutPosition
-                data={[
-                  (this.state.angry * 100).toFixed(2),
-                  (this.state.disgusted * 100).toFixed(2),
-                  (this.state.fearful * 100).toFixed(2),
-                  (this.state.happy * 100).toFixed(2),
-                  (this.state.neutral * 100).toFixed(2),
-                  (this.state.sad * 100).toFixed(2),
-                  (this.state.surprised * 100).toFixed(2)
-                ].filter(data => data > 1)}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="container">
-          {Object.keys(this.props.transcript).length > 0 ? (
-            <div>
-              <h2>Frequently Used Words</h2>
-              <WordCloud transcript={this.props.transcript.data} />
-            </div>
-          ) : (
-            ''
-          )}
-        </div> */}
-
         <div className="container">
           {this.state.showGraph ? (
             <div>
               <h2>Facial Analysis Data</h2>
-              {/* <DonutPosition
-                data={[
-                  {angry: (this.state.angry * 100).toFixed(2)},
-                  {disgusted: (this.state.disgusted * 100).toFixed(2)},
-                  {fearful: (this.state.fearful * 100).toFixed(2)},
-                  {happy: (this.state.happy * 100).toFixed(2)},
-                  {neutral: (this.state.neutral * 100).toFixed(2)},
-                  {sad: (this.state.sad * 100).toFixed(2)},
-                  {surprised: (this.state.surprised * 100).toFixed(2)}
-                ].filter(data => Object.values(data) > 1)}
-              /> */}
 
               <DonutPosition data={faceData} />
             </div>
@@ -238,8 +197,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getArchivedVideo: archiveId => dispatch(getArchivedVideo(archiveId)),
     getFaceData: archiveId => dispatch(getFaceData(archiveId)),
-    postFaceData: (videoId, expressions) =>
-      dispatch(postFaceData(videoId, expressions)),
     getAllVideos: userId => dispatch(getAllVideos(userId)),
     getTranscript: archiveId => dispatch(getTranscript(archiveId))
   }

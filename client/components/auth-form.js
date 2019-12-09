@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
 
+const GoogleOAuth = process.env.GOOGLE_CALLBACK
+
 /**
  * COMPONENT
  */
@@ -34,7 +36,13 @@ const AuthForm = props => {
               />
               <div className="LoginGoogleButtons">
                 <Button content="Login" primary />
-                <Button color="red" icon="google" />
+                <Button
+                  as="a"
+                  href="/auth/google"
+                  role="link"
+                  color="red"
+                  icon="google"
+                />
               </div>
             </Form>
           </Grid.Column>

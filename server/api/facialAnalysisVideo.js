@@ -53,33 +53,4 @@ router.get('/:archiveId', async (req, res, next) => {
   }
 })
 
-router.post('/:videoId', async (req, res, next) => {
-  try {
-    // const faceData = await Face.findAll({
-    //   include: [
-    //     {
-    //       model: Video,
-    //       where: {
-    //         id: req.params.videoId
-    //       }
-    //     }
-    //   ]
-    // })
-
-    const newFaceData = await Face.create({
-      angry: req.body.angry,
-      disgusted: req.body.disgusted,
-      fearful: req.body.fearful,
-      happy: req.body.happy,
-      neutral: req.body.neutral,
-      sad: req.body.sad,
-      surprised: req.body.surprised,
-      videoId: req.params.videoId
-    })
-    res.status(201).json(newFaceData)
-  } catch (error) {
-    console.error(error)
-  }
-})
-
 module.exports = router
