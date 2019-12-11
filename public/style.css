@@ -8,6 +8,7 @@ body {
   background: url('./Meeting1.png');
   background-size: cover;
   color: white;
+  height: 100%;
   padding-top: 25%;
 }
 
