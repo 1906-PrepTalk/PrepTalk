@@ -41,6 +41,9 @@ export default class Slice extends React.Component {
       .outerRadius(outerRadius)
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
+
+    // console.log(value.data, `color:${fill}`)
+
     return (
       <g onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} {...props}>
         <path d={arc(value)} fill={fill} />
@@ -48,8 +51,9 @@ export default class Slice extends React.Component {
           transform={translate(...arc.centroid(value))}
           dy=".35em"
           className="label"
+          fontSize="30px"
         >
-          {label}
+          {`${label[0]}: ${label[1]}%`}
         </text>
       </g>
     )

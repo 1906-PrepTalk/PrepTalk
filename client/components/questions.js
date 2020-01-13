@@ -38,7 +38,7 @@ export default class Questions extends Component {
           basic
         >
           {' '}
-          <Icon name="question" /> Ask me A Question
+          <Icon name="question" /> Generate a question!
         </Button>{' '}
         <h3>{this.state.question}</h3>
       </div>

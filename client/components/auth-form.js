@@ -4,10 +4,6 @@ import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Button, Divider, Form, Grid, Segment} from 'semantic-ui-react'
 
-/**
- * COMPONENT
- */
-
 const AuthForm = props => {
   const {handleSubmit} = props
   return (
@@ -34,7 +30,13 @@ const AuthForm = props => {
               />
               <div className="LoginGoogleButtons">
                 <Button content="Login" primary />
-                <Button color="red" icon="google" />
+                <Button
+                  as="a"
+                  href="/auth/google"
+                  role="link"
+                  color="red"
+                  icon="google"
+                />
               </div>
             </Form>
           </Grid.Column>
@@ -69,14 +71,6 @@ const AuthForm = props => {
   )
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
@@ -91,9 +85,6 @@ const mapDispatch = dispatch => {
 
 export const Login = connect(null, mapDispatch)(AuthForm)
 
-/**
- * PROP TYPES
- */
 AuthForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 }
