@@ -1,7 +1,6 @@
 const User = require('./user')
 const Video = require('./video')
 const Transcript = require('./transcript')
-const Face = require('./face')
 const Report = require('./report')
 
 /**
@@ -15,12 +14,8 @@ User.hasMany(Video)
 
 Transcript.belongsTo(Video)
 Report.belongsTo(Video)
-Face.belongsTo(Video)
 
 Report.belongsTo(Transcript)
-Report.belongsTo(Face)
-
-
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -33,6 +28,5 @@ module.exports = {
   User,
   Video,
   Transcript,
-  Face,
   Report
 }
