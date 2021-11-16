@@ -46,7 +46,7 @@
     "@google-cloud/storage": "^3.1.0",
     "@opentok/client": "^2.16.2",
     "@tensorflow/tfjs-core": "^1.2.8",
-    "aws-sdk": "^2.513.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
